@@ -38,7 +38,7 @@ $site = $pages->get('/config/');
 $user->loggedin = is_userloggedin(session_id());
 
 if ($user->loggedin) {
-	// setup_user(session_id());
+	setup_user(session_id());
 } elseif ($page->template != 'login' && $page->template != 'redir') {
 	header('location: ' . $pages->get('template=login')->url());
 	exit;

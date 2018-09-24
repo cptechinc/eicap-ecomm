@@ -139,3 +139,32 @@ function curl_get($url) {
 	));
 	return curl_exec($curl);
 }
+
+/* =============================================================
+  PROCESSWIRE USER FUNCTIONS
+============================================================ */
+   function setup_user($sessionID) {
+	   $loginrecord = get_loginrecord($sessionID);
+	   $loginID = $loginrecord['loginid'];
+	   $user = LogmUser::load($loginID);
+	   DplusWire::wire('user')->fullname = $loginrecord['loginname'];
+	   DplusWire::wire('user')->loginid = $loginrecord['loginid'];
+	   DplusWire::wire('user')->has_customerrestrictions = $loginrecord['restrictcustomers'];
+	   DplusWire::wire('user')->salespersonid = $loginrecord['salespersonid'];
+	   // DplusWire::wire('user')->mainrole = $user->get_dplusorole();
+	   // DplusWire::wire('user')->addRole($user->get_dplusrole());
+   }
+
+   /**
+		* Trigger a PHP error, warning, or notice. Automatically prepends 'CP-DPLUSO' for easier management. Note
+		* that fatal errors (E_USER_ERROR) will prevent further processing.
+		*
+		* @param    string    $error          Error message (max 1024 characters)
+		* @param    int   $level          PHP error level, from PHP's E_USER constants
+		* @return   null
+		*/
+	   function error($error, $level = E_USER_ERROR) {
+		   $error = (strpos($error, 'CP-DPLUSO: ') !== 0 ? 'CP-DPLUSO: ' . $error : $error);
+		   trigger_error($error, $level);
+		   return;
+	   }
