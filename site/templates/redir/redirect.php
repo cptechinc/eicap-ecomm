@@ -1,5 +1,5 @@
 <?php
-	$user->loggedin = is_validlogin(session_id());
+	$user->loggedin = is_userloggedin(session_id());
 	$url = !empty($session->loc) ? $session->loc : $config->pages->index;
 	$session->remove('loc');
 

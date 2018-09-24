@@ -111,13 +111,11 @@ function hash_templatefile($filename) {
 
 /**
  * Writes an array one datem per line into the dplus directory
- * @param  array $data      Array of Lines for the request
- * @param  string $filename What to name File
+ * @param  array $data   Array of Lines for the request
  * @return void
  */
 function write_dplusfile($data, $filename) {
 	$file = '';
-	echo var_dump($data);
 	foreach ($data as $line) {
 		$file .= $line . "\n";
 	}
