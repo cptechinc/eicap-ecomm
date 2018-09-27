@@ -1,12 +1,29 @@
-html { position: relative; height: 100%; }
+/**************************************
+ 	General Styles
+ **************************************/
+html {
+	position: relative;
+	height: 100%;
+}
+
 body { height: 100%;}
-footer { width: 100%; padding-top: 15px; }
-.container.page {min-height: 100%; height: 100%; height: auto; padding-bottom:200px;}
+
+footer {
+	width: 100%;
+	padding-top: 15px;
+}
+
+.container.page {
+	min-height: 100%;
+	height: 100%;
+	height: auto;
+	padding-bottom:200px;
+}
 
 
-/**
- * Login Styles
- */
+/**************************************
+ 	Login Styles
+ **************************************/
 .form-signin {
 	width: 100%;
 	max-width: 500px;

@@ -20,7 +20,7 @@
             <ul class="nav navbar-nav navbar-right hidden-sm">
                 <?php //if($page->editable()) echo "<li class='edit'><a href='$page->editUrl'>Edit</a></li>"; ?>
                 <?php if ($user->loggedin) : ?>
-                    <li class="nav-item"><a href="<?= $pages->get('/user/')->url; ?>" class="text-white nav-link"><i class="fa fa-user text-white" aria-hidden="true"></i> User : <?= $user->fullname; ?></a></li>
+                    <li class="nav-item"><a href="<?= $pages->get('/user/')->url; ?>" class="text-white nav-link"><i class="fa fa-user text-white" aria-hidden="true"></i>&nbsp;User : <span class="font-weight-bold"><?= $user->fullname; ?></span></a></li>
                     <li>
                     	<a href="<?php echo $config->pages->account; ?>redir/?action=logout" class="btn btn-light logout">Logout</a>
                     </li>

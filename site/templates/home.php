@@ -21,7 +21,7 @@
 				  	</div>
 				</div>
 			</a>
-			<a href="#" class="col-sm-4">
+			<a href="<?= $pages->get('/user/')->url; ?>" class="col-sm-4">
 				<div class="card bg-primary">
 				    <div class="card-body">
 				    	<h5 class="card-title text-center"><i class="fa fa-user fa-5x text-white" aria-hidden="true"></i></h5>
