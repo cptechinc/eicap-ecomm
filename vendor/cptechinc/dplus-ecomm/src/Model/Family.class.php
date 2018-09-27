@@ -31,7 +31,12 @@
 		protected $name5;
 		protected $dummy;
         
-        public static function import_families() {
+		/**
+		 * Imports a family record from the database and makes a page in Processwire
+		 * @param  string $parentcode Code to be parsed for parent page
+		 * @return bool               Was Family Created / Updated
+		 */
+        public function import_family($parentcode = '') {
             
         }
 	}
