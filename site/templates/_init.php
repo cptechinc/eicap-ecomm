@@ -17,8 +17,9 @@ include_once("./_dbfunc.php");
 include_once("{$config->paths->vendor}cptechinc/dplus-processwire/vendor/autoload.php");
 include_once("{$config->paths->vendor}cptechinc/dplus-base/vendor/autoload.php");
 include_once("{$config->paths->vendor}cptechinc/dplus-content/vendor/autoload.php");
-include_once("{$config->paths->vendor}cptechinc/dplus-services/vendor/autoload.php");
+//include_once("{$config->paths->vendor}cptechinc/dplus-services/vendor/autoload.php");
 include_once("{$config->paths->vendor}cptechinc/dpluso-processwire-classes/vendor/autoload.php");
+include_once($config->paths->vendor."cptechinc/dplus-ecomm/vendor/autoload.php");
 include_once("{$config->paths->templates}configs/nav-config.php");
 
 $config->styles->append(hash_templatefile('styles/bootstrap.min.css'));

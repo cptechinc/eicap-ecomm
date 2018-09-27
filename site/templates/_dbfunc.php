@@ -92,3 +92,33 @@
             return $sql->fetchAll();
         }
     }
+
+/* =============================================================
+    FAMILY FUNCTIONS
+============================================================ */
+    function get_families($debug = false) {
+        $q = (new QueryBuilder())->table('family');
+        $sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+        if ($debug) {
+            return $q->generate_sqlquery($q->params);
+        } else {
+            $sql->execute($q->params);
+            $sql->setFetchMode(PDO::FETCH_CLASS, 'Family');
+            return $sql->fetchAll();
+        }
+    }
+
+    function get_family($famID, $debug = false) {
+        $q = (new QueryBuilder())->table('family');
+        $q->where('famID', $famID);
+        $sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+        if ($debug) {
+            return $q->generate_sqlquery($q->params);
+        } else {
+            $sql->execute($q->params);
+            $sql->setFetchMode(PDO::FETCH_CLASS, 'Family');
+            return $sql->fetch();
+        }
+    }
