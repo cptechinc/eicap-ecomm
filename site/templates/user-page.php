@@ -12,7 +12,7 @@
 					<a href="<?= $pages->get('/user/account/')->url; ?>">
 						<div class="card-body">
 							<h1 class="text-center text-danger"><i class="fa fa-address-card fa-2x" aria-hidden="true"></i></h1>
-							<p class="card-text text-center text-danger">Profile</p>
+							<p class="card-text font-weight-bold text-center text-danger">Profile</p>
 						</div>
 					</a>
 				</div>
@@ -22,7 +22,7 @@
 					<a href="#">
 						<div class="card-body">
 							<h1 class="text-center text-danger"><i class="fa fa-list-alt fa-2x" aria-hidden="true"></i></h1>
-							<p class="card-text text-center text-danger">Past Orders</p>
+							<p class="card-text font-weight-bold text-center text-danger">Past Orders</p>
 						</div>
 					</a>
 				</div>
@@ -32,7 +32,7 @@
 					<a href="#">
 						<div class="card-body">
 							<h1 class="text-center text-danger"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i></h1>
-							<p class="card-text text-center text-danger">Addresses</p>
+							<p class="card-text font-weight-bold text-center text-danger">Addresses</p>
 						</div>
 					</a>
 				</div>
@@ -42,7 +42,7 @@
 					<a href="#">
 						<div class="card-body">
 							<h1 class="text-center text-danger"><i class="fa fa-credit-card fa-2x" aria-hidden="true"></i></h1>
-							<p class="card-text text-center text-danger">Payments</p>
+							<p class="card-text font-weight-bold text-center text-danger">Payments</p>
 						</div>
 					</a>
 				</div>
