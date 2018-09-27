@@ -3,7 +3,7 @@
 <div class="jumbotron page-banner" style="background: url('<?= $page->pagebanner->url; ?>'); background-size: cover;">
 </div>
 	<div class="container page">
-		<h1 class="text-danger font-weight-bold">Welcome back, !</h1>
+		<h1 class="text-danger font-weight-bold">Welcome back, <?= $user->fullname; ?>!</h1>
 		<div class="row mt-4">
 			<a href="#" class="col-sm-4">
 				<div class="card bg-primary">
@@ -32,6 +32,7 @@
 		</div>
 		<div class="row mt-4">
 			<div class="col-sm-12">
+				<h3 class="text-danger font-weight-bold"><?= $page->summary; ?></h3>
 				<p><?= $page->body; ?></p>
 			</div>
 		</div>

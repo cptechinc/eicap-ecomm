@@ -1,21 +1,21 @@
 <?php include('./_head.php'); // include header markup ?>
 
 <div class="container page">
-    <h2 class="font-weight-bold text-center my-4"><?= $page->headline; ?></h2>
+    <h2 class="font-weight-bold text-center text-danger my-4"><?= $page->headline; ?></h2>
 	<div class="row">
 		<div class="col-md-3">
-			<h5 class="font-weight-bold"><i class="fa fa-home" aria-hidden="true"></i>&ensp;Address</h5>
+			<h5 class="font-weight-bold text-danger"><i class="fa fa-home" aria-hidden="true"></i>&ensp;Address</h5>
 				<p><?= $site->company_address; ?></p>
 				</br>
-			<h5 class="font-weight-bold"><i class="fa fa-phone" aria-hidden="true"></i>&ensp;Phone</h5>
+			<h5 class="font-weight-bold text-danger"><i class="fa fa-phone" aria-hidden="true"></i>&ensp;Phone</h5>
 				<p><a href="tel:+<?= $site->company_phone; ?>"><?= $site->company_phone; ?></a></p>
 				</br>
-            <h5 class="font-weight-bold"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Email</h5>
+            <h5 class="font-weight-bold text-danger"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Email</h5>
 				<p><a href="mailto:<?= $site->company_email; ?>"><?= $site->company_email; ?></a></p>
 				</br>
 		</div>
 		<div class="col-md-3">
-			<h5 class="font-weight-bold"><i class="fa fa-clock-o" aria-hidden="true"></i>&ensp;Hours</h5>
+			<h5 class="font-weight-bold text-danger"><i class="fa fa-clock-o" aria-hidden="true"></i>&ensp;Hours</h5>
 				<p><?= $site->company_hours; ?></p>
 				</br>
 		</div>
