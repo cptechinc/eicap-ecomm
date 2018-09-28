@@ -122,3 +122,33 @@
             return $sql->fetch();
         }
     }
+
+/* =============================================================
+    PRODUCT FUNCTIONS
+============================================================ */
+    function get_products($debug = false) {
+        $q = (new QueryBuilder())->table('itemmaster');
+        $sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+        if ($debug) {
+            return $q->generate_sqlquery($q->params);
+        } else {
+            $sql->execute($q->params);
+            $sql->setFetchMode(PDO::FETCH_CLASS, 'Product');
+            return $sql->fetchAll();
+        }
+    }
+
+    function get_product($itemid, $debug = false) {
+        $q = (new QueryBuilder())->table('itemmaster');
+        $q->where('itemid', $itemid);
+        $sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+        if ($debug) {
+            return $q->generate_sqlquery($q->params);
+        } else {
+            $sql->execute($q->params);
+            $sql->setFetchMode(PDO::FETCH_CLASS, 'Product');
+            return $sql->fetch();
+        }
+    }

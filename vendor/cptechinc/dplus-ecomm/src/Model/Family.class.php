@@ -80,10 +80,11 @@
 
 		public function create_page($parentcode = '') {
 			$parent = DplusWire::wire('pages')->get("template=category,catID=$this->catid");
+
 			if (get_class($parent) == 'ProcessWire\Page') {
 				$p = new Page(); // create new page object
 				$p->template = 'family'; // set template
-				$p->parent = DplusWire::wire('pages')->get("template=category,catID=$this->catid"); // set the parent
+				$p->parent = $parent; // set the parent
 				$p->name = DplusWire::wire('sanitizer')->pageName($this->famID); // give it a name used in the url for the page
 				$p->title = $this->name1;
 				$p->save();
