@@ -20,6 +20,7 @@ footer {
 	padding-bottom:200px;
 }
 
+.breadcrumb .breadcrumb-item::before {color: white;}
 
 /**************************************
  	Login Styles
@@ -34,4 +35,12 @@ footer {
 .page-banner{height: 375px;}
 	@media screen and (max-width:600px) {
 		.page-banner{height: 300px;}
+}
+
+/**************************************
+ 	Product Styles
+ **************************************/
+.product-list {
+	list-style: none;
+	padding: 0;
 }
