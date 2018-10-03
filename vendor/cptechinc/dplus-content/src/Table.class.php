@@ -24,7 +24,17 @@
 		 * @var bool
 		 */
 		private $thopen = false;
+		
+		/**
+		 * Table Section that is open e.g. thead | tbody | tfoot
+		 * @var string
+		 */
 		private $opensection = false;
+		
+		/**
+		 * HTML for table
+		 * @var string
+		 */
 		private $tablestring = '';
 		private static $count = 0;
 

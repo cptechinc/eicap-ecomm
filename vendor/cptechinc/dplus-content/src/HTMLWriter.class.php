@@ -122,10 +122,10 @@
 			============================================================ */
 			/**
 			 * Returns HTML select element
-			 * @param  string $attr		  Attributes ex. class=sample-class btn|id=stuff
-			 * @param  array  $keyvalues	Array of Key Values for the options
-			 * @param  string $selectvalue Value to be selected
-			 * @return string				  Returns String to the code, or adds the string to $this->content
+			 * @param  string $attr         Attributes ex. class=sample-class btn|id=stuff
+			 * @param  array  $keyvalues     Array of Key Values for the options
+			 * @param  string $selectvalue  Value to be selected
+			 * @return string               Returns String to the code, or adds the string to $this->content
 			 */
 			public function select($attr = '', array $keyvalues, $selectvalue = '') {
 				$options = '';

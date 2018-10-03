@@ -1,6 +1,5 @@
 <?php 
-    class FormMaker {
-        use ThrowErrorTrait;
+    class FormMaker extends HTMLWriter {
         
         private $formstring = '';
         private static $count = 0;
@@ -10,9 +9,9 @@
 			CONSTRUCTOR FUNCTIONS 
 		============================================================ */
         public function __construct($attr = '', $openform = true) {
+            $this->bootstrap = new HTMLWriter();
             self::$count++;
-            $this->bootstrap = new Contento();
-            $this->formstring = $this->indent() . $openform ? $this->bootstrap->open('form', $attr) : '';
+            $this->formstring = $this->indent() . $openform ? $this->open('form', $attr) : '';
             $this->openform = $openform;
         }
         
@@ -20,14 +19,14 @@
 			GETTER FUNCTIONS 
 		============================================================ */
         public function __call($name, $args){
-            if (in_array($name, $this->bootstrap->closeable)) {
+            if (in_array($name, $this->closeable)) {
                 if (!$args[1]) {
-                    $this->formstring .= $this->bootstrap->open($name, $args[0]); // OPEN ONLY
+                    $this->formstring .= $this->open($name, $args[0]); // OPEN ONLY
                 } else {
-                    $this->formstring .= $this->bootstrap->openandclose($name, $args[0], $args[1]); // CLOSE ONLY
+                    $this->formstring .= $this->create_element($name, $args[0], $args[1]); // CLOSE ONLY
                 }
-            } elseif (in_array($name, $this->bootstrap->emptytags)) {
-                $this->formstring .= $this->bootstrap->open($name, $args[0]);    
+            } elseif (in_array($name, $this->emptytags)) {
+                $this->formstring .= $this->open($name, $args[0]);    
             } else {
                 $this->error("This element $name is not defined to be called as a closing or open ended element");
                 return false;
@@ -38,28 +37,28 @@
 			CLASS FUNCTIONS 
 		============================================================ */
         public function input($attr = '') {
-            $this->formstring .= $this->indent() . $this->bootstrap->input($attr);
+            $this->formstring .= $this->indent() . parent::input($attr);
         }
         
         public function select($attr = '', array $keyvalues, $selectvalue = null) {
-            $this->formstring .= $this->indent() . $this->bootstrap->select($attr, $keyvalues, $selectvalue);
+            $this->formstring .= $this->indent() . parent::select($attr, $keyvalues, $selectvalue);
         }
         
         public function button($attr = '', $content) {
-            $this->formstring .= $this->indent() . $this->bootstrap->button($attr, $content);
+            $this->formstring .= $this->indent() . parent::button($attr, $content);
         }
         
         public function add($str) {
             $this->formstring .= $str;
         }
         
-        public function close($element) {
-            $this->formstring .= $this->bootstrap->close($element);
+        public function close($element = '') {
+            $this->formstring .= parent::close($element);
         }
         
         public function finish() {
 			if ($this->openform) {
-				$this->formstring .= $this->bootstrap->close('form');
+				$this->formstring .= parent::close('form');
 			}
             return $this->formstring;
         }
@@ -72,7 +71,7 @@
     	 * Makes a new line and adds four spaces to format a string in html
     	 * @return string new line and four spaces
     	 */
-    	protected function indent() {
+    	public function indent() {
     		$indent = "\n";
     		for ($i = 0; $i < self::$count; $i++) {
     			$indent .= '  ';
