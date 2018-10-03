@@ -1,4 +1,7 @@
-<?php     
+<?php
+	/**
+	 * Class for dealing with sorting tables by its columns and proving the sorting rules and description
+	 */
 	class TablePageSorter {
 		/**
 		 * Column to sort by
@@ -58,11 +61,11 @@
 			return !empty($this->orderby) ? "$this->orderby-$this->sortrule" : '';
 		}
 		
-	    /**
-	     * Returns an html string of the symbole to use based on the sort rule
-	     * @param  string $column column to sort by if it matches the orderby column then the symbol will be the opposite of the current
-	     * @return string         HTML for the sort icon
-	     */
+		/**
+		 * Returns an html string of the symbole to use based on the sort rule
+		 * @param  string $column column to sort by if it matches the orderby column then the symbol will be the opposite of the current
+		 * @return string		 HTML for the sort icon
+		 */
 		public function generate_sortsymbol($column) {
 			$symbol = "";
 			if ($this->orderby == $column) {
@@ -79,7 +82,7 @@
 		 * Takes the provided column and determines the sort rule for it based upon the current
 		 * sort rule and the current column being sorted by
 		 * @param  string $column 
-		 * @return string        ASC|DESC
+		 * @return string		ASC|DESC
 		 */
 		public function generate_columnsortingrule($column) {
 			if ($this->orderby != $column || $this->sortrule == false) {
