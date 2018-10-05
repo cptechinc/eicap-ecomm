@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99de2c0bca80b4d3ac894ba50b05c3cf",
+    "content-hash": "d78221d9c8735755d7595e75f79442f4",
     "packages": [
         {
             "name": "atk4/core",
@@ -257,6 +257,51 @@
                 "user-actions"
             ],
             "time": "2018-09-25T15:45:52+00:00"
+        },
+        {
+            "name": "cptechinc/dplus-order",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cptechinc/dplus-order.git",
+                "reference": "5ece93b64d986a602c921d975b3570124191eaf1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cptechinc/dplus-order/zipball/5ece93b64d986a602c921d975b3570124191eaf1",
+                "reference": "5ece93b64d986a602c921d975b3570124191eaf1",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Order.interface.php",
+                    "src/OrderDetail.interface.php",
+                    "src/Order.class.php",
+                    "src/SalesOrder.class.php",
+                    "src/CartQuote.class.php",
+                    "src/Quote.class.php",
+                    "src/SalesOrderHistory.class.php",
+                    "src/OrderDetail.class.php",
+                    "src/CartDetail.class.php",
+                    "src/QuoteDetail.class.php",
+                    "src/SalesOrderDetail.class.php",
+                    "src/OrderCreditCard.class.php",
+                    "src/Qnote.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Classes for Dplus Orders, Quotes, and Carts",
+            "homepage": "http://github.com/cptechinc/dplus-order",
+            "keywords": [
+                "cart",
+                "cartquote",
+                "detail",
+                "qnote",
+                "quote",
+                "sales-order"
+            ],
+            "time": "2018-10-04T14:41:32+00:00"
         },
         {
             "name": "eoghanobrien/php-simple-mail",
@@ -592,7 +637,8 @@
         "jwage/purl": 20,
         "cptechinc/dplus-base": 20,
         "cptechinc/dplus-dpluso": 20,
-        "cptechinc/dplus-content": 20
+        "cptechinc/dplus-content": 20,
+        "cptechinc/dplus-order": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
