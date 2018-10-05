@@ -6,7 +6,9 @@
     "homepage": "http://github.com/cptechinc/dplus-ecomm",
 	"autoload": {
 		"files": [
-			"src/Model/Family.class.php"
+			"src/Model/Family.class.php",
+			"src/Model/Product.class.php",
+			"src/SalesOrdersDisplay.class.php"
 		]
 	}
 }

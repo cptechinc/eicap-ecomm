@@ -22,6 +22,10 @@ footer {
 
 .breadcrumb .breadcrumb-item::before {color: white;}
 
+.top-margin {
+	margin-top: 32px;
+}
+
 /**************************************
  	Login Styles
  **************************************/
