@@ -13,18 +13,36 @@
                 <?php echo "<h1 class='text-danger font-weight-bold'>" . ucwords(strtolower($page->get('headline|title'))) . "</h1>"; ?>
                 <?php $children = $page->children(); ?>
             </div>
-            <?php foreach ($children as $child) : ?>
-                <div class="col-sm-4 mb-4">
-                    <div class="card">
-                        <img class="card-img-top" src="<?= $child->product_image->url; ?>" alt="<?= ucwords(strtolower($child->imagetext)); ?>">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <a href="<?= $child->url; ?>"><?= ucwords(strtolower($child->title)); ?></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-responsive">
+					<thead>
+						<th>Image</th>
+						<th>ItemID</th>
+						<th>Description</th>
+						<th>Qty</th>
+						<th>Submit</th>
+					</thead>
+					<tbody>
+						<?php foreach ($children as $child) : ?>
+						<tr>
+							<form class="" action="" method="post">
+								<td class="col-sm-3"><img class="card-img-top" src="<?= $child->product_image->url; ?>" alt="<?= ucwords(strtolower($child->imagetext)); ?>"></td>
+								<td class="col-sm-2"><?= $child->itemid; ?></td>
+								<td class="col-sm-5"><a href="<?= $child->url; ?>"><?= ucwords(strtolower($child->title)); ?></a></td>
+								<td class="col-sm-1">
+									<input class="form-control" type="text" name="qty" size="4" value="0">
+								</td>
+								<td class="col-sm-1">
+									<button class="btn btn-primary" type="button" name="button">Add</button>
+								</td>
+							</form>
+						</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	<!-- end content -->
