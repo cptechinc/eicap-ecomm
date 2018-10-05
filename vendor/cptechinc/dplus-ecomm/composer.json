@@ -1,0 +1,14 @@
+{
+	"name": "cptechinc/dplus-ecomm",
+    "type": "library",
+    "description": "Classes for Dplus Ecomm",
+    "keywords": ["dplus-ecomm"],
+    "homepage": "http://github.com/cptechinc/dplus-ecomm",
+	"autoload": {
+		"files": [
+			"src/Model/Family.class.php",
+			"src/Model/Product.class.php",
+			"src/SalesOrdersDisplay.class.php"
+		]
+	}
+}

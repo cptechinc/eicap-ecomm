@@ -34,7 +34,8 @@
         "picqer/php-barcode-generator": "^0.2.2",
         "cptechinc/dplus-base": "dev-master",
         "cptechinc/dplus-dpluso": "dev-master",
-        "cptechinc/dplus-content": "dev-master"
+        "cptechinc/dplus-content": "dev-master",
+        "cptechinc/dplus-order": "dev-master"
     },
     "autoload": {
         "files": [ "wire/core/ProcessWire.php" ]

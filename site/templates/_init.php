@@ -15,6 +15,7 @@ $config->pages = new ProcessWire\Paths($config->rootURL);
 include_once("./_func.php"); // include our shared functions
 include_once("./_dbfunc.php");
 include_once("{$config->paths->vendor}cptechinc/dplus-processwire/vendor/autoload.php");
+include_once("{$config->paths->vendor}cptechinc/dplus-ecomm/vendor/autoload.php");
 include_once("{$config->paths->templates}configs/nav-config.php");
 
 $config->styles->append(hash_templatefile('styles/bootstrap.min.css'));
@@ -39,3 +40,14 @@ if ($user->loggedin) {
 	header('location: ' . $pages->get('template=login')->url());
 	exit;
 }
+
+$page->filename = $_SERVER['REQUEST_URI'];
+// BUILD AND INSTATIATE CLASSES
+$page->fullURL = new \Purl\Url($page->httpUrl);
+$page->fullURL->path = '';
+
+if (!empty($page->filename) && $page->filename != '/') {
+	$page->fullURL->join($page->filename);
+}
+
+$page->stringerbell = new StringerBell();
