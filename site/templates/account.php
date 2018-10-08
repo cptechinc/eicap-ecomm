@@ -49,7 +49,7 @@
 						</table>
 					</div>
 				</div>
-				<a href="<?= $pages->get('/')->url; ?>" class="btn btn-primary mt-3">Go back to Account Page</a>
+				<a href="<?= $pages->get('/')->url; ?>" class="btn btn-primary mt-3"><i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Go back to Account Page</a>
 			</div>
 			<div class="col-sm-6">
 				<div class="card border-primary">

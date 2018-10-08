@@ -36,7 +36,7 @@
 
 			<div class="align-self-center"><?= $paginator; ?></div>
         </div>
-		<a href="<?= $pages->get('/')->url; ?>" class="btn btn-primary my-1">Go back to Account Page</a>
+		<a href="<?= $pages->get('/')->url; ?>" class="btn btn-primary my-1"><i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Go back to Account Page</a>
 
     </div>
 	<!-- end content -->

@@ -10,7 +10,7 @@
                 <?php $homepage = $pages->get('/'); ?>
         		<?php $children = $homepage->children(); ?>
                 <?php foreach ($children as $child) : ?>
-                    <?php if ($child->template != 'user-page') : ?>
+                    <?php if ($child->template != 'user-page' && $child->template != 'cart') : ?>
                         <li class="nav-item">
                             <a class="text-white nav-link" href="<?= $child->url; ?>"><?= $child->title; ?></a>
                         </li>
@@ -21,7 +21,10 @@
                 <?php //if($page->editable()) echo "<li class='edit'><a href='$page->editUrl'>Edit</a></li>"; ?>
                 <?php if ($user->loggedin) : ?>
                     <li class="nav-item"><a href="<?= $homepage->url; ?>" class="text-white nav-link"><i class="fa fa-user text-white" aria-hidden="true"></i>&nbsp;User : <span class="font-weight-bold"><?= $user->fullname; ?></span></a></li>
-                    <li>
+                    <li class="nav-item">
+                        <a href="<?= $pages->get('/cart/')->url; ?>" class="text-white nav-link">&nbsp;<i class="fa fa-shopping-cart text-white" aria-hidden="true"></i>&nbsp;&nbsp;( 0 )&nbsp;&nbsp;</a>
+                    </li>
+                    <li class="nav-item">
                     	<a href="<?php echo $config->pages->account; ?>redir/?action=logout" class="btn btn-light logout">Logout</a>
                     </li>
                 <?php else : ?>
