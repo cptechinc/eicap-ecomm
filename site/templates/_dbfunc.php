@@ -152,7 +152,7 @@
             return $sql->fetch();
         }
     }
-    
+
 /* =============================================================
     SALES ORDER FUNCTIONS
 ============================================================ */
@@ -246,8 +246,26 @@
 			return $sql->fetchAll(PDO::FETCH_ASSOC);
 		}
 	}
-    
-    
+
+    function get_orderdetails($sessionID, $ordn, $useclass = false, $debug = false) {
+        $q = (new QueryBuilder())->table('ordrdet');
+		$q->where('sessionid', $sessionID);
+		$q->where('orderno', $ordn);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			if ($useclass) {
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrder');
+				return $sql->fetchAll();
+			}
+			return $sql->fetchAll(PDO::FETCH_ASSOC);
+		}
+	}
+
+
     /* =============================================================
 	EDIT ORDER FUNCTIONS
 ============================================================ */
@@ -274,9 +292,9 @@
 		} else {
 			$sql->execute($q->params);
 			if ($useclass) {
-				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrder'); // CAN BE SalesOrder|SalesOrderEdit
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrder');
 				return $sql->fetch();
 			}
 			return $sql->fetch(PDO::FETCH_ASSOC);
 		}
-	}
+    }

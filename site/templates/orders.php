@@ -1,5 +1,5 @@
 <?php
-	$salesordersdisplay = new SalesOrdersDisplay('1tutf4nrj4k3mh7torcjbd8e7t', $page->fullURL, $modal = '', $loadint = '', $ajax = false);
+	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->pagenbr = $input->pageNum;
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->paginationinsertafter = $page->name;
@@ -9,7 +9,7 @@
 <?php $orders = $salesordersdisplay->get_orders(); ?>
 <?php include('./_head.php'); // include header markup ?>
 	<div class="container page top-margin">
-		<h1 class="text-danger font-weight-bold border-bottom border-primary">Your Orders</h1>
+		<h1 class="text-danger font-weight-bold">Your Orders</h1>
         <div class="list-group">
 			<div class="form-group">
 				<div href="#" class="list-group-item list-group-item-action bg-secondary text-white font-weight-bold">
@@ -17,8 +17,8 @@
 						<div class="col">Order #</div>
 						<div class="col">Customer</div>
 						<div class="col">Shiptoid</div>
-						<div class="col">Order Total</div>
-						<div class="col">Order Date</div>
+						<div class="col text-right">Order Total</div>
+						<div class="col text-right">Order Date</div>
 					</div>
 				</div>
 	            <?php foreach ($orders as $order) : ?>
