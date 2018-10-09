@@ -28,9 +28,11 @@
     /**
 	* CART REDIRECT
 	*
-	*
-	*
-	*
+	*   case 'add-to-cart':
+	*		DBNAME=$config->dplusdbname
+	*		CARTDET
+	*		ITEMID=$itemID
+	*		break;
 	*   case 'remove-line':
 	*		DBNAME=$config->dplusdbname
 	*		CARTDET
@@ -42,14 +44,21 @@
 	**/
 
     switch ($action) {
+        case 'add-to-cart':
+            $itemID = $input->$requestmethod->text('itemID');
+            $qty = determine_qty($input, $requestmethod, $itemID); // TODO MAKE IN CART DETAIL
+            $data = array('DBNAME' => $config->dplusdbname, 'CARTDET' => false, 'ITEMID' => $itemID, 'QTY' => "$qty");
+            $session->data = $data;
+            $session->addtocart = 'You added ' . $qty . ' of ' . $itemID . ' to your cart';
+            $session->loc = $config->urls->root . 'cart/';
+            break;
         case 'remove-line':
-			$linenbr = $input->post->text('linenbr');
-            echo var_dump($linenbr);
+			$linenbr = $input->$requestmethod->text('linenbr');
 			$cartdetail = CartDetail::load($sessionID, $linenbr);
 			$cartdetail->set('qty', '0');
 			$session->sql = $cartdetail->update();
-			$session->loc = $config->urls->root . 'cart/';
 			$data = array('DBNAME' => $config->dplusdbname, 'CARTDET' => false, 'LINENO' => $linenbr, 'QTY' => '0');
+            $session->loc = $config->urls->root . 'cart/';
 			break;
 	}
 	write_dplusfile($data, $filename);

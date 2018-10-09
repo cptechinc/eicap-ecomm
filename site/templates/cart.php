@@ -37,9 +37,11 @@
 									<td class="col-sm-1 text-right">$ <?= $page->stringerbell->format_money($detail->price); ?></td>
 									<td class="col-sm-1 text-right">$ <?= $page->stringerbell->format_money($detail->totalprice); ?></td>
 									<td class="col-sm-2 text-right">
-										<button class="btn btn-primary" type="button" name="button"><i class="fa fa-save text-white" aria-hidden="true"></i></button>
-										<a href="<?= $cartdisplay->generate_detaildeleteurl($cart, $detail); ?>" class="btn btn-danger detail-line-icon">
-											<i class="fa fa-trash text-white" aria-hidden="true"></i>
+										<button type="submit" name="button" class="btn btn-primary save-button" title="Save Changes">
+											<span class="fa fa-floppy-o"></span> <span class="sr-only">Save Line</span>
+										</button>
+										<a href="<?= $cartdisplay->generate_detaildeleteurl($cart, $detail); ?>" class="btn btn-danger detail-line-icon" title="Delete Item">
+											<i class="fa fa-trash text-white" aria-hidden="true"></i><span class="sr-only">Delete Line</span>
 										</a>
 									</td>
 								</form>
