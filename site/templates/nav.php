@@ -22,7 +22,8 @@
                 <?php if ($user->loggedin) : ?>
                     <li class="nav-item"><a href="<?= $homepage->url; ?>" class="text-white nav-link"><i class="fa fa-user text-white" aria-hidden="true"></i>&nbsp;User : <span class="font-weight-bold"><?= $user->fullname; ?></span></a></li>
                     <li class="nav-item">
-                        <a href="<?= $pages->get('/cart/')->url; ?>" class="text-white nav-link">&nbsp;<i class="fa fa-shopping-cart text-white" aria-hidden="true"></i>&nbsp;&nbsp;( 0 )&nbsp;&nbsp;</a>
+                        <?php $count = count_cartdetails(session_id()); ?>
+                        <a href="<?= $pages->get('/cart/')->url; ?>" class="text-white nav-link">&nbsp;<i class="fa fa-shopping-cart text-white" aria-hidden="true"></i>&nbsp;&nbsp;( <?= $count; ?> )&nbsp;&nbsp;</a>
                     </li>
                     <li class="nav-item">
                     	<a href="<?php echo $config->pages->account; ?>redir/?action=logout" class="btn btn-light logout">Logout</a>

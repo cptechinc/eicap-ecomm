@@ -323,6 +323,26 @@
 	}
 
     /**
+	 * Returns the number of Cart Items for this session
+	 * @param  string $sessionID Session Identifier
+	 * @param  bool   $debug     Run in debug? If so return SQL Query
+	 * @return int               Number of Cart Items for this session
+	 */
+	function count_cartdetails($sessionID, $debug = false) {
+		$q = (new QueryBuilder())->table('cartdet');
+		$q->field('COUNT(*)');
+		$q->where('sessionid', $sessionID);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
+		}
+	}
+
+    /**
 	 * Return the CartDetail for this session and Line Number
 	 * @param  string     $sessionID Session Identifier
 	 * @param  int        $linenbr   Detail Line Number
