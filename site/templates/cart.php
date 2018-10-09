@@ -3,7 +3,7 @@
 <?php include('./_head.php'); ?>
 
 	<div class='container page'>
-
+		<?php echo $cart->ordertotal; ?>
 		<div class="row">
 			<div class="col-sm-12 mt-5">
                 <h1 class="font-weight-bold text-danger">Cart</h1>
@@ -35,7 +35,7 @@
 										<input class="form-control" type="text" name="qty" size="4" value="<?= number_format($detail->qty, 0); ?>">
 									</td>
 									<td class="col-sm-1 text-right">$ <?= $page->stringerbell->format_money($detail->price); ?></td>
-									<td class="col-sm-1 text-right">$ <?= $page->stringerbell->format_money($detail->totalprice); ?></td>
+									<td class="col-sm-1 text-right">$ <?= $page->stringerbell->format_money($detail->price * $detail->qty); ?></td>
 									<td class="col-sm-2 text-right">
 										<button type="submit" name="button" class="btn btn-primary save-button" title="Save Changes">
 											<span class="fa fa-floppy-o"></span> <span class="sr-only">Save Line</span>
@@ -47,12 +47,18 @@
 								</form>
 							</tr>
 						<?php endforeach; ?>
-
+							<tr>
+								<td class="col-sm-3"></td>
+								<td class="col-sm-4"></td>
+								<td colspan="2" class="col-sm-1 text-right font-weight-bold">Cart Total</td>
+								<td class="col-sm-1 text-right font-weight-bold">$ <?= $page->stringerbell->format_money($cart->subtotal); ?></td>
+								<td class="col-sm-2 text-right"></td>
+							</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<a href="" class="btn btn-success mt-3">Submit for Review&nbsp;&nbsp;<i class="fa fa-arrow-circle-right text-white" aria-hidden="true"></i></a></br>
+		<a href="#" class="btn btn-success mt-3">Submit for Review&nbsp;&nbsp;<i class="fa fa-arrow-circle-right text-white" aria-hidden="true"></i></a></br>
 	</div>
 	<!-- end content -->
 
