@@ -28,13 +28,16 @@
 	*		DBNAME=$config->dplusdbname
 	*		CARTDET
 	*		ITEMID=$itemID
+	*		QTY=$qty
 	*		break;
+	*	case 'quick-update-line':
+	*	    DBNAME=$config->dplusdbname
+	*		CARTDET
+	*		LINENO=$linenbr
 	*   case 'remove-line':
 	*		DBNAME=$config->dplusdbname
 	*		CARTDET
 	*		LINENO=$linenbr
-	*		CUSTID=$custID
-	*		SHIPTOID=$shipID
 	*		break;
 	*
 	**/
@@ -44,9 +47,10 @@
             $itemID = $input->$requestmethod->text('itemID');
             $qty = $input->$requestmethod->text('qty');
             $data = array("DBNAME=$config->dplusdbname", "CARTDET", "ITEMID=$itemID", "QTY=$qty");
+            $data["CUSTID"] = empty($custID) ? $config->defaultweb : $custID;
             $session->data = $data;
             $session->addtocart = 'You added ' . $qty . ' of ' . $itemID . ' to your cart';
-            $session->loc = $pages->get('/cart/')->url;
+            $session->loc = $config->pages->cart;
             break;
         case 'quick-update-line':
 			$linenbr = $input->$requestmethod->text('linenbr');
@@ -54,7 +58,8 @@
 			$cartdetail->set('qty', $input->$requestmethod->text('qty'));
 			$session->sql = $cartdetail->update();
 			$data = array("DBNAME=$config->dplusdbname", "CARTDET", "LINENO=$linenbr");
-			$session->loc = $pages->get('/cart/')->url;
+            $data["CUSTID"] = empty($custID) ? $config->defaultweb : $custID;
+			$session->loc = $config->pages->cart;
 			break;
         case 'remove-line':
 			$linenbr = $input->$requestmethod->text('linenbr');
@@ -62,7 +67,8 @@
 			$cartdetail->set('qty', '0');
 			$session->sql = $cartdetail->update();
 			$data = array("DBNAME=$config->dplusdbname", "CARTDET", "LINENO=$linenbr", "QTY=0");
-            $session->loc = $pages->get('/cart/')->url;
+            $data["CUSTID"] = empty($custID) ? $config->defaultweb : $custID;
+            $session->loc = $config->pages->cart;
 			break;
 	}
 	write_dplusfile($data, $filename);
