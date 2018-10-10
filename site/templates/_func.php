@@ -169,18 +169,10 @@ function curl_get($url) {
 		   return;
 	   }
 
-	/* =============================================================
-	  STRING FUNCTIONS
-	============================================================ */
+/* =============================================================
+  STRING FUNCTIONS
+============================================================ */
    function determine_qty(Processwire\WireInput $input, $requestmethod, $itemID) {
-	if (DplusWire::wire('modules')->isInstalled('QtyPerCase')) {
-		$qtypercase = DplusWire::wire('modules')->get('QtyPerCase');
-		if (!empty($itemID)) {
-			$qty = $qtypercase->generate_qtyfromcasebottle($itemID, $input->$requestmethod->text('bottle-qty'), $input->$requestmethod->text('case-qty'));
-		}
-	} else {
 		$qty = !empty($input->$requestmethod->text('qty')) ? $input->$requestmethod->text('qty') : 1;
-
+		return $qty;
 	}
-	return $qty;
-}

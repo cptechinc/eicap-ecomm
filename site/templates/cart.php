@@ -3,7 +3,6 @@
 <?php include('./_head.php'); ?>
 
 	<div class='container page'>
-		<?php echo $cart->ordertotal; ?>
 		<div class="row">
 			<div class="col-sm-12 mt-5">
                 <h1 class="font-weight-bold text-danger">Cart</h1>
@@ -26,6 +25,7 @@
 							<tr>
 								<form class="" action="<?= $config->pages->root.'dplus-ecomm/cart/redir/'; ?>" method="post">
 									<input type="hidden" name="linenbr" value="<?= $detail->linenbr; ?>">
+									<input type="hidden" name="itemid" value="<?= $detail->itemid; ?>">
 									<td class="col-sm-3"><img class="card-img-top" src="" alt="IMG TEXT"></td>
 									<td class="col-sm-4">
 										<?= $detail->itemid; ?></br>
@@ -34,12 +34,12 @@
 									<td class="col-sm-1">
 										<input class="form-control" type="text" name="qty" size="4" value="<?= number_format($detail->qty, 0); ?>">
 									</td>
-									<td class="col-sm-1 text-right">$ <?= $page->stringerbell->format_money($detail->price); ?></td>
+									<td class="col-sm-1 text-right"><?= $page->stringerbell->format_money($detail->price); ?></td>
 									<td class="col-sm-1 text-right">$ <?= $page->stringerbell->format_money($detail->price * $detail->qty); ?></td>
 									<td class="col-sm-2 text-right">
-										<button type="submit" name="button" class="btn btn-primary save-button" title="Save Changes">
+										<a href="<?= $cartdisplay->generate_detailupdateurl($cart, $detail); ?>" class="btn btn-primary save-button" title="Save Changes">
 											<span class="fa fa-floppy-o"></span> <span class="sr-only">Save Line</span>
-										</button>
+										</a>
 										<a href="<?= $cartdisplay->generate_detaildeleteurl($cart, $detail); ?>" class="btn btn-danger detail-line-icon" title="Delete Item">
 											<i class="fa fa-trash text-white" aria-hidden="true"></i><span class="sr-only">Delete Line</span>
 										</a>

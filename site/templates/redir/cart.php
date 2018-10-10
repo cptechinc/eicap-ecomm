@@ -52,6 +52,15 @@
             $session->addtocart = 'You added ' . $qty . ' of ' . $itemID . ' to your cart';
             $session->loc = $config->urls->root . 'cart/';
             break;
+        case 'quick-update-line':
+			$linenbr = $input->$requestmethod->text('linenbr');
+			$cartdetail = CartDetail::load($sessionID, $linenbr);
+			$qty = determine_qty($input, $requestmethod, $cartdetail->itemid); // TODO MAKE IN CART DETAIL
+			$cartdetail->set('qty', $qty);
+			$session->sql = $cartdetail->update();
+			$data = array('DBNAME' => $config->dplusdbname, 'CARTDET' => false, 'LINENO' => $linenbr);
+			$session->loc = $config->urls->root . 'cart/';
+			break;
         case 'remove-line':
 			$linenbr = $input->$requestmethod->text('linenbr');
 			$cartdetail = CartDetail::load($sessionID, $linenbr);
