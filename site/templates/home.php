@@ -7,7 +7,7 @@
 			</div>
 		</div>
 		<div class="row bg-primary rounded">
-			<div class="col-sm-4 my-3">
+			<div class="col-sm-4 mt-3">
 				<div class="card bg-white">
 					<a href="<?= $pages->get('/user/account/')->url; ?>">
 						<div class="card-body">
@@ -17,7 +17,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-sm-4 my-3">
+			<div class="col-sm-4 mt-3">
 				<div class="card bg-white">
 					<a href="<?= $pages->get('/user/orders/')->url; ?>">
 						<div class="card-body">
@@ -27,12 +27,12 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-sm-4 my-3">
+			<div class="col-sm-4 mt-3">
 				<div class="card bg-white">
-					<a href="#">
+					<a href="<?= $pages->get('/cart/')->url; ?>">
 						<div class="card-body">
-							<h1 class="text-center text-danger"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i></h1>
-							<p class="card-text font-weight-bold text-center text-danger">Addresses</p>
+							<h1 class="text-center text-danger"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></h1>
+							<p class="card-text font-weight-bold text-center text-danger">Cart</p>
 						</div>
 					</a>
 				</div>
@@ -41,7 +41,7 @@
 				<div class="card bg-white">
 					<a href="<?= $pages->get('/user/add-vendor/')->url; ?>">
 						<div class="card-body">
-							<h1 class="text-center text-danger"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i></h1>
+							<h1 class="text-center text-danger"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i></h1>
 							<p class="card-text font-weight-bold text-center text-danger">Add New Vendor</p>
 						</div>
 					</a>
@@ -51,7 +51,7 @@
 				<div class="card bg-white">
 					<a href="<?= $pages->get('/user/add-item/')->url; ?>">
 						<div class="card-body">
-							<h1 class="text-center text-danger"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i></h1>
+							<h1 class="text-center text-danger"><i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i></h1>
 							<p class="card-text font-weight-bold text-center text-danger">Add New Item</p>
 						</div>
 					</a>

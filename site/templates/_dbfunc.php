@@ -152,7 +152,7 @@
             return $sql->fetch();
         }
     }
-    
+
 /* =============================================================
     SALES ORDER FUNCTIONS
 ============================================================ */
@@ -246,10 +246,29 @@
 			return $sql->fetchAll(PDO::FETCH_ASSOC);
 		}
 	}
-    
-/* =============================================================
+
+    function get_orderdetails($sessionID, $ordn, $useclass = false, $debug = false) {
+        $q = (new QueryBuilder())->table('ordrdet');
+		$q->where('sessionid', $sessionID);
+		$q->where('orderno', $ordn);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			if ($useclass) {
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrder');
+				return $sql->fetchAll();
+			}
+			return $sql->fetchAll(PDO::FETCH_ASSOC);
+		}
+	}
+
+
+    /* =============================================================
 	EDIT ORDER FUNCTIONS
-============================================================ */
+    ============================================================ */
 	function can_editorder($sessionID, $ordn, $debug) {
 		$sql = DplusWire::wire('dplusdatabase')->prepare("SELECT editord FROM ordrhed WHERE sessionid = :sessionID AND orderno = :ordn LIMIT 1");
 		$switching = array(':sessionID' => $sessionID, ':ordn' => $ordn); $withquotes = array(true, true);
@@ -273,10 +292,130 @@
 		} else {
 			$sql->execute($q->params);
 			if ($useclass) {
-				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrder'); // CAN BE SalesOrder|SalesOrderEdit
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrder');
 				return $sql->fetch();
 			}
 			return $sql->fetch(PDO::FETCH_ASSOC);
+		}
+    }
+
+    /* =============================================================
+        CART FUNCTIONS
+    ============================================================ */
+    /**
+	 * Returns the carthead record for this session
+	 * @param  string $sessionID Session Identifier
+	 * @param  bool   $debug     Run in debug? If so returns SQL Query
+	 * @return CartQuote            CartQuote
+	 */
+	function get_carthead($sessionID, $debug = false) {
+		$q = (new QueryBuilder())->table('carthed');
+		$q->where('sessionid', $sessionID);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			$sql->setFetchMode(PDO::FETCH_CLASS, 'CartQuote'); // CAN BE SalesOrder|SalesOrderEdit
+			return $sql->fetch();
+		}
+	}
+
+    /**
+	 * Returns the number of Cart Items for this session
+	 * @param  string $sessionID Session Identifier
+	 * @param  bool   $debug     Run in debug? If so return SQL Query
+	 * @return int               Number of Cart Items for this session
+	 */
+	function count_cartdetails($sessionID, $debug = false) {
+		$q = (new QueryBuilder())->table('cartdet');
+		$q->field('COUNT(*)');
+		$q->where('sessionid', $sessionID);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
+		}
+	}
+
+    /**
+	 * Return the CartDetail for this session and Line Number
+	 * @param  string     $sessionID Session Identifier
+	 * @param  int        $linenbr   Detail Line Number
+	 * @param  bool       $debug     Run in debug?
+	 * @return CartDetail            Cart Detail Line
+	 */
+	function get_cartdetail($sessionID, $linenbr, $debug = false) {
+		$q = (new QueryBuilder())->table('cartdet');
+		$q->where('sessionid', $sessionID);
+		$q->where('linenbr', $linenbr);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			$sql->setFetchMode(PDO::FETCH_CLASS, 'CartDetail');
+			return $sql->fetch();
+		}
+	}
+
+    /**
+	 * Returns an array of CartDetails
+	 * @param  string $sessionID Session Identifier
+	 * @param  bool   $useclass  Use CartDetail Class?
+	 * @param  bool   $debug     Run in debug? If so return SQL Query
+	 * @return array             CartDetails
+	 */
+	function get_cartdetails($sessionID, $useclass = true, $debug = false) {
+		$q = (new QueryBuilder())->table('cartdet');
+		$q->where('sessionid', $sessionID);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			if ($useclass) {
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'CartDetail'); // CAN BE SalesOrder|SalesOrderEdit
+				return $sql->fetchAll();
+			}
+			return $sql->fetchAll(PDO::FETCH_ASSOC);
+		}
+	}
+
+    /**
+	 * Updates the CartDetail record (cartdet) in the database
+	 * @param  string     $sessionID Session Identifier
+	 * @param  CartDetail $detail    CartDetail Object with changes, will use CartDetail properties to load original
+	 * @param  bool       $debug     Run in debug?
+	 * @return string                SQL Query
+	 */
+	function update_cartdetail($sessionID, CartDetail $detail, $debug = false) {
+		$originaldetail = CartDetail::load($sessionID, $detail->linenbr);
+		$properties = array_keys($detail->_toArray());
+		$q = (new QueryBuilder())->table('cartdet');
+		$q->mode('update');
+		foreach ($properties as $property) {
+			if ($detail->$property != $originaldetail->$property) {
+				$q->set($property, $detail->$property);
+			}
+		}
+		$q->where('sessionid', $detail->sessionid);
+		$q->where('linenbr', $detail->linenbr);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery();
+		} else {
+			if ($detail->has_changes()) {
+				$sql->execute($q->params);
+			}
+			return $q->generate_sqlquery($q->params);
 		}
 	}
 

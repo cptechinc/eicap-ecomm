@@ -1,5 +1,6 @@
 <footer class="bg-danger">
 	<div class='container'>
+		<strong class="text-white">Session ID: <?php echo session_id(); ?></strong>
         <div class="row pt-2">
             <div class="col-sm-6">
                 <p class="text-white-50"><?= $site->company_name; ?></br>
