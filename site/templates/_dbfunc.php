@@ -247,8 +247,7 @@
 		}
 	}
     
-    
-    /* =============================================================
+/* =============================================================
 	EDIT ORDER FUNCTIONS
 ============================================================ */
 	function can_editorder($sessionID, $ordn, $debug) {
@@ -278,5 +277,94 @@
 				return $sql->fetch();
 			}
 			return $sql->fetch(PDO::FETCH_ASSOC);
+		}
+	}
+
+/* =============================================================
+	CUSTOMER INDEX FUNCTIONS
+============================================================ */
+    /**
+	 * Returns the Number of custindex records that match the search
+	 * and filters it by user permissions
+	 * @param  string $query   Search Query
+	 * @param  string $loginID User Login ID, if blank, will use current User
+	 * @param  bool   $debug   Run in debug? If so, Return SQL Query
+	 * @return int             Number of custindex records that match the search | SQL Query
+	 */
+	function count_searchcustindex($query, $loginID = '', $debug = false) {
+		$loginID = (!empty($loginID)) ? $loginID : DplusWire::wire('user')->loginid;
+		$user = LogmUser::load($loginID);
+		$SHARED_ACCOUNTS = DplusWire::wire('config')->sharedaccounts;
+		$search = QueryBuilder::generate_searchkeyword($query);
+		$groupedcustindexquery = (new QueryBuilder())->table('custindex')->group('custid, shiptoid');
+
+		$q = new QueryBuilder();
+		$q->field($q->expr('COUNT(*)'));
+
+		// CHECK if Users has restrictions by Application Config, then User permissions
+		if ($user->get_dplusrole() == DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'] && DplusWire::wire('pages')->get('/config/')->restrict_allowedcustomers) {
+			$custpermquery = (new QueryBuilder())->table('custperm')->field('custid, shiptoid')->where('loginid', [$loginID, $SHARED_ACCOUNTS]);
+			$q->table($groupedcustindexquery, 'custgrouped');
+			$q->where('(custid, shiptoid)','in', $custpermquery);
+		} else {
+			$q->table($groupedcustindexquery, 'custgrouped');
+		}
+        
+		$fieldstring = implode(", ' ', ", array_keys(Contact::generate_classarray()));
+
+		$q->where($q->expr("UCASE(REPLACE(CONCAT($fieldstring), '-', '')) LIKE UCASE([])", [$search]));
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
+		}
+	}
+    
+    /**
+	 * Returns Customer Index records that match the Query
+	 * @param  string $keyword Query String to match
+	 * @param  int    $limit   Number of records to return
+	 * @param  int    $page    Page to start from
+	 * @param  string $orderby Order By string
+	 * @param  string $loginID User Login ID, if blank, will use current user
+	 * @param  bool   $debug   Run in debug? If so, will return SQL Query
+	 * @return array           Customer Index records that match the Query
+	 */
+	function search_custindexpaged($keyword, $limit = 10, $page = 1, $orderby, $loginID = '', $debug = false) {
+		$loginID = (!empty($loginID)) ? $loginID : DplusWire::wire('user')->loginid;
+		$user = LogmUser::load($loginID);
+		$SHARED_ACCOUNTS = DplusWire::wire('config')->sharedaccounts;
+
+		$search = '%'.str_replace(' ', '%', str_replace('-', '', addslashes($keyword))).'%';
+		$q = (new QueryBuilder())->table('custindex');
+
+		if ($user->get_dplusrole() == DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'] && DplusWire::wire('pages')->get('/config/')->restrict_allowedcustomers) {
+			$permquery = (new QueryBuilder())->table('custperm');
+			$permquery->field('custid, shiptoid');
+			$permquery->where('loginid', [$loginID, $SHARED_ACCOUNTS]);
+			$q->where('(custid, shiptoid)','in', $permquery);
+		}
+		$fieldstring = implode(", ' ', ", array_keys(Contact::generate_classarray()));
+
+		$q->where($q->expr("UCASE(REPLACE(CONCAT($fieldstring), '-', '')) LIKE UCASE([])", [$search]));
+		$q->limit($limit, $q->generate_offset($page, $limit));
+
+		if (!empty($orderbystring)) {
+			$q->order($q->generate_orderby($orderbystring));
+		} else {
+			$q->order($q->expr('custid <> []', [$search]));
+		}
+		$q->group('custid, shiptoid');
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			$sql->setFetchMode(PDO::FETCH_CLASS, 'Customer');
+			return $sql->fetchAll();
 		}
 	}
