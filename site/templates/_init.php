@@ -17,6 +17,7 @@ include_once("./_dbfunc.php");
 include_once("{$config->paths->vendor}cptechinc/dplus-processwire/vendor/autoload.php");
 include_once("{$config->paths->vendor}cptechinc/dplus-ecomm/vendor/autoload.php");
 include_once("{$config->paths->templates}configs/nav-config.php");
+include_once("{$config->paths->templates}configs/dplus-config.php");
 
 $config->styles->append(hash_templatefile('styles/bootstrap.min.css'));
 $config->styles->append('//fonts.googleapis.com/css?family=Lusitana:400,700|Quattrocento:400,700');
@@ -51,3 +52,13 @@ if (!empty($page->filename) && $page->filename != '/') {
 }
 
 $page->stringerbell = new StringerBell();
+
+// SET CONFIG PROPERTIES
+	if ($input->get->modal) {
+		$config->modal = true;
+	}
+	
+	if ($input->get->json) {
+		$config->json = true;
+	}
+	
