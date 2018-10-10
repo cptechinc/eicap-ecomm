@@ -7,11 +7,7 @@
 
     $custID = $shipID = '';
 
-    if ($input->requestMethod('POST')) {
-        $requestmethod = 'post';
-    } else {
-        $requestmethod = 'get';
-    }
+    $requestmethod = $input->requestMethod('POST') ? 'post' : 'get';
     $action = $input->$requestmethod->text('action');
 
     $custID = $input->$requestmethod->text('custID');
@@ -46,28 +42,27 @@
     switch ($action) {
         case 'add-to-cart':
             $itemID = $input->$requestmethod->text('itemID');
-            $qty = determine_qty($input, $requestmethod, $itemID); // TODO MAKE IN CART DETAIL
-            $data = array('DBNAME' => $config->dplusdbname, 'CARTDET' => false, 'ITEMID' => $itemID, 'QTY' => "$qty");
+            $qty = $input->$requestmethod->text('qty');
+            $data = array("DBNAME=$config->dplusdbname", "CARTDET", "ITEMID=$itemID", "QTY=$qty");
             $session->data = $data;
             $session->addtocart = 'You added ' . $qty . ' of ' . $itemID . ' to your cart';
-            $session->loc = $config->urls->root . 'cart/';
+            $session->loc = $pages->get('/cart/')->url;
             break;
         case 'quick-update-line':
 			$linenbr = $input->$requestmethod->text('linenbr');
 			$cartdetail = CartDetail::load($sessionID, $linenbr);
-			$qty = determine_qty($input, $requestmethod, $cartdetail->itemid); // TODO MAKE IN CART DETAIL
-			$cartdetail->set('qty', $qty);
+			$cartdetail->set('qty', $input->$requestmethod->text('qty'));
 			$session->sql = $cartdetail->update();
-			$data = array('DBNAME' => $config->dplusdbname, 'CARTDET' => false, 'LINENO' => $linenbr);
-			$session->loc = $config->urls->root . 'cart/';
+			$data = array("DBNAME=$config->dplusdbname", "CARTDET", "LINENO=$linenbr");
+			$session->loc = $pages->get('/cart/')->url;
 			break;
         case 'remove-line':
 			$linenbr = $input->$requestmethod->text('linenbr');
 			$cartdetail = CartDetail::load($sessionID, $linenbr);
 			$cartdetail->set('qty', '0');
 			$session->sql = $cartdetail->update();
-			$data = array('DBNAME' => $config->dplusdbname, 'CARTDET' => false, 'LINENO' => $linenbr, 'QTY' => '0');
-            $session->loc = $config->urls->root . 'cart/';
+			$data = array("DBNAME=$config->dplusdbname", "CARTDET", "LINENO=$linenbr", "QTY=0");
+            $session->loc = $pages->get('/cart/')->url;
 			break;
 	}
 	write_dplusfile($data, $filename);

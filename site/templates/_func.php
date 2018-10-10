@@ -172,7 +172,3 @@ function curl_get($url) {
 /* =============================================================
   STRING FUNCTIONS
 ============================================================ */
-   function determine_qty(Processwire\WireInput $input, $requestmethod, $itemID) {
-		$qty = !empty($input->$requestmethod->text('qty')) ? $input->$requestmethod->text('qty') : 1;
-		return $qty;
-	}

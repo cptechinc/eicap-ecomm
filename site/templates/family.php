@@ -27,7 +27,9 @@
 					<tbody>
 						<?php foreach ($children as $child) : ?>
 						<tr>
-							<form class="" action="" method="post">
+							<form class="" action="<?= $config->pages->root. 'cart/redir/'; ?>" method="post">
+								<input type="hidden" name="action" value="add-to-cart">
+								<input type="hidden" name="itemID" value="<?= $child->itemid; ?>">
 								<td class="col-sm-3"><img class="card-img-top" src="<?= $child->product_image->url; ?>" alt="<?= ucwords(strtolower($child->imagetext)); ?>"></td>
 								<td class="col-sm-2"><?= $child->itemid; ?></td>
 								<td class="col-sm-5"><a href="<?= $child->url; ?>"><?= ucwords(strtolower($child->title)); ?></a></td>
@@ -35,7 +37,7 @@
 									<input class="form-control" type="text" name="qty" size="4" value="0">
 								</td>
 								<td class="col-sm-1">
-									<button class="btn btn-primary" type="button" name="button">Add</button>
+									<button class="btn btn-primary" type="submit" name="add_to_cart">Add</button>
 								</td>
 							</form>
 						</tr>
