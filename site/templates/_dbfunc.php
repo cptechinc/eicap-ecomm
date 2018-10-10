@@ -303,6 +303,52 @@
         CART FUNCTIONS
     ============================================================ */
     /**
+	 * Returns if Session has a carthead record
+	 * @param  string $sessionID Session Identifier
+	 * @param  bool   $debug     Run in debug?
+	 * @return bool              If there's a carthead record will return 1 / true
+	 */
+	function has_carthead($sessionID, $debug = false) {
+		$q = (new QueryBuilder())->table('carthed');
+		$q->field($q->expr("IF(COUNT(*) > 1, 1, 0)"));
+		$q->where('sessionid', $sessionID);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
+		}
+	}
+    
+    /**
+	 * Inserts new carthead record
+	 * @param  string $sessionID Session Identifier
+	 * @param  string $custID    Customer ID
+	 * @param  string $shipID    Customer Shipto ID
+	 * @param  bool   $debug     Run in debug?
+	 * @return string            SQL Query
+	 */
+	function insert_cartheadcust($sessionID, $custID, $shipID = '', $debug = false) {
+		$q = (new QueryBuilder())->table('carthed');
+		$q->mode('insert');
+		$q->set('sessionid', $sessionID);
+		$q->set('custid', $custID);
+		$q->set('shiptoid', $shipID);
+		$q->set('date', date('Ymd'));
+		$q->set('time', date('His'));
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $q->generate_sqlquery($q->params);
+		}
+	}
+    
+    /**
 	 * Returns the carthead record for this session
 	 * @param  string $sessionID Session Identifier
 	 * @param  bool   $debug     Run in debug? If so returns SQL Query
@@ -505,5 +551,27 @@
 			$sql->execute($q->params);
 			$sql->setFetchMode(PDO::FETCH_CLASS, 'Customer');
 			return $sql->fetchAll();
+		}
+	}
+    
+    function get_customer($custID, $shiptoID = false, $debug = false) {
+		$q = (new QueryBuilder())->table('custindex');
+		$q->where('custid', $custID);
+
+		if ($shiptoID) {
+			$q->where('shiptoid', $shiptoID);
+			$q->where('source', Contact::$types['customer-shipto']);
+		} else {
+			$q->where('source', Contact::$types['customer']);
+		}
+
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			$sql->setFetchMode(PDO::FETCH_CLASS, 'Customer');
+			return $sql->fetch();
 		}
 	}

@@ -3,11 +3,12 @@
     $cart = $cartdisplay->get_cartquote();
 	
 	if (!empty($cart->custid)) {
-		$page->title = "Cart for ".get_customername($cart->custid);
+		$page->title = "Cart for ".Customer::get_customernamefromid($cart->custid);
+        $page->body = "{$config->paths->content}cart/cart-outline.php";
 	} else {
 		$input->get->function = 'cart';
 		$page->title = "Choose a Customer";
-		
+		$page->body = "{$config->paths->content}customer/index/search-form.php";
 	}
 	
 	include('./_include-page.php');
