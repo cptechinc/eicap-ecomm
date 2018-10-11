@@ -2,7 +2,7 @@
     $cartdisplay = new CartDisplay(session_id(), $page->fullURL, '#ajax-modal');
     $cart = $cartdisplay->get_cartquote();
 	
-	if (!empty($cart->custid)) {
+	if (!empty($cart->custid) && $cart->custid != $config->defaultcustid) {
 		$page->title = "Cart for ".Customer::get_customernamefromid($cart->custid);
         $page->body = "{$config->paths->content}cart/cart-outline.php";
 	} else {
