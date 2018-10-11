@@ -10,6 +10,12 @@
 	*
 	*
 	* switch ($action) {
+    *	case 'load-cust-orders':
+	*		DBNAME=$config->dplusdbname
+	*		ORDRHED
+	*		CUSTID=$custID
+	*		TYPE=O  ** OPEN ORDERS
+	*		break;
 	*	case 'get-order-details':
 	*		DBNAME=$config->DBNAME
 	*		ORDERDET=$ordn
@@ -19,6 +25,13 @@
 	**/
 
     switch ($action) {
+        case 'load-cust-orders':
+			$custID = $input->get->text('custID');
+			$data = array('DBNAME' => $config->dplusdbname, 'ORDRHED' => false, 'CUSTID' => $custID, 'TYPE' => 'O');
+			$session->{'orders-loaded-for'} = $custID;
+			$session->{'orders-updated'} = date('m/d/Y h:i A');
+			$session->loc = $config->pages->root.'user/orders/';
+			break;
         case 'get-order-details':
 			$ordn = $input->$requestmethod->text('ordn');
 			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn");
