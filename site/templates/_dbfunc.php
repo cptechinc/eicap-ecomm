@@ -94,6 +94,55 @@
     }
 
 /* =============================================================
+	LOGMPERM FUNCTIONS
+============================================================ */
+	/**
+	 * Returns the Order Number / Quote Number created
+	 * @param  string $sessionID Session Identifier
+	 * @param  bool   $debug     Run in debug? IF so return SQL Query
+	 * @return string            Dplus (Order / Quote) Number
+	 */
+	function get_createdordn($sessionID, $debug = false) {
+		$q = (new QueryBuilder())->table('logperm');
+		$q->field('ordernbr');
+		$q->where('sessionid', $sessionID);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery();
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
+		}
+	}
+
+/* =============================================================
+	PERMISSION FUNCTIONS
+============================================================ */
+	/**
+	 * Returns if User has permission to function / menu / page
+	 * // NOTE This is based by login ID
+	 * @param  string $loginID       User Login ID
+	 * @param  string $dplusfunction Dplus Function / Menu code
+	 * @param  bool   $debug         Run in debug? IF so return SQL Query
+	 * @return bool                  User has menu / function access ?
+	 */
+	function has_dpluspermission($loginID, $dplusfunction, $debug = false) {
+		$q = (new QueryBuilder())->table('funcperm');
+		$q->field($q->expr("IF(permission = 'Y', 1, 0)"));
+		$q->where('loginid', $loginID);
+		$q->where('function', $dplusfunction);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
+		}
+	}
+
+/* =============================================================
     FAMILY FUNCTIONS
 ============================================================ */
     function get_families($debug = false) {
@@ -262,6 +311,21 @@
 				return $sql->fetchAll();
 			}
 			return $sql->fetchAll(PDO::FETCH_ASSOC);
+		}
+	}
+
+    function get_custidfromorder($sessionID, $ordn, $debug = false) {
+		$q = (new QueryBuilder())->table('ordrhed');
+		$q->field('custid');
+		$q->where('sessionid', $sessionID);
+		$q->where('orderno', $ordn);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
 		}
 	}
 

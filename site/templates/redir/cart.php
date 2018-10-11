@@ -76,6 +76,10 @@
 			if (!empty($cart->shipid)) {$data[] = "SHIPTOID=$cart->shipid"; }
             $session->loc = $pages->get('/cart/')->url;
 			break;
+        case 'create-sales-order':
+			$data = array("DBNAME=$config->dplusdbname", "CREATESO");
+           	$session->loc = $config->pages->orders . "redir/?action=edit-new-order";
+            break;
 	}
 	write_dplusfile($data, $filename);
 	curl_get("127.0.0.1/cgi-bin/$config->cgi?fname=$filename");
