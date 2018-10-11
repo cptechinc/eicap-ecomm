@@ -159,12 +159,12 @@
 
     function count_userorders($sessionID, $filter = false, $filtertypes = false, $debug = false) {
 		$q = (new QueryBuilder())->table('ordrhed');
-		$expression = $q->expr('IF (COUNT(*) = 1, 1, IF(COUNT(DISTINCT(custid)) > 1, COUNT(*), 0)) as count');
+		// $expression = $q->expr('IF (COUNT(*) = 1, 1, IF(COUNT(DISTINCT(custid)) > 1, COUNT(*), 0)) as count'); //TODO could not find count with this line
 		if (!empty($filter)) {
-			$expression = $q->expr('COUNT(*)');
+			// $expression = $q->expr('COUNT(*)');
 			$q->generate_filters($filter, $filtertypes);
 		}
-		$q->field($expression);
+		$q->field($q->expr('COUNT(*)'));
 		$q->where('sessionid', $sessionID);
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
@@ -321,7 +321,7 @@
 			return $sql->fetchColumn();
 		}
 	}
-    
+
     /**
 	 * Inserts new carthead record
 	 * @param  string $sessionID Session Identifier
@@ -347,7 +347,7 @@
 			return $q->generate_sqlquery($q->params);
 		}
 	}
-    
+
     /**
 	 * Returns the carthead record for this session
 	 * @param  string $sessionID Session Identifier
@@ -494,7 +494,7 @@
 		} else {
 			$q->table($groupedcustindexquery, 'custgrouped');
 		}
-        
+
 		$fieldstring = implode(", ' ', ", array_keys(Contact::generate_classarray()));
 
 		$q->where($q->expr("UCASE(REPLACE(CONCAT($fieldstring), '-', '')) LIKE UCASE([])", [$search]));
@@ -507,7 +507,7 @@
 			return $sql->fetchColumn();
 		}
 	}
-    
+
     /**
 	 * Returns Customer Index records that match the Query
 	 * @param  string $keyword Query String to match
@@ -553,7 +553,7 @@
 			return $sql->fetchAll();
 		}
 	}
-    
+
     function get_customer($custID, $shiptoID = false, $debug = false) {
 		$q = (new QueryBuilder())->table('custindex');
 		$q->where('custid', $custID);

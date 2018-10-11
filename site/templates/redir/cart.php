@@ -28,13 +28,16 @@
 	*		DBNAME=$config->dplusdbname
 	*		CARTDET
 	*		ITEMID=$itemID
+	*		QTY=$qty
 	*		break;
+	*	case 'quick-update-line':
+	*	    DBNAME=$config->dplusdbname
+	*		CARTDET
+	*		LINENO=$linenbr
 	*   case 'remove-line':
 	*		DBNAME=$config->dplusdbname
 	*		CARTDET
 	*		LINENO=$linenbr
-	*		CUSTID=$custID
-	*		SHIPTOID=$shipID
 	*		break;
 	*
 	**/
@@ -49,7 +52,7 @@
 			if (!empty($cart->shipid)) {$data[] = "SHIPTOID=$cart->shipid"; }
             $session->data = $data;
             $session->addtocart = 'You added ' . $qty . ' of ' . $itemID . ' to your cart';
-            $session->loc = $pages->get('/cart/')->url;
+            $session->loc = $config->pages->cart;
             break;
         case 'quick-update-line':
             $cart = CartQuote::load(session_id());
