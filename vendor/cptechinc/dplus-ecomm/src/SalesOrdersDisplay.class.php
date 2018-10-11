@@ -30,13 +30,6 @@
 			return get_orderhead($this->sessionID, $this->ordn, $debug);
 		}
 
-		public function get_orders($debug = false) {
-			$useclass = true;
-			$this->tablesorter->sortrule = 'DESC';
-			$orders = get_userordersorderdate($this->sessionID, DplusWire::wire('session')->display, $this->pagenbr, $this->tablesorter->sortrule, $this->filters, $this->filterable, $useclass, $debug);
-			return $debug ? $orders : $this->orders = $orders;
-		}
-
 		public function get_ordercount($debug = false) {
 			$count = count_userorders($this->sessionID, $this->filters, $this->filterable, $debug);
 			return $debug ? $count : $this->count = $count;

@@ -10,8 +10,6 @@
 <?php include('./_head.php'); // include header markup ?>
 	<div class="container page top-margin">
 		<h1 class="text-danger font-weight-bold">Your Orders</h1>
-
-<!-------------------------------- START SEARCH FORM  -->
 		<div class="panel-body">
 			<div class="row mb-3">
 				<div class="col-sm-6">
