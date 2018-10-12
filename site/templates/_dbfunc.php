@@ -307,7 +307,7 @@
 		} else {
 			$sql->execute($q->params);
 			if ($useclass) {
-				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrder');
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrderDetail');
 				return $sql->fetchAll();
 			}
 			return $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -362,6 +362,47 @@
 			return $sql->fetch(PDO::FETCH_ASSOC);
 		}
     }
+
+    function get_orderdetail($sessionID, $ordn, $linenbr, $debug = false) {
+		$q = (new QueryBuilder())->table('ordrdet');
+		$q->where('sessionid', $sessionID);
+		$q->where('orderno', $ordn);
+		$q->where('linenbr', $linenbr);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrderDetail');
+			return $sql->fetch();
+		}
+	}
+
+    function update_orderdetail($sessionID, $detail, $debug = false) {
+		$originaldetail = SalesOrderDetail::load($sessionID, $detail->orderno, $detail->linenbr);
+		$properties = array_keys($detail->_toArray());
+		$q = (new QueryBuilder())->table('ordrdet');
+		$q->mode('update');
+		foreach ($properties as $property) {
+			if ($detail->$property != $originaldetail->$property) {
+				$q->set($property, $detail->$property);
+			}
+		}
+		$q->where('orderno', $detail->orderno);
+		$q->where('sessionid', $detail->sessionid);
+		$q->where('linenbr', $detail->linenbr);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery();
+		} else {
+			if ($detail->has_changes()) {
+				$sql->execute($q->params);
+			}
+			return $q->generate_sqlquery($q->params);
+		}
+	}
 
     /* =============================================================
         CART FUNCTIONS

@@ -46,8 +46,19 @@
 			$qty = $input->post->text('qty');
 			$orderdetail->set('qty', $qty);
 			$session->sql = $orderdetail->update();
-			$data = array('DBNAME' => $config->dplusdbname, 'SALEDET' => false, 'ORDERNO' => $ordn, 'LINENO' => $linenbr, 'CUSTID' => $custID);
-			$session->loc = $config->pages->edit."order/?ordn=$ordn"; // TODO correct page name
+			$data = array("DBNAME=$config->dplusdbname", "SALEDET", "ORDERNO=$ordn", "LINENO=$linenbr", "CUSTID=$custID");
+			$session->loc = $config->pages->orders.'edit-order/?ordn=' . $ordn;
+			$session->editdetail = true;
+			break;
+        case 'remove-line-get':
+			$ordn = $input->get->text('ordn');
+			$linenbr = $input->get->text('linenbr');
+			$orderdetail = SalesOrderDetail::load(session_id(), $ordn, $linenbr);
+			$orderdetail->set('qty', '0');
+			$session->sql = $orderdetail->update();
+			$custID = get_custidfromorder(session_id(), $ordn, false);
+			$data = array("DBNAME=$config->dplusdbname", "SALEDET", "ORDERNO=$ordn", "LINENO=$linenbr", "QTY=0", "CUSTID=$custID");
+			$session->loc = $config->pages->orders.'edit-order/?ordn=' . $ordn;
 			$session->editdetail = true;
 			break;
 	}
