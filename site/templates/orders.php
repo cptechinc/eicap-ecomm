@@ -22,7 +22,7 @@
 				</div>
 			</div>
 
-			<div id="orders-search-div" class="<?= (empty($orderpanel->filters)) ? 'collapse' : ''; ?>">
+			<div id="orders-search-div" class="<?= (empty($salesordersdisplay->filters)) ? 'collapse' : ''; ?>">
 				<form action="<?= $salesordersdisplay->pageurl->getUrl(); ?>" method="get" data-ordertype="sales-orders" data-loadinto="#orders-panel" data-focus="#orders-panel" data-modal="#ajax-modal" class="orders-search-form allow-enterkey-submit">
 					<input type="hidden" name="filter" value="filter">
 
@@ -90,7 +90,7 @@
 
         <div class="list-group">
 			<div class="form-group">
-				<div href="#" class="list-group-item list-group-item-action bg-secondary text-white font-weight-bold">
+				<div href="#" class="list-group-item list-group-item-action bg-secondary font-weight-bold">
 					<div class="row">
 						<div class="col">
 							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("orderno") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
