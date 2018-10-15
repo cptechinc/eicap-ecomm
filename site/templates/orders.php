@@ -1,9 +1,10 @@
 <?php
 	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->pagenbr = $input->pageNum;
+	$salesordersdisplay->generate_filter($input);
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->paginationinsertafter = $page->name;
-	$paginator = new Paginator($salesordersdisplay->pagenbr, $salesorderspanel->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
+	$paginator = new Paginator($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
 ?>
 
 <?php $orders = $salesordersdisplay->get_orders(); ?>
@@ -21,26 +22,26 @@
 				</div>
 			</div>
 
-			<div id="orders-search-div" class="collapse">
+			<div id="orders-search-div" class="<?= (empty($orderpanel->filters)) ? 'collapse' : ''; ?>">
 				<form action="<?= $salesordersdisplay->pageurl->getUrl(); ?>" method="get" data-ordertype="sales-orders" data-loadinto="#orders-panel" data-focus="#orders-panel" data-modal="#ajax-modal" class="orders-search-form allow-enterkey-submit">
 					<input type="hidden" name="filter" value="filter">
 
 					<div class="row">
 						<div class="col-sm-3">
 							<h4>Order #</h4>
-							<input class="form-control form-group inline input-sm" type="text" name="orderno[]" value="" placeholder="From Order #">
-							<input class="form-control form-group inline input-sm" type="text" name="orderno[]" value="" placeholder="Through Order #">
+							<input class="form-control form-group inline input-sm" type="text" name="orderno[]" value="<?= $salesordersdisplay->get_filtervalue('orderno'); ?>" placeholder="From Order #">
+							<input class="form-control form-group inline input-sm" type="text" name="orderno[]" value="<?= $salesordersdisplay->get_filtervalue('orderno', 1); ?>" placeholder="Through Order #">
 						</div>
 						<div class="col-sm-3">
 							<h4>Cust ID</h4>
 							<div class="input-group form-group">
-								<input class="form-control form-group inline input-sm" type="text" name="custid[]" id="sales-order-cust-from" value="" placeholder="From CustID">
+								<input class="form-control form-group inline input-sm" type="text" name="custid[]" id="sales-order-cust-from" value="<?= $salesordersdisplay->get_filtervalue('custid'); ?>" placeholder="From CustID">
 								<span class="input-group-append">
 									<button type="button" class="btn btn-outline-secondary input-group-text not-round get-custid-search" data-field="#sales-order-cust-from"> <i class="fa fa-search" aria-hidden="true"></i> <span class="sr-only">Search</span> </button>
 								</span>
 							</div>
 							<div class="input-group form-group">
-								<input class="form-control form-group inline input-sm" type="text" name="custid[]" id="sales-order-cust-to" value="" placeholder="Through CustID">
+								<input class="form-control form-group inline input-sm" type="text" name="custid[]" id="sales-order-cust-to" value="<?= $salesordersdisplay->get_filtervalue('custid', 1); ?>" placeholder="Through CustID">
 								<span class="input-group-append">
 									<button type="button" class="btn btn-outline-secondary input-group-text not-round get-custid-search" data-field="#sales-order-cust-to"> <i class="fa fa-search" aria-hidden="true"></i> <span class="sr-only">Search</span> </button>
 								</span>
@@ -49,25 +50,25 @@
 						<div class="col-sm-3">
 							<h4>Order Total</h4>
 							<div class="input-group form-group">
-								<input class="form-control form-group inline input-sm" type="text" name="ordertotal[]" id="order-total-min" value="" placeholder="From Order Total">
+								<input class="form-control form-group inline input-sm" type="text" name="ordertotal[]" id="order-total-min" value="<?= $salesordersdisplay->get_filtervalue('ordertotal'); ?>" placeholder="From Order Total">
 								<span class="input-group-append">
-									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-min').val('')"> <span class="fa fa-angle-double-down" aria-hidden="true"></span> <span class="sr-only">Min</span> </button>
+									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-min').val('<?= get_minordertotal(session_id()); ?>')"> <span class="fa fa-angle-double-down" aria-hidden="true"></span> <span class="sr-only">Min</span> </button>
 								</span>
 							</div>
 							<div class="input-group form-group">
-								<input class="form-control form-group inline input-sm" type="text" name="ordertotal[]" id="order-total-max" value="" placeholder="Through Order Total">
+								<input class="form-control form-group inline input-sm" type="text" name="ordertotal[]" id="order-total-max" value="<?= $salesordersdisplay->get_filtervalue('ordertotal', 1); ?>" placeholder="Through Order Total">
 								<span class="input-group-append">
-									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-max').val('')"> <span class="fa fa-angle-double-up" aria-hidden="true"></span> <span class="sr-only">Max</span> </button>
+									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-max').val('<?= get_maxordertotal(session_id()); ?>')"> <span class="fa fa-angle-double-up" aria-hidden="true"></span> <span class="sr-only">Max</span> </button>
 								</span>
 							</div>
 						</div>
 						<div class="col-sm-3">
 							<h4>Order Date</h4>
-							<?php $name = 'orderdate[]'; $value = ''; ?>
+							<?php $name = 'orderdate[]'; $value = $salesordersdisplay->get_filtervalue('orderdate'); ?>
 							<?php include $config->paths->content."common/date-picker.php"; ?>
 							<label class="small text-muted">From Date </label>
 
-							<?php $name = 'orderdate[]'; $value = ''; ?>
+							<?php $name = 'orderdate[]'; $value = $salesordersdisplay->get_filtervalue('orderdate', 1); ?>
 							<?php include $config->paths->content."common/date-picker.php"; ?>
 							<label class="small text-muted">Through Date </label>
 						</div>
@@ -79,7 +80,7 @@
 						</div>
 						<?php if ($input->get->filter) : ?>
 							<div class="form-group col-sm-6">
-								<!-- $salesordersdisplay->generate_clearsearchlink(); -->
+								<?php $salesordersdisplay->generate_clearsearchlink(); ?>
 							</div>
 						<?php endif; ?>
 					</div>
@@ -91,11 +92,31 @@
 			<div class="form-group">
 				<div href="#" class="list-group-item list-group-item-action bg-secondary text-white font-weight-bold">
 					<div class="row">
-						<div class="col">Order #</div>
-						<div class="col">Customer</div>
-						<div class="col">Shiptoid</div>
-						<div class="col text-right">Order Total</div>
-						<div class="col text-right">Order Date</div>
+						<div class="col">
+							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("orderno") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+								Order # <?= $salesordersdisplay->tablesorter->generate_sortsymbol('orderno'); ?>
+							</a>
+						</div>
+						<div class="col">
+							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("custid") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+								Customer <?= $salesordersdisplay->tablesorter->generate_sortsymbol('custid'); ?>
+							</a>
+						</div>
+						<div class="col">
+							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("shiptoid") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+								Ship-To <?= $salesordersdisplay->tablesorter->generate_sortsymbol('shiptoid'); ?>
+							</a>
+						</div>
+						<div class="col text-right">
+							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("ordertotal") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+								Order Totals <?= $salesordersdisplay->tablesorter->generate_sortsymbol('ordertotal'); ?>
+							</a>
+						</div>
+						<div class="col text-right">
+							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("orderdate") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+								Order Date <?= $salesordersdisplay->tablesorter->generate_sortsymbol('orderdate'); ?>
+							</a>
+						</div>
 					</div>
 				</div>
 	            <?php foreach ($orders as $order) : ?>

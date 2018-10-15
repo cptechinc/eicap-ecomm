@@ -91,7 +91,7 @@
             <div class="col-sm-10 text-right">Total:</div>
             <div class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($order->ordertotal); ?></div>
         </div>
-        <a href="<?= $page->parent->url; ?>" class="btn btn-primary mt-3">Back to Orders Page</a>
+        <a href="<?= $page->parent->url; ?>" class="btn btn-primary mt-3"><i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Back to Orders Page</a>
     </div>
 
 	<!-- end content -->
