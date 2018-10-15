@@ -3,13 +3,53 @@
 <?php $editorderdisplay = new EditSalesOrderDisplay(session_id(), $page->fullURL, '#ajax-modal', $ordn); ?>
 <?php $order = $editorderdisplay->get_order(); ?>
 <?php $order_details = $editorderdisplay->get_orderdetails($order); ?>
-<?php $page->title = "Review Order #".$ordn. " for ".Customer::get_customernamefromid($order->custid); ?>
+<?php $page->title = "Edit Order #".$ordn. " for ".Customer::get_customernamefromid($order->custid); ?>
 
 <div class="container page top-margin">
     <div class="form-group">
         <h1 class="text-danger font-weight-bold border-bottom border-primary"><?= ucwords(strtolower($page->get('headline|title'))); ?></h1>
     </div>
-    <div class="list-group">
+    <div class="row mt-4">
+        <div class="col-sm-4">
+            <legend class="font-weight-bold text-danger">Billing</legend>
+            <address>
+                <?= $order->custname; ?> (<?= $order->custid; ?>)<br>
+                <?= $order->billaddress; ?><br>
+                <?= !empty($order->billaddress2) ? $order->billaddress2."<br>" : ''; ?>
+                <?= "$order->billcity, $order->billstate $order->billzip"; ?>
+            </address>
+        </div>
+        <div class="col-sm-4">
+            <legend class="font-weight-bold text-danger">Shipping</legend>
+            <address>
+                <?= $order->shipname." ($order->shiptoid)"; ?><br>
+                <?= $order->shipaddress; ?><br>
+                <?= !empty($order->shipaddress2) ? $order->shipaddress2."<br>" : ''; ?>
+                <?= "$order->shipcity, $order->billstate $order->shipzip"; ?>
+            </address>
+        </div>
+        <div class="col-sm-4">
+            <legend class="font-weight-bold text-danger">Order Summary</legend>
+            <div class="row">
+                <div class="col-sm-7">Subtotal:</div>
+                <div class="col-sm-5 text-right">$ <?= $page->stringerbell->format_money($order->subtotal); ?></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7">Shipping:</div>
+                <div class="col-sm-5 text-right">$ <?= $page->stringerbell->format_money($order->freight); ?></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7">Tax:</div>
+                <div class="col-sm-5 text-right">$ <?= $page->stringerbell->format_money($order->salestax); ?></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7">Total:</div>
+                <div class="col-sm-5 text-right">$ <?= $page->stringerbell->format_money($order->ordertotal); ?></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-group mt-3">
         <div class="list-group-item list-group-item-action bg-secondary text-white font-weight-bold">
             <div class="row">
                 <div class="col">Item / Description</div>
@@ -52,7 +92,9 @@
                             <button type="submit" class="btn btn-success save-button" title="Save Changes">
                                 <span class="fa fa-floppy-o"></span> <span class="sr-only">Save Line</span>
                             </button>
-                            <?= $editorderdisplay->generate_deletedetaillink($order, $detail); ?>
+                            <a href="<?= $editorderdisplay->generate_deletedetailurl($order, $detail); ?>" class='btn btn-danger'>
+                                <i class="fa fa-trash"></i> <span class="sr-only">Delete Line</span>
+                            </a>
                         </div>
                     </div>
                 </div>

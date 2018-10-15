@@ -205,15 +205,13 @@
 /* =============================================================
     SALES ORDER FUNCTIONS
 ============================================================ */
-
     function count_userorders($sessionID, $filter = false, $filtertypes = false, $debug = false) {
 		$q = (new QueryBuilder())->table('ordrhed');
-		// $expression = $q->expr('IF (COUNT(*) = 1, 1, IF(COUNT(DISTINCT(custid)) > 1, COUNT(*), 0)) as count'); //TODO could not find count with this line
+        $q->field($q->expr('COUNT(*)'));
 		if (!empty($filter)) {
-			// $expression = $q->expr('COUNT(*)');
 			$q->generate_filters($filter, $filtertypes);
 		}
-		$q->field($q->expr('COUNT(*)'));
+
 		$q->where('sessionid', $sessionID);
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 

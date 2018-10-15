@@ -2,6 +2,7 @@
 	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->pagenbr = $input->pageNum;
 	$salesordersdisplay->generate_filter($input);
+
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->paginationinsertafter = $page->name;
 	$paginator = new Paginator($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);

@@ -71,6 +71,12 @@
 			return $bootstrap->a("href=$href|class=btn btn-sm btn-danger|title=Delete Item", $icon);
 		}
 
+		public function generate_deletedetailurl(Order $order, OrderDetail $detail) {
+			$url = $this->generate_ordersredirurl();
+			$url->query->setData(array('action' => 'remove-line-get', 'ordn' => $order->orderno, 'linenbr' => $detail->linenbr, 'page' => $this->pageurl->getUrl()));
+			return $url->getUrl();
+		}
+
 		public function generate_readonlyalert() {
 			$bootstrap = new HTMLWriter();
 			$msg = $bootstrap->create_element('b', '', 'Attention!') . ' This order will open in read-only mode, you will not be able to save changes.';

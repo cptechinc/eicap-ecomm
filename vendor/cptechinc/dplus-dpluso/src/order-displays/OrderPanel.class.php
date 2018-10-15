@@ -208,16 +208,19 @@
 			} else {
 				$this->filters = array();
 				foreach ($this->filterable as $filter => $type) {
-					if (!empty($input->get->$filter)) {
+					if (!empty($input->get->$filter)) { // IF WE HAVE FILTERS IN THE GET ARRAY
 						if (!is_array($input->get->$filter)) {
 							$value = $input->get->text($filter);
 							$this->filters[$filter] = explode('|', $value);
 						} else {
-							$this->filters[$filter] = $input->get->$filter;
-						}
-					} elseif (is_array($input->get->$filter)) {
-						if (strlen($input->get->$filter[0])) {
-							$this->filters[$filter] = $input->get->$filter;
+							if (strlen($input->get->$filter[0])) {
+								for ($i = 0; $i < sizeof($input->get->$filter); $i++) {
+									if (empty($input->get->$filter[$i])) {
+										unset($input->get->$filter[$i]);
+									}
+								}
+								$this->filters[$filter] = $input->get->$filter;
+							}
 						}
 					}
 				}
@@ -236,16 +239,20 @@
 			} else {
 				$this->filters = array();
 				foreach ($this->filterable as $filter => $type) {
-					if (!empty($input->get->$filter)) {
+					if (!empty($input->get->$filter)) { // IF WE HAVE FILTERS IN THE GET ARRAY
 						if (!is_array($input->get->$filter)) {
 							$value = $input->get->text($filter);
 							$this->filters[$filter] = explode('|', $value);
 						} else {
-							$this->filters[$filter] = $input->get->$filter;
-						}
-					} elseif (is_array($input->get->$filter)) {
-						if (strlen($input->get->$filter[0])) {
-							$this->filters[$filter] = $input->get->$filter;
+							if (strlen($input->get->$filter[0])) {
+								for ($i = 0; $i < sizeof($input->get->$filter); $i++) {
+									if (empty($input->get->$filter[$i])) {
+										unset($input->get->$filter[$i]);
+									}
+								}
+								$this->filters[$filter] = $input->get->$filter;
+								echo json_encode($this->filters);
+							}
 						}
 					}
 				}

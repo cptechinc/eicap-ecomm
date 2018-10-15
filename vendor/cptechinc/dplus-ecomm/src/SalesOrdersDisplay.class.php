@@ -30,8 +30,9 @@
 			return get_orderhead($this->sessionID, $this->ordn, $debug);
 		}
 
-		public function get_ordercount($debug = false) {
-			$count = count_userorders($this->sessionID, $this->filters, $this->filterable, $debug);
-			return $debug ? $count : $this->count = $count;
+		public function generate_filter(ProcessWire\WireInput $input) {
+			$stringerbell = new StringerBell();
+			parent::generate_filter($input);
+			//unset($this->filters['orderno']);
 		}
 	}

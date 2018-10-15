@@ -64,7 +64,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <a href="<?= $config->pages->cart."redir/?action=create-sales-order"; ?>" class="btn btn-block btn-primary mt-3" data-type="order">
-            		Send for Review&nbsp;&nbsp;<i class="fa fa-arrow-circle-right text-white" aria-hidden="true"></i>
+            		Create Order &nbsp;&nbsp;<i class="fa fa-arrow-circle-right text-white" aria-hidden="true"></i>
             	</a>
             </div>
         </div>
