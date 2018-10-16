@@ -1,4 +1,5 @@
 <?php
+	$page->title = "Your Orders";
 	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->pagenbr = $input->pageNum;
 	$salesordersdisplay->generate_filter($input);
@@ -6,12 +7,18 @@
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->paginationinsertafter = $page->name;
 	$paginator = new Paginator($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
+	
+	$orders = $salesordersdisplay->get_orders();
 ?>
 
-<?php $orders = $salesordersdisplay->get_orders(); ?>
+<?php  ?>
 <?php include('./_head.php'); // include header markup ?>
+	<div class='container top-margin'>
+		<div class="form-group">
+			<h1 class="text-danger font-weight-bold border-bottom border-primary"><?= ucwords(strtolower($page->get('headline|title'))); ?></h1>
+		</div>
+	</div>
 	<div class="container page top-margin">
-		<h1 class="text-danger font-weight-bold">Your Orders</h1>
 
 		<div class="panel-body">
 			<div class="row mb-3">
