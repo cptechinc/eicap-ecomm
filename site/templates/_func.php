@@ -1,5 +1,5 @@
 <?php
-
+	use Dplus\ProcessWire\DplusWire;
 /**
  * Shared functions used by the beginner profile
  *

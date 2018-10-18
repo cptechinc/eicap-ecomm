@@ -6,7 +6,7 @@
 
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->paginationinsertafter = $page->name;
-	$paginator = new Paginator($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
+	$paginator = new Dplus\Content\Paginator($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
 	
 	$orders = $salesordersdisplay->get_orders();
 ?>
@@ -37,8 +37,8 @@
 					<div class="row">
 						<div class="col-sm-3">
 							<h4>Order #</h4>
-							<input class="form-control form-group inline input-sm" type="text" name="orderno[]" value="<?= $salesordersdisplay->get_filtervalue('orderno'); ?>" placeholder="From Order #">
-							<input class="form-control form-group inline input-sm" type="text" name="orderno[]" value="<?= $salesordersdisplay->get_filtervalue('orderno', 1); ?>" placeholder="Through Order #">
+							<input class="form-control form-group inline input-sm" type="text" name="ordernumber[]" value="<?= $salesordersdisplay->get_filtervalue('ordernumber'); ?>" placeholder="From Order #">
+							<input class="form-control form-group inline input-sm" type="text" name="ordernumber[]" value="<?= $salesordersdisplay->get_filtervalue('ordernumber', 1); ?>" placeholder="Through Order #">
 						</div>
 						<div class="col-sm-3">
 							<h4>Cust ID</h4>
@@ -58,25 +58,25 @@
 						<div class="col-sm-3">
 							<h4>Order Total</h4>
 							<div class="input-group form-group">
-								<input class="form-control form-group inline input-sm" type="text" name="ordertotal[]" id="order-total-min" value="<?= $salesordersdisplay->get_filtervalue('ordertotal'); ?>" placeholder="From Order Total">
+								<input class="form-control form-group inline input-sm" type="text" name="total_order[]" id="order-total-min" value="<?= $salesordersdisplay->get_filtervalue('total_order'); ?>" placeholder="From Order Total">
 								<span class="input-group-append">
-									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-min').val('<?= get_minordertotal(session_id()); ?>')"> <span class="fa fa-angle-double-down" aria-hidden="true"></span> <span class="sr-only">Min</span> </button>
+									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-min').val('<?= get_minordertotal(); ?>')"> <span class="fa fa-angle-double-down" aria-hidden="true"></span> <span class="sr-only">Min</span> </button>
 								</span>
 							</div>
 							<div class="input-group form-group">
-								<input class="form-control form-group inline input-sm" type="text" name="ordertotal[]" id="order-total-max" value="<?= $salesordersdisplay->get_filtervalue('ordertotal', 1); ?>" placeholder="Through Order Total">
+								<input class="form-control form-group inline input-sm" type="text" name="total_order[]" id="order-total-max" value="<?= $salesordersdisplay->get_filtervalue('total_order', 1); ?>" placeholder="Through Order Total">
 								<span class="input-group-append">
-									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-max').val('<?= get_maxordertotal(session_id()); ?>')"> <span class="fa fa-angle-double-up" aria-hidden="true"></span> <span class="sr-only">Max</span> </button>
+									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-max').val('<?= get_maxordertotal(); ?>')"> <span class="fa fa-angle-double-up" aria-hidden="true"></span> <span class="sr-only">Max</span> </button>
 								</span>
 							</div>
 						</div>
 						<div class="col-sm-3">
 							<h4>Order Date</h4>
-							<?php $name = 'orderdate[]'; $value = $salesordersdisplay->get_filtervalue('orderdate'); ?>
+							<?php $name = 'order_date[]'; $value = $salesordersdisplay->get_filtervalue('order_date'); ?>
 							<?php include $config->paths->content."common/date-picker.php"; ?>
 							<label class="small text-muted">From Date </label>
 
-							<?php $name = 'orderdate[]'; $value = $salesordersdisplay->get_filtervalue('orderdate', 1); ?>
+							<?php $name = 'order_date[]'; $value = $salesordersdisplay->get_filtervalue('order_date', 1); ?>
 							<?php include $config->paths->content."common/date-picker.php"; ?>
 							<label class="small text-muted">Through Date </label>
 						</div>
@@ -101,8 +101,8 @@
 				<div href="#" class="list-group-item list-group-item-action bg-secondary font-weight-bold">
 					<div class="row">
 						<div class="col">
-							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("orderno") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
-								Order # <?= $salesordersdisplay->tablesorter->generate_sortsymbol('orderno'); ?>
+							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("ordernumber") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+								Order # <?= $salesordersdisplay->tablesorter->generate_sortsymbol('ordernumber'); ?>
 							</a>
 						</div>
 						<div class="col">
@@ -116,13 +116,13 @@
 							</a>
 						</div>
 						<div class="col text-right">
-							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("ordertotal") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
-								Order Totals <?= $salesordersdisplay->tablesorter->generate_sortsymbol('ordertotal'); ?>
+							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("total_order") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+								Order Totals <?= $salesordersdisplay->tablesorter->generate_sortsymbol('total_order'); ?>
 							</a>
 						</div>
 						<div class="col text-right">
-							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("orderdate") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
-								Order Date <?= $salesordersdisplay->tablesorter->generate_sortsymbol('orderdate'); ?>
+							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("order_date") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+								Order Date <?= $salesordersdisplay->tablesorter->generate_sortsymbol('order_date'); ?>
 							</a>
 						</div>
 					</div>
@@ -130,11 +130,11 @@
 	            <?php foreach ($orders as $order) : ?>
 	                <a href="<?= $salesordersdisplay->generate_loaddetailsurl($order); ?>" class="list-group-item list-group-item-action">
 						<div class="row">
-							<div class="col"><?= $order->orderno; ?></div>
+							<div class="col"><?= $order->ordernumber; ?></div>
 							<div class="col"><?= $order->custid; ?></div>
 							<div class="col"><?= $order->shiptoid; ?></div>
-							<div class="col text-right">$ <?= $order->ordertotal; ?></div>
-							<div class="col text-right"><?= $order->orderdate; ?></div>
+							<div class="col text-right">$ <?= $order->total_order; ?></div>
+							<div class="col text-right"><?= $order->order_date; ?></div>
 						</div>
 	                </a>
 	            <?php endforeach; ?>

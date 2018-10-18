@@ -1,6 +1,5 @@
-
 <div class="form-group">
-    <?php include "{$config->paths->content}products/product-search-form.php"; ?>
+    <?php include "{$config->paths->content}products/search/form.php"; ?>
 </div>
 <div class="row">
     <?php foreach ($products as $product) : ?>

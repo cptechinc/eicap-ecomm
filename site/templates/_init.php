@@ -14,7 +14,7 @@ $config->pages = new ProcessWire\Paths($config->rootURL);
 
 include_once("./_func.php"); // include our shared functions
 include_once("./_dbfunc.php");
-include_once("{$config->paths->vendor}cptechinc/dplus-processwire/vendor/autoload.php");
+include_once("./_init.js.php");
 include_once("{$config->paths->vendor}cptechinc/dplus-ecomm/vendor/autoload.php");
 include_once("{$config->paths->templates}configs/nav-config.php");
 include_once("{$config->paths->templates}configs/dplus-config.php");
@@ -27,6 +27,7 @@ $config->styles->append(hash_templatefile('styles/main.css'));
 $config->scripts->append('https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js');
 $config->scripts->append(hash_templatefile('scripts/popper.js'));
 $config->scripts->append(hash_templatefile('scripts/bootstrap.min.js'));
+$config->scripts->append(hash_templatefile('scripts/uri.js'));
 $config->scripts->append(hash_templatefile('scripts/main.js'));
 
 
@@ -51,14 +52,14 @@ if (!empty($page->filename) && $page->filename != '/') {
 	$page->fullURL->join($page->filename);
 }
 
-$page->stringerbell = new StringerBell();
+$page->stringerbell = new Dplus\Base\StringerBell();
 
 // SET CONFIG PROPERTIES
-	if ($input->get->modal) {
-		$config->modal = true;
-	}
-	
-	if ($input->get->json) {
-		$config->json = true;
-	}
+if ($input->get->modal) {
+	$config->modal = true;
+}
+
+if ($input->get->json) {
+	$config->json = true;
+}
 	

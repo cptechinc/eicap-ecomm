@@ -32,15 +32,21 @@
             break;
         case 'edit-new-order':
 			$ordn = get_createdordn(session_id());
-			$custID = get_custidfromorder(session_id(), $ordn);
+			$custID = SalesOrder::find_custid($ordn);
 			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn", "CUSTID=$custID", "LOCK");
 			$session->createdorder = $ordn;
-			$session->loc = $config->pages->orders.'edit-order/?ordn=' . $ordn;
+			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
+			break;
+        case 'get-order-edit':
+			$ordn = $input->get->text('ordn');
+			$custID = SalesOrderHistory::is_saleshistory($ordn) ? SalesOrderHistory::find_custid($ordn) : SalesOrder::find_custid($ordn);
+			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn", "CUSTID=$custID", "LOCK");
+			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
 			break;
         case 'quick-update-line':
 			$ordn = $input->post->text('ordn');
 			$linenbr = $input->post->text('linenbr');
-			$custID = get_custidfromorder(session_id(), $ordn);
+			$custID = SalesOrder::find_custid($ordn);
 			$orderdetail = SalesOrderDetail::load(session_id(), $ordn, $linenbr);
 			// $orderdetail->set('whse', $input->post->text('whse'));
 			$qty = $input->post->text('qty');
@@ -56,10 +62,15 @@
 			$orderdetail = SalesOrderDetail::load(session_id(), $ordn, $linenbr);
 			$orderdetail->set('qty', '0');
 			$session->sql = $orderdetail->update();
-			$custID = get_custidfromorder(session_id(), $ordn, false);
+			$custID = SalesOrder::find_custid($ordn);
 			$data = array("DBNAME=$config->dplusdbname", "SALEDET", "ORDERNO=$ordn", "LINENO=$linenbr", "QTY=0", "CUSTID=$custID");
 			$session->loc = $config->pages->orders.'edit-order/?ordn=' . $ordn;
 			$session->editdetail = true;
+			break;
+        case 'unlock-order':
+			$ordn = $input->get->text('ordn');
+			$data = array("DBNAME=$config->dplusdbname", 'UNLOCK' => false, "ORDERNO=$ordn");
+			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
 			break;
 	}
 

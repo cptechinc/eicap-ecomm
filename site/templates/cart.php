@@ -1,5 +1,5 @@
 <?php
-    $cartdisplay = new CartDisplay(session_id(), $page->fullURL, '#ajax-modal');
+    $cartdisplay = new Dplus\Dpluso\OrderDisplays\CartDisplay(session_id(), $page->fullURL, '#ajax-modal');
     $cart = $cartdisplay->get_cartquote();
 	
 	if (!empty($cart->custid) && $cart->custid != $config->defaultcustid) {

@@ -1,5 +1,8 @@
 <?php $details = get_cartdetails(session_id()); ?>
 
+<div class="form-group">
+    <?php include "{$config->paths->content}products/product-search-form.php"; ?>
+</div>
 <div class="list-group">
     <div class="list-group-item list-group-item-action bg-secondary text-white font-weight-bold">
         <div class="row">
@@ -48,25 +51,32 @@
             </div>
         </form>
     <?php endforeach; ?>
-        <div class="list-group-item bg-light">
-            <div class="row">
-                <div class="col-12 col-sm"></div>
-                <div class="col-6 col-sm text-right"></div>
-                <div class="col-6 col-sm text-right"></div>
-                <div class="col-6 col-sm text-right">
-                    <div class="d-sm-none"><b>Cart Total</b></div>
-                    <br>
-                    <strong>Cart Total:&emsp;$ <?= $page->stringerbell->format_money($cart->subtotal); ?></strong>
-                </div>
-                <div class="col-12 col-sm text-right"></div>
-            </div>
-        </div>
+    <div class="list-group-item bg-light">
         <div class="row">
-            <div class="col-sm-3">
-                <a href="<?= $config->pages->cart."redir/?action=create-sales-order"; ?>" class="btn btn-block btn-primary mt-3" data-type="order">
-            		Create Order &nbsp;&nbsp;<i class="fa fa-arrow-circle-right text-white" aria-hidden="true"></i>
-            	</a>
+            <div class="col-12 col-sm"></div>
+            <div class="col-6 col-sm text-right"></div>
+            <div class="col-6 col-sm text-right"></div>
+            <div class="col-6 col-sm text-right">
+                <div class="d-sm-none"><b>Cart Total</b></div>
+                <br>
+                <strong>Cart Total:&emsp;$ <?= $page->stringerbell->format_money($cart->subtotal); ?></strong>
             </div>
+            <div class="col-12 col-sm text-right"></div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <a href="<?= $config->pages->cart."redir/?action=create-sales-order"; ?>" class="btn btn-block btn-primary mt-3" data-type="order">
+        		Create Order &nbsp;&nbsp;<i class="fa fa-arrow-circle-right text-white" aria-hidden="true"></i>
+        	</a>
+        </div>
+    </div>
 
+
+    <!-- Button trigger modal -->
+    <a href="<?= $pages->get('/products/search/')->url; ?>" class="btn btn-primary cart-item-search">
+      Launch demo modal
+  </a>
+    
+    
 </div>
