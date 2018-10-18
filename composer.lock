@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d78221d9c8735755d7595e75f79442f4",
+    "content-hash": "1c2c5c3589f00f9d78d8dbcd3dc7f72e",
     "packages": [
         {
             "name": "atk4/core",
@@ -114,37 +114,48 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-base.git",
-                "reference": "e33415eec46c034f481e373ae9c8a6947c1d31df"
+                "reference": "bf67963e60512a3dfae80cdb6def582ff03670f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-base/zipball/e33415eec46c034f481e373ae9c8a6947c1d31df",
-                "reference": "e33415eec46c034f481e373ae9c8a6947c1d31df",
+                "url": "https://api.github.com/repos/cptechinc/dplus-base/zipball/bf67963e60512a3dfae80cdb6def582ff03670f8",
+                "reference": "bf67963e60512a3dfae80cdb6def582ff03670f8",
                 "shasum": ""
+            },
+            "require": {
+                "atk4/dsql": "1.1"
             },
             "type": "library",
             "autoload": {
+                "psr-4": {
+                    "Dplus\\Base\\": "src/"
+                },
                 "files": [
-                    "src/traits/CreateFromObjectArray.trait.php",
-                    "src/traits/CreateClassArray.trait.php",
-                    "src/traits/AttributeParser.trait.php",
-                    "src/traits/ThrowError.trait.php",
-                    "src/traits/MagicMethods.trait.php",
-                    "src/traits/Filterable.trait.php",
-                    "src/DplusDateTime.class.php",
-                    "src/Stringer.class.php",
-                    "src/QueryBuilder.class.php",
-                    "src/Curl.class.php"
+                    "src/utfport.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Paul Gomez",
+                    "email": "paul@cptechinc.com",
+                    "homepage": "https://www.cptechinc.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Barbara Bullemer",
+                    "email": "barbara@cptechinc.com",
+                    "homepage": "https://www.cptechinc.com",
+                    "role": "Developer"
+                }
+            ],
             "description": "Base Classes and Attributes",
             "homepage": "https://github.com/cptechinc/dplus-base",
             "keywords": [
                 "dplus-attributes",
                 "dplus-base"
             ],
-            "time": "2018-10-03T20:54:57+00:00"
+            "time": "2018-10-18T16:15:44+00:00"
         },
         {
             "name": "cptechinc/dplus-content",
@@ -152,25 +163,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-content.git",
-                "reference": "f4b3c28b2d61d8457257d4927217d54ac31eac6d"
+                "reference": "a8d277e0d7508b5a5f6426874452c603177583e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-content/zipball/f4b3c28b2d61d8457257d4927217d54ac31eac6d",
-                "reference": "f4b3c28b2d61d8457257d4927217d54ac31eac6d",
+                "url": "https://api.github.com/repos/cptechinc/dplus-content/zipball/a8d277e0d7508b5a5f6426874452c603177583e5",
+                "reference": "a8d277e0d7508b5a5f6426874452c603177583e5",
                 "shasum": ""
             },
             "type": "library",
             "autoload": {
-                "files": [
-                    "src/HTMLWriter.class.php",
-                    "src/HTMLMaker.class.php",
-                    "src/Table.class.php",
-                    "src/FormMaker.class.php",
-                    "src/Paginator.class.php",
-                    "src/TablePageSorter.class.php",
-                    "src/JavaScripter.class.php"
-                ]
+                "psr-4": {
+                    "Dplus\\Content\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Dplus Content Classes",
@@ -182,7 +187,7 @@
                 "paginator",
                 "table"
             ],
-            "time": "2018-10-03T18:06:57+00:00"
+            "time": "2018-10-18T16:16:53+00:00"
         },
         {
             "name": "cptechinc/dplus-dpluso",
@@ -190,61 +195,32 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-dpluso.git",
-                "reference": "9592bb0e0bf06ff302ed758b728de03dc17e90ff"
+                "reference": "856b846cb4ad9f209e74918a3f3da4097831d65f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-dpluso/zipball/9592bb0e0bf06ff302ed758b728de03dc17e90ff",
-                "reference": "9592bb0e0bf06ff302ed758b728de03dc17e90ff",
+                "url": "https://api.github.com/repos/cptechinc/dplus-dpluso/zipball/856b846cb4ad9f209e74918a3f3da4097831d65f",
+                "reference": "856b846cb4ad9f209e74918a3f3da4097831d65f",
                 "shasum": ""
             },
             "type": "library",
             "autoload": {
-                "files": [
-                    "src/order-displays/OrderDisplay.class.php",
-                    "src/order-displays/OrderDisplay.interface.php",
-                    "src/order-displays/CartDisplay.class.php",
-                    "src/order-displays/OrderPanel.class.php",
-                    "src/order-displays/OrderPanel.interface.php",
-                    "src/order-displays/OrderPanelCustomer.interface.php",
-                    "src/order-displays/OrderPanelCustomer.trait.php",
-                    "src/order-displays/SalesOrderDisplay.interface.php",
-                    "src/order-displays/SalesOrderDisplay.trait.php",
-                    "src/order-displays/SalesOrderDisplay.class.php",
-                    "src/order-displays/SalesOrderDisplayEdit.class.php",
-                    "src/order-displays/SalesOrderPanel.interface.php",
-                    "src/order-displays/SalesOrderPanel.class.php",
-                    "src/order-displays/SalesOrderHistoryPanel.class.php",
-                    "src/order-displays/SalesOrderPanelRep.class.php",
-                    "src/order-displays/SalesOrderPanelCustomer.class.php",
-                    "src/order-displays/SalesOrderHistoryPanel.class.php",
-                    "src/order-displays/SalesOrderHistoryPanelCustomer.class.php",
-                    "src/order-displays/QuoteDisplay.interface.php",
-                    "src/order-displays/QuotePanel.interface.php",
-                    "src/order-displays/QuoteDisplay.trait.php",
-                    "src/order-displays/QuoteDisplay.class.php",
-                    "src/order-displays/QuoteDisplayEdit.class.php",
-                    "src/order-displays/QuotePanel.class.php",
-                    "src/order-displays/QuotePanelRep.class.php",
-                    "src/order-displays/QuotePanelCustomer.class.php",
-                    "src/user-actions/UserAction.class.php",
-                    "src/user-actions/UserActionDisplay.class.php",
-                    "src/user-actions/UserActionDisplayEdit.class.php",
-                    "src/user-actions/UserActionsPanel.class.php",
-                    "src/user-actions/UserActionsPanelCustomer.class.php",
-                    "src/user-actions/UserActionsPanelContact.class.php",
-                    "src/user-actions/UserActionsPanelSalesOrder.class.php",
-                    "src/user-actions/UserActionsPanelQuote.class.php",
-                    "src/bookings/BookingsPanel.class.php",
-                    "src/bookings/BookingsPanelCustomer.class.php",
-                    "src/items/ItemLookupModal.class.php",
-                    "src/configs/FormFieldsConfig.class.php",
-                    "src/customer/CustomerIndex.class.php",
-                    "src/customer/Contact.class.php",
-                    "src/customer/Customer.class.php",
-                    "src/general/SigninLog.class.php",
-                    "src/model/Vendor.class.php",
-                    "src/model/LogmUser.class.php"
+                "psr-4": {
+                    "Dplus\\Dpluso\\Bookings\\": "src/Bookings/",
+                    "Dplus\\Dpluso\\Configs\\": "src/Configs/",
+                    "Dplus\\Dpluso\\Customer\\": "src/Customer/",
+                    "Dplus\\Dpluso\\General\\": "src/General/",
+                    "Dplus\\Dpluso\\Items\\": "src/Items/",
+                    "Dplus\\Dpluso\\Model\\": "src/Model/",
+                    "Dplus\\Dpluso\\OrderDisplays\\": "src/OrderDisplays/",
+                    "Dplus\\Dpluso\\UserActions\\": "src/UserActions/"
+                },
+                "classmap": [
+                    "src/Customer/Contact.class.php",
+                    "src/Customer/Customer.class.php",
+                    "src/Model/LogmUser.class.php",
+                    "src/Model/Vendor.class.php",
+                    "src/UserActions/UserAction.class.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -256,7 +232,7 @@
                 "order-displays",
                 "user-actions"
             ],
-            "time": "2018-09-25T15:45:52+00:00"
+            "time": "2018-10-18T16:17:32+00:00"
         },
         {
             "name": "cptechinc/dplus-order",
@@ -264,30 +240,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-order.git",
-                "reference": "5ece93b64d986a602c921d975b3570124191eaf1"
+                "reference": "61748298699ca781c1a3b110a6b5cdabf9c83e9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-order/zipball/5ece93b64d986a602c921d975b3570124191eaf1",
-                "reference": "5ece93b64d986a602c921d975b3570124191eaf1",
+                "url": "https://api.github.com/repos/cptechinc/dplus-order/zipball/61748298699ca781c1a3b110a6b5cdabf9c83e9b",
+                "reference": "61748298699ca781c1a3b110a6b5cdabf9c83e9b",
                 "shasum": ""
             },
             "type": "library",
             "autoload": {
-                "files": [
-                    "src/Order.interface.php",
-                    "src/OrderDetail.interface.php",
-                    "src/Order.class.php",
-                    "src/SalesOrder.class.php",
-                    "src/CartQuote.class.php",
-                    "src/Quote.class.php",
-                    "src/SalesOrderHistory.class.php",
-                    "src/OrderDetail.class.php",
-                    "src/CartDetail.class.php",
-                    "src/QuoteDetail.class.php",
-                    "src/SalesOrderDetail.class.php",
-                    "src/OrderCreditCard.class.php",
-                    "src/Qnote.class.php"
+                "classmap": [
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -301,7 +265,35 @@
                 "quote",
                 "sales-order"
             ],
-            "time": "2018-10-04T14:41:32+00:00"
+            "time": "2018-10-18T16:13:08+00:00"
+        },
+        {
+            "name": "cptechinc/dplus-processwire",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cptechinc/dplus-processwire.git",
+                "reference": "518e22e55546caacdd50b0074364eb44c8b2e2bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cptechinc/dplus-processwire/zipball/518e22e55546caacdd50b0074364eb44c8b2e2bb",
+                "reference": "518e22e55546caacdd50b0074364eb44c8b2e2bb",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/DplusWire.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Dplus Processwire",
+            "homepage": "http://github.com/cptechinc/dplus-processwire",
+            "keywords": [
+                "processwire-dplus"
+            ],
+            "time": "2018-10-12T21:47:36+00:00"
         },
         {
             "name": "eoghanobrien/php-simple-mail",
@@ -636,9 +628,10 @@
     "stability-flags": {
         "jwage/purl": 20,
         "cptechinc/dplus-base": 20,
-        "cptechinc/dplus-dpluso": 20,
+        "cptechinc/dplus-processwire": 20,
+        "cptechinc/dplus-order": 20,
         "cptechinc/dplus-content": 20,
-        "cptechinc/dplus-order": 20
+        "cptechinc/dplus-dpluso": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
