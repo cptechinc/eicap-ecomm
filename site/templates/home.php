@@ -22,7 +22,7 @@
 					<a href="<?= $pages->get('/user/orders/')->url; ?>">
 						<div class="card-body">
 							<h1 class="text-center text-danger"><i class="fa fa-list-alt fa-2x" aria-hidden="true"></i></h1>
-							<p class="card-text font-weight-bold text-center text-danger">Past Orders</p>
+							<p class="card-text font-weight-bold text-center text-danger">Open Orders</p>
 						</div>
 					</a>
 				</div>

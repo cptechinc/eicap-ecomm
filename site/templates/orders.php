@@ -7,7 +7,7 @@
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->paginationinsertafter = $page->name;
 	$paginator = new Dplus\Content\Paginator($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
-	
+
 	$orders = $salesordersdisplay->get_orders();
 ?>
 
@@ -132,7 +132,12 @@
 						<div class="row">
 							<div class="col"><?= $order->ordernumber; ?></div>
 							<div class="col"><?= $order->custid; ?></div>
-							<div class="col"><?= $order->shiptoid; ?></div>
+							<div class="col">
+								<?php $address = $order->shipto_address1."<br>"; ?>
+								<?php $address .= (!empty($order->shipto_address2)) ? $order->shipto_address2."<br>" : ''; ?>
+								<?php $address .= $order->shipto_city.", ". $order->shipto_state.' ' . $order->shipto_zip; ?>
+								<button type="button" class="btn btn-default" data-toggle="popover" data-placement="right" title="<?= $address; ?>" data-content=""><?= $order->shiptoid; ?></button>
+							</div>
 							<div class="col text-right">$ <?= $order->total_order; ?></div>
 							<div class="col text-right"><?= $order->order_date; ?></div>
 						</div>
@@ -145,5 +150,11 @@
 		<a href="<?= $pages->get('/')->url; ?>" class="btn btn-primary my-1"><i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Go back to Account Page</a>
 
     </div>
+
+<script type="text/javascript">
+	$(function () {
+		$('[data-toggle="popover"]').popover()
+	});
+</script>
 	<!-- end content -->
 <?php include('./_foot.php'); // include footer markup ?>

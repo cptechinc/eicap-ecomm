@@ -1,10 +1,10 @@
 
-<?php 
-	$ordn = $input->get->text('ordn'); 
+<?php
+	$ordn = $input->get->text('ordn');
 	$editorderdisplay = new Dplus\Dpluso\OrderDisplays\EditSalesOrderDisplay(session_id(), $page->fullURL, '#ajax-modal', $ordn);
 	$order = $editorderdisplay->get_order();
 	$page->title = "Editing Order # $ordn for ".Customer::get_customernamefromid($order->custid);
-	
+
 	include('./_head.php');
 ?>
 <div class="container page top-margin">
@@ -55,8 +55,8 @@
 		<div class="list-group-item list-group-item-action bg-secondary text-white font-weight-bold">
 			<div class="row">
 				<div class="col">Item / Description</div>
-				<div class="col text-right">Qty</div>
 				<div class="col text-right">Price</div>
+				<div class="col text-right">Qty</div>
 				<div class="col text-right">Total</div>
 				<div class="col text-right">Edit / Remove</div>
 			</div>
