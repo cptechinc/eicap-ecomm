@@ -35,7 +35,14 @@
 					<input type="hidden" name="filter" value="filter">
 
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-2">
+							<h4>Hold Status</h4>
+							<label>On Hold</label>
+							<input class="pull-right" type="checkbox" name="holdtype[]" value="On Hold" checked></br>
+							<label>Ordered</label>
+							<input class="pull-right" type="checkbox" name="holdtype[]" value="Ordered" checked></br>
+						</div>
+						<div class="col-sm-2">
 							<h4>Order #</h4>
 							<input class="form-control form-group inline input-sm" type="text" name="ordernumber[]" value="<?= $salesordersdisplay->get_filtervalue('ordernumber'); ?>" placeholder="From Order #">
 							<input class="form-control form-group inline input-sm" type="text" name="ordernumber[]" value="<?= $salesordersdisplay->get_filtervalue('ordernumber', 1); ?>" placeholder="Through Order #">
@@ -55,7 +62,7 @@
 								</span>
 							</div>
 						</div>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<h4>Order Total</h4>
 							<div class="input-group form-group">
 								<input class="form-control form-group inline input-sm" type="text" name="total_order[]" id="order-total-min" value="<?= $salesordersdisplay->get_filtervalue('total_order'); ?>" placeholder="From Order Total">
@@ -130,13 +137,15 @@
 	            <?php foreach ($orders as $order) : ?>
 	                <a href="<?= $salesordersdisplay->generate_loaddetailsurl($order); ?>" class="list-group-item list-group-item-action">
 						<div class="row">
-							<div class="col"><?= $order->ordernumber; ?></div>
+							<div class="col"><?= $order->ordernumber; ?></br></div>
 							<div class="col"><?= $order->custid; ?></div>
 							<div class="col">
-								<?php $address = $order->shipto_address1."<br>"; ?>
-								<?php $address .= (!empty($order->shipto_address2)) ? $order->shipto_address2."<br>" : ''; ?>
+								<?php $address = $order->shipto_address1.' '; ?>
+								<?php $address .= (!empty($order->shipto_address2)) ? $order->shipto_address2 : ''; ?>
 								<?php $address .= $order->shipto_city.", ". $order->shipto_state.' ' . $order->shipto_zip; ?>
-								<button type="button" class="btn btn-default" data-toggle="popover" data-placement="right" title="<?= $address; ?>" data-content=""><?= $order->shiptoid; ?></button>
+								<?php if (!empty($order->shiptoid)) : ?>
+									<button type="button" class="btn btn-default" data-toggle="popover" data-placement="right" title="<?= $address; ?>" data-content=""><?= $order->shiptoid; ?></button>
+								<?php endif; ?>
 							</div>
 							<div class="col text-right">$ <?= $order->total_order; ?></div>
 							<div class="col text-right"><?= $order->order_date; ?></div>
