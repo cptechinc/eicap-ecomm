@@ -1,4 +1,6 @@
 <?php
+	use Dplus\Base\DplusDateTime;
+	
 	$page->title = "Your Orders";
 	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->pagenbr = $input->pageNum;
@@ -6,12 +8,10 @@
 
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->paginationinsertafter = $page->name;
-	$paginator = new Dplus\Content\Paginator($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
+	$paginator = new Dplus\Content\PaginatorBootstrap4($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
 	
 	$orders = $salesordersdisplay->get_orders();
 ?>
-
-<?php  ?>
 <?php include('./_head.php'); // include header markup ?>
 	<div class='container top-margin'>
 		<div class="form-group">
@@ -134,12 +134,11 @@
 							<div class="col"><?= $order->custid; ?></div>
 							<div class="col"><?= $order->shiptoid; ?></div>
 							<div class="col text-right">$ <?= $order->total_order; ?></div>
-							<div class="col text-right"><?= $order->order_date; ?></div>
+							<div class="col text-right"><?= DplusDateTime::format_date($order->order_date); ?></div>
 						</div>
 	                </a>
 	            <?php endforeach; ?>
 			</div>
-
 			<div class="align-self-center"><?= $paginator; ?></div>
         </div>
 		<a href="<?= $pages->get('/')->url; ?>" class="btn btn-primary my-1"><i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Go back to Account Page</a>
