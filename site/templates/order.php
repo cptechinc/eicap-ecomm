@@ -1,6 +1,6 @@
 <?php
     use Dplus\Base\DplusDateTime;
-    
+
     $ordn = $input->get->text('ordn');
     $orderdisplay = new Dplus\Dpluso\OrderDisplays\SalesOrderDisplay(session_id(), $page->fullURL, '', $ordn);
     $order = $orderdisplay->get_order();
@@ -8,7 +8,7 @@
 ?>
 <?php include('./_head.php'); // include header markup ?>
 	<div class="container page top-margin">
-		<h1 class="text-danger font-weight-bold border-bottom border-danger"><?= $page->title; ?></h1>
+		<h1 class="text-danger font-weight-bold border-bottom border-primary"><?= $page->title; ?></h1>
         <?php if ($order->is_onreview()) : ?>
             <div class="alert alert-danger" role="alert">
                 <strong><i class="fa fa-warning" aria-hidden="true"></i>&nbsp;Pending Order!</strong>&nbsp;&nbsp;This order will be processed once it is approved.
