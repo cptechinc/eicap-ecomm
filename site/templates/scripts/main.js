@@ -1,4 +1,6 @@
 $(function() {
+	$('[data-toggle="tooltip"]').tooltip();
+	
 	$("body").on("click", ".cart-item-search", function(e) {
 		e.preventDefault();
 		var button = $(this);
