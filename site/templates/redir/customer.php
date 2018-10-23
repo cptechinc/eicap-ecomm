@@ -35,11 +35,14 @@
 
     switch ($action) {
         case 'shop-as-customer':
-			$data = array("DBNAME=$config->dplusdbname", "CARTCUST", "CUSTID=$custID");
-            if (!empty($shipID)) {$data['SHIPID'] = $shipID; $session->shipID = $shipID; }
-			if (!CartQuote::cart_exists(session_id())) {
-				$session->sql = insert_cartheadcust(session_id(), $custID, $shipID);
-			}
+		    $data = array();
+            $cart = new CartQuote();
+            $cart->set('sessionid', session_id());
+            $cart->set('custid', $custID);
+            $cart->set('shiptoid', $shipID);
+            $session->sql = $cart->save(true);
+            $cart->save();
+
 			if ($input->post->page) {
 				$session->loc = $input->post->text('page');
 			} elseif ($input->get->page) {
@@ -49,8 +52,12 @@
 			}
 			break;
 	}
-	write_dplusfile($data, $filename);
-	curl_get("127.0.0.1/cgi-bin/$config->cgi?fname=$filename");
+
+    if (!empty($data)) {
+        write_dplusfile($data, $filename);
+        curl_get("127.0.0.1/cgi-bin/$config->cgi?fname=$filename");
+    }
+
 	if (!empty($session->get('loc')) && !$config->ajax) {
 		header("Location: $session->loc");
 	}

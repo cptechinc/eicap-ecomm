@@ -1,7 +1,7 @@
 <?php
 	use Dplus\Base\QueryBuilder;
 	use Dplus\ProcessWire\DplusWire;
-	
+
 /* =============================================================
 	LOGIN FUNCTIONS
 ============================================================= */
@@ -211,7 +211,7 @@
 	function count_salesorders($filter = false, $filtertypes = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('COUNT(*)'));
-		
+
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
@@ -290,7 +290,7 @@
 			return $sql->fetchAll(PDO::FETCH_ASSOC);
 		}
 	}
-	
+
 	/**
 	 * Returns the Sales Order from the oe_head table
 	 * @param  string $ordn      Sales Order Number
@@ -310,11 +310,11 @@
 			return $sql->fetch();
 		}
 	}
-	
-	
+
+
 	/**
 	 * Returns SalesOrderEdit object for Editable Sales Order
-	 * @param  string $sessionID Session ID 
+	 * @param  string $sessionID Session ID
 	 * @param  string $ordn      Sales Order Number
 	 * @param  bool   $debug     Run in debug? If so, return SQL Query
 	 * @return SalesOrderEdit    Editable Sales Order
@@ -436,9 +436,9 @@
 	/* =============================================================
 		EDIT ORDER FUNCTIONS
 	============================================================ */
-	
 
-	
+
+
 	function get_orderhead($sessionID, $ordn, $useclass = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->where('sessionid', $sessionID);
@@ -509,7 +509,7 @@
 	 */
 	function has_carthead($sessionID, $debug = false) {
 		$q = (new QueryBuilder())->table('carthed');
-		$q->field($q->expr("IF(COUNT(*) > 1, 1, 0)"));
+		$q->field($q->expr("IF(COUNT(*) > 0, 1, 0)"));
 		$q->where('sessionid', $sessionID);
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
@@ -523,27 +523,59 @@
 
 	/**
 	 * Inserts new carthead record
-	 * @param  string $sessionID Session Identifier
-	 * @param  string $custID    Customer ID
-	 * @param  string $shipID    Customer Shipto ID
-	 * @param  bool   $debug     Run in debug?
-	 * @return string            SQL Query
+	 * @param  string    $sessionID Session Identifier
+	 * @param  CartQuote $cart      Cart Header
+	 * @param  bool      $debug     Run in debug? IF so, return SQL Query
+	 * @return bool                 Was Record Inserted?
 	 */
-	function insert_cartheadcust($sessionID, $custID, $shipID = '', $debug = false) {
+	function insert_carthead($sessionID, CartQuote $cart, $debug = false) {
+		$properties = array_keys($cart->_toArray());
 		$q = (new QueryBuilder())->table('carthed');
 		$q->mode('insert');
-		$q->set('sessionid', $sessionID);
-		$q->set('custid', $custID);
-		$q->set('shiptoid', $shipID);
-		$q->set('date', date('Ymd'));
-		$q->set('time', date('His'));
+		$cart->set('date', date('Ymd'));
+		$cart->set('time', date('His'));
+		foreach ($properties as $property) {
+			if (!empty($cart->$property)) {
+				$q->set($property, $cart->$property);
+			}
+		}
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
 		if ($debug) {
 			return $q->generate_sqlquery($q->params);
 		} else {
 			$sql->execute($q->params);
+			return DplusWire::wire('dplusdatabase')->lastInsertId() > 0 ? true : false;
+		}
+	}
+
+	/**
+	 * Updates carthead record
+	 * @param  string    $sessionID Session Identifier
+	 * @param  CartQuote $cart      Cart Header
+	 * @param  bool      $debug     Run in debug? If so, return SQL Query
+	 * @return int                  Was Record Updated?
+	 */
+	function update_carthead($sessionID, CartQuote $cart, $debug = false) {
+		$originalcart = CartQuote::load($sessionID);
+		$properties = array_keys($cart->_toArray());
+		$q = (new QueryBuilder())->table('carthed');
+		$q->mode('update');
+		$cart->set('date', date('Ymd'));
+		$cart->set('time', date('His'));
+		foreach ($properties as $property) {
+			if ($cart->$property != $originalcart->$property) {
+				$q->set($property, $cart->$property);
+			}
+		}
+		$q->where('sessionid', $cart->sessionid);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
 			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return boolval($sql->rowCount());
 		}
 	}
 
@@ -788,7 +820,7 @@
 			$q->field('COUNT(*)');
 			$q->where('ordernumber', $ordn);
 			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
-	
+
 			if ($debug) {
 				return $q->generate_sqlquery($q->params);
 			} else {
@@ -796,7 +828,7 @@
 				return $sql->fetchColumn();
 			}
 		}
-		
+
 		/**
 		 * Returns the Customer ID from a Sales History Order
 		 * @param  string $ordn  Sales Order Number
@@ -808,7 +840,7 @@
 			$q->field('custid');
 			$q->where('ordernumber', $ordn);
 			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
-	
+
 			if ($debug) {
 				return $q->generate_sqlquery($q->params);
 			} else {

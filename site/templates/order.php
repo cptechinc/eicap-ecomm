@@ -15,9 +15,9 @@
             </div>
         <?php endif; ?>
         <h5 class="font-weight-bold">Ordered on <?= DplusDateTime::format_date($order->order_date); ?></h5>
-        
+
         <a href="<?= $page->parent->url; ?>" class="btn btn-primary mt-3">
-            <i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Back to Orders Page
+            <i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;To Orders Page
         </a>
 
         <div class="row mt-4">
@@ -105,7 +105,7 @@
         <div class="row">
             <div class="col">
                 <a href="<?= $page->parent->url; ?>" class="btn btn-primary mt-3">
-                    <i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Back to Orders Page
+                    <i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;To Orders Page
                 </a>
             </div>
             <div class="col ">

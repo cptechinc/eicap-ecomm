@@ -1,3 +1,4 @@
+<h1 class="text-danger font-weight-bold border-bottom border-primary mb-4"><?= $page->title; ?></h1>
 <form action="<?= $pages->get('/customers/')->url; ?>" method="get">
     <div class="form-group">
         <?php if ($input->get->function) : ?>

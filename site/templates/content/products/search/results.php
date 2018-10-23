@@ -1,3 +1,4 @@
+<h1 class="text-danger font-weight-bold border-bottom border-primary mb-4"><?= $page->title; ?></h1>
 <div class="form-group">
     <?php include "{$config->paths->content}products/search/form.php"; ?>
 </div>
