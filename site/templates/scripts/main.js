@@ -1,4 +1,6 @@
 $(function() {
+	$('[data-toggle="tooltip"]').tooltip();
+	
 	$("body").on("click", ".cart-item-search", function(e) {
 		e.preventDefault();
 		var button = $(this);
@@ -9,7 +11,18 @@ $(function() {
 		$(loadinto).loadin(href, function() {
 			$(modal).modal('show');
 			setTimeout(function (){ $(modal).find('.query').focus();}, 500);
-			
+		});
+	});
+	
+	$("body").on("submit", "#item-search", function(e) {
+		e.preventDefault();
+		var form = $(this);
+		var modal = config.modals.ajax;
+		var loadinto = modal+" .modal-content";
+		var href = URI(form.attr('action')).query(form.serialize()).addQuery('modal', 'modal').normalizeQuery().toString();
+		
+		$(loadinto).loadin(href, function() {
+			$(modal).modal('show');
 		});
 	});
 });

@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
     <div class="container">
         <a class="text-white font-weight-bold navbar-brand" href="<?= $pages->get('/')->url; ?>"><?= $site->company_name; ?></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav mr-auto">
                 <?php $homepage = $pages->get('/'); ?>
         		<?php $children = $homepage->children(); ?>
@@ -26,7 +26,7 @@
                         <a href="<?= $pages->get('/cart/')->url; ?>" class="text-white nav-link">&nbsp;<i class="fa fa-shopping-cart text-white" aria-hidden="true"></i>&nbsp;&nbsp;( <?= $count; ?> )&nbsp;&nbsp;</a>
                     </li>
                     <li class="nav-item">
-                    	<a href="<?php echo $config->pages->account; ?>redir/?action=logout" class="btn btn-light logout">Logout</a>
+                    	<a href="<?php echo $config->pages->account; ?>redir/?action=logout" class="btn btn-danger logout">Logout</a>
                     </li>
                 <?php else : ?>
 

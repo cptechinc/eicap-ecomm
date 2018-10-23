@@ -39,7 +39,9 @@
             <?php endif; ?>
         </tbody>
     </table>
-    <div class="text-center">
-        <?= $resultscount ? $paginator : ''; ?>
+    <div class="d-flex flex-column">
+        <div class="align-self-center">
+            <?= $paginator; ?>
+        </div>
     </div>
 </div>

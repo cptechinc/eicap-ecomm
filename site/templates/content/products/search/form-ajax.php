@@ -1,4 +1,4 @@
-<form action="<?= $pages->get('template=products-search')->url; ?>" method="GET" id="">
+<form action="<?= $pages->get('template=products-search')->url; ?>" method="GET" id="item-search">
     <div class="input-group">
         <input type="text" class="form-control cust-index-search" name="q" placeholder="ItemID, Description">
         <span class="input-group-btn">

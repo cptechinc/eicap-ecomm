@@ -36,7 +36,8 @@
         "cptechinc/dplus-processwire": "dev-master",
         "cptechinc/dplus-order": "dev-master",
         "cptechinc/dplus-content": "dev-master",
-        "cptechinc/dplus-dpluso": "dev-master"
+        "cptechinc/dplus-dpluso": "dev-master",
+        "cptechinc/dplus-ecomm": "dev-master"
     },
     "autoload": {
         "files": [ 

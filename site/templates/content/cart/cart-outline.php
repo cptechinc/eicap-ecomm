@@ -1,7 +1,12 @@
 <?php $details = get_cartdetails(session_id()); ?>
 
 <div class="form-group">
-    <?php include "{$config->paths->content}products/product-search-form.php"; ?>
+    <?php //include "{$config->paths->content}products/product-search-form.php"; ?>
+    
+    <!-- Button trigger modal -->
+    <a href="<?= $pages->get('/products/search/')->url; ?>" class="btn btn-primary cart-item-search">
+        Search Items
+    </a>
 </div>
 <div class="list-group">
     <div class="list-group-item list-group-item-action bg-secondary text-white font-weight-bold">
@@ -73,10 +78,7 @@
     </div>
 
 
-    <!-- Button trigger modal -->
-    <a href="<?= $pages->get('/products/search/')->url; ?>" class="btn btn-primary cart-item-search">
-      Launch demo modal
-  </a>
+    
     
     
 </div>

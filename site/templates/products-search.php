@@ -1,6 +1,6 @@
 <?php 
     $q = $input->get->text('q');
-    $page->title = "Searching for '$q'";
+    $page->title = $input->get->q ? "Searching for '$q'" : "Search Products";
     $products = $pages->find("template=product, title|body~=$q");
 
     if ($config->ajax) {

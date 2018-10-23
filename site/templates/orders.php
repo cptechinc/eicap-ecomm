@@ -1,4 +1,6 @@
 <?php
+	use Dplus\Base\DplusDateTime;
+	
 	$page->title = "Your Orders";
 	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->pagenbr = $input->pageNum;
@@ -6,12 +8,10 @@
 
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->paginationinsertafter = $page->name;
-	$paginator = new Dplus\Content\Paginator($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
-
+	$paginator = new Dplus\Content\PaginatorBootstrap4($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
+	
 	$orders = $salesordersdisplay->get_orders();
 ?>
-
-<?php  ?>
 <?php include('./_head.php'); // include header markup ?>
 	<div class='container top-margin'>
 		<div class="form-group">
@@ -142,28 +142,23 @@
 							<div class="col">
 								<?php $address = $order->shipto_address1.' '; ?>
 								<?php $address .= (!empty($order->shipto_address2)) ? $order->shipto_address2 : ''; ?>
+								<?php $address .= "<br>"; ?>
 								<?php $address .= $order->shipto_city.", ". $order->shipto_state.' ' . $order->shipto_zip; ?>
 								<?php if (!empty($order->shiptoid)) : ?>
-									<button type="button" class="btn btn-default" data-toggle="popover" data-placement="right" title="<?= $address; ?>" data-content=""><?= $order->shiptoid; ?></button>
+									<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" data-html="true" title="<?= $address; ?>"><?= $order->shiptoid; ?></button>
 								<?php endif; ?>
 							</div>
 							<div class="col text-right">$ <?= $order->total_order; ?></div>
-							<div class="col text-right"><?= $order->order_date; ?></div>
+							<div class="col text-right"><?= DplusDateTime::format_date($order->order_date); ?></div>
 						</div>
 	                </a>
 	            <?php endforeach; ?>
 			</div>
-
 			<div class="align-self-center"><?= $paginator; ?></div>
         </div>
-		<a href="<?= $pages->get('/')->url; ?>" class="btn btn-primary my-1"><i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Go back to Account Page</a>
-
+		<a href="<?= $pages->get('/')->url; ?>" class="btn btn-primary my-1">
+			<i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Go back to Account Page
+		</a>
     </div>
-
-<script type="text/javascript">
-	$(function () {
-		$('[data-toggle="popover"]').popover()
-	});
-</script>
 	<!-- end content -->
 <?php include('./_foot.php'); // include footer markup ?>
