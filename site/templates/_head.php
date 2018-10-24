@@ -12,6 +12,5 @@
 		<?php include ('_config.js.php'); ?>
 	</head>
 
-	<body>
+	<body class="fuelux">
 		<?php include('./nav.php'); ?>
-		

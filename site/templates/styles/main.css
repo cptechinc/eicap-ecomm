@@ -56,3 +56,18 @@ footer {
 .form-control.qty {
 	width: 80px;
 }
+
+/*==============================================================
+	FUELUX STYLES
+==============================================================*/
+	.fuelux .datepicker-calendar-days td.selected.current-day b,
+	.fuelux .datepicker-calendar-days td.selected.current-day button {
+		color: #fff;
+	}
+
+	.fuelux .datepicker-calendar-days td.current-day span {
+		background: #007bff;
+	}
+	.fuelux .datepicker-calendar-days td.current-day button {
+		color: #fff;
+	}

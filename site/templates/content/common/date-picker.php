@@ -7,15 +7,15 @@
 		<div class="dropdown-menu dropdown-menu-right datepicker-calendar-wrapper" role="menu">
 			<div class="datepicker-calendar">
 				<div class="datepicker-calendar-header">
-					<button type="button" class="prev"><span class="glyphicon glyphicon-chevron-left"></span><span class="sr-only">Previous Month</span></button>
-					<button type="button" class="next"><span class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next Month</span></button>
+					<button type="button" class="prev bg-secondary"><i class="fa fa-chevron-left text-white"></i><span class="sr-only">Previous Month</span></button>
+					<button type="button" class="next bg-secondary"><i class="fa fa-chevron-right text-white"></i><span class="sr-only">Next Month</span></button>
 					<button type="button" class="title">
-						<span class="month">
+						<span class="month font-weight-bold text-danger">
 							<span data-month="0">January</span> <span data-month="1">February</span> <span data-month="2">March</span>
 							<span data-month="3">April</span> <span data-month="4">May</span> <span data-month="5">June</span>
 							<span data-month="6">July</span> <span data-month="7">August</span> <span data-month="8">September</span>
 							<span data-month="9">October</span> <span data-month="10">November</span> <span data-month="11">December</span>
-						</span> <span class="year"></span>
+						</span> <span class="year font-weight-bold text-danger"></span>
 					</button>
 				</div>
 				<table class="datepicker-calendar-days">
@@ -28,7 +28,7 @@
 			</div>
 			<div class="datepicker-wheels" aria-hidden="true">
 				<div class="datepicker-wheels-month">
-					<h2 class="header">Month</h2>
+					<h2 class="header text-danger">Month</h2>
 					<ul>
 						<li data-month="0"><button type="button">Jan</button></li> <li data-month="1"><button type="button">Feb</button></li>
 						<li data-month="2"><button type="button">Mar</button></li> <li data-month="3"><button type="button">Apr</button></li>
@@ -39,7 +39,7 @@
 					</ul>
 				</div>
 				<div class="datepicker-wheels-year">
-					<h2 class="header">Year</h2>
+					<h2 class="header text-danger">Year</h2>
 					<ul></ul>
 				</div>
 				<div class="datepicker-wheels-footer clearfix">
