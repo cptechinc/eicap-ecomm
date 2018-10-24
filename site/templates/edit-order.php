@@ -51,6 +51,9 @@
 		</div>
 	</div>
 
+	<a href="<?= $pages->get('/products/search/')->url; ?>" class="btn btn-primary cart-item-search">
+        Search Items
+    </a>
 	<div class="list-group mt-3">
 		<div class="list-group-item list-group-item-action bg-secondary text-white font-weight-bold">
 			<div class="row">

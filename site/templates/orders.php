@@ -1,6 +1,6 @@
 <?php
 	use Dplus\Base\DplusDateTime;
-	
+
 	$page->title = "Your Orders";
 	$salesordersdisplay = new Dplus\Ecomm\SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->pagenbr = $input->pageNum;
@@ -9,7 +9,7 @@
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->paginationinsertafter = $page->name;
 	$paginator = new Dplus\Content\PaginatorBootstrap4($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
-	
+
 	$orders = $salesordersdisplay->get_orders();
 ?>
 <?php include('./_head.php'); // include header markup ?>
@@ -36,10 +36,10 @@
 					<div class="row">
 						<div class="col-sm-2">
 							<h4>Hold Status</h4>
-							<label>On Hold</label>
-							<input class="pull-right" type="checkbox" name="holdtype[]" value="On Hold" checked></br>
-							<label>Ordered</label>
-							<input class="pull-right" type="checkbox" name="holdtype[]" value="Ordered" checked></br>
+							<label>Approved</label>
+							<input class="pull-right" type="checkbox" name="holdtype[]" value="Approved" checked></br>
+							<label>Unapproved</label>
+							<input class="pull-right" type="checkbox" name="holdtype[]" value="Unapproved" checked></br>
 						</div>
 						<div class="col-sm-2">
 							<h4>Order #</h4>
