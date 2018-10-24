@@ -67,7 +67,7 @@
 			break;
         case 'remove-line':
             $cart = CartQuote::load(session_id());
-			$linenbr = $input->$requestmethod->text('linenbr');
+			$linenbr = $input->$requestmethod->int('line');
 			$cartdetail = CartDetail::load($sessionID, $linenbr);
 			$cartdetail->set('qty', '0');
 			$session->sql = $cartdetail->update();
