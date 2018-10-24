@@ -2,7 +2,7 @@
 	use Dplus\Base\DplusDateTime;
 
 	$page->title = "Your Orders";
-	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
+	$salesordersdisplay = new Dplus\Ecomm\SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->pagenbr = $input->pageNum;
 	$salesordersdisplay->generate_filter($input);
 
@@ -19,7 +19,6 @@
 		</div>
 	</div>
 	<div class="container page top-margin">
-
 		<div class="panel-body">
 			<div class="row mb-3">
 				<div class="col-sm-6">

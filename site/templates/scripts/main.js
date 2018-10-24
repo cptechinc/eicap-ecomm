@@ -1,6 +1,24 @@
 $(function() {
 	$('[data-toggle="tooltip"]').tooltip();
 	
+	$("body").on("change", ".results-per-page-form .results-per-page", function() {
+		var form = $(this).closest("form");
+		var ajax = form.hasClass('ajax-load');
+		var showonpage = form.find('.results-per-page').val();
+		var displaypage = form.attr('action');
+		var href = URI(displaypage).addQuery('display', showonpage).toString();
+		
+		if (ajax) {
+			var loadinto = form.data('loadinto');
+			var focuson = form.data('focus');
+			loadin(href, loadinto, function() {
+				if (focuson.length > 0) { $('html, body').animate({scrollTop: $(focuson).offset().top - 60}, 1000);}
+			});
+		} else {
+			window.location.href = href;
+		}
+	});
+	
 	$("body").on("click", ".cart-item-search", function(e) {
 		e.preventDefault();
 		var button = $(this);
@@ -26,6 +44,7 @@ $(function() {
 		});
 	});
 });
+
 $.fn.extend({
 	loadin: function(href, callback) {
 		var element = $(this);

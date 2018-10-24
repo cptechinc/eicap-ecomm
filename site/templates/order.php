@@ -104,14 +104,25 @@
         </div>
         <div class="row">
             <div class="col">
-                <a href="<?= $page->parent->url; ?>" class="btn btn-primary mt-3">
-                    <i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;To Orders Page
+                <a href="<?= $page->parent->url; ?>" class="btn btn-primary">
+                    <i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Back to Orders Page
                 </a>
             </div>
-            <div class="col ">
-                <a href="<?= $orderdisplay->generate_editurl($order); ?>" class="btn btn-warning float-right">
-                    <i class="fa fa-pencil" aria-hidden="true"></i> Edit Sales Order
-                </a>
+            <?php if ($user->hasRole($config->user_roles['sales-manager']['dplus-code'])) : ?>
+                <div class="col">
+                    <?php if ($order->can_editapproved()) : ?>
+                        <a href="#" class="btn btn-warning float-right">
+                            <i class="fa fa-pencil" aria-hidden="true"></i> Approve Sales Order
+                        </a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+            <div class="col">
+                <?php if ($order->can_editapproved()) : ?>
+                    <a href="<?= $orderdisplay->generate_editurl($order); ?>" class="btn btn-warning float-right">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit Sales Order
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
