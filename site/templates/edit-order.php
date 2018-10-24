@@ -51,7 +51,7 @@
 		</div>
 	</div>
 
-	<a href="<?= $pages->get('/products/search/')->url; ?>" class="btn btn-primary cart-item-search">
+	<a href="<?= $pages->get('/products/search/')->url.'?ordn='.$ordn; ?>" class="btn btn-primary cart-item-search">
         Search Items
     </a>
 	<div class="list-group mt-3">

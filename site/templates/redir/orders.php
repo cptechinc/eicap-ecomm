@@ -55,10 +55,11 @@
 			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
 			break;
 		case 'add-to-order':
+            $sessionID = session_id();
 			$itemID = $input->$requestmethod->text('itemID');
 			$qty = $input->$requestmethod->text('qty');
 			$ordn = $input->$requestmethod->text('ordn');
-			
+
 			if (SalesOrder::does_exist($ordn)) {
 				$custID = SalesOrder::find_custid($ordn);
 				$data = array("DBNAME=$config->dplusdbname", "SALEDET", "ORDERNO=$ordn", "ITEMID=$itemID", "QTY=$qty", "CUSTID=$custID");
@@ -84,12 +85,12 @@
 			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
 			break;
 	}
-	
+
 	if (!empty($data)) {
 		write_dplusfile($data, $filename);
 		curl_get("127.0.0.1/cgi-bin/$config->cgi?fname=$filename");
 	}
-	
+
 	if (!empty($session->get('loc')) && !$config->ajax) {
 		header("Location: $session->loc");
 	}
