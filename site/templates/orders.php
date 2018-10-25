@@ -107,6 +107,7 @@
 							</div>
 						<?php endif; ?>
 					</div>
+					<hr class="bg-danger">
 				</form>
 			</div>
 		</div>
