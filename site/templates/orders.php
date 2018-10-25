@@ -1,7 +1,7 @@
 <?php
 	use Dplus\Base\DplusDateTime;
 
-	$page->title = "Your Orders";
+	$page->title = "Sale Orders";
 	$salesordersdisplay = new Dplus\Ecomm\SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->pagenbr = $input->pageNum;
 	$salesordersdisplay->generate_filter($input);
@@ -15,11 +15,20 @@
 <?php include('./_head.php'); // include header markup ?>
 	<div class='container top-margin'>
 		<div class="form-group">
-			<h1 class="text-danger font-weight-bold border-bottom border-primary"><?= ucwords(strtolower($page->get('headline|title'))); ?></h1>
+			<h1 class="text-danger font-weight-bold border-bottom border-primary">
+				<?= ucwords(strtolower($page->get('headline|title'))); ?>
+			</h1>
 		</div>
 	</div>
 	<div class="container page top-margin">
 		<div class="panel-body">
+
+			<div class="form-group">
+				<div class="list-group-item list-group-item-action bg-primary text-white font-weight-bold">
+					Total Orders <span class="badge badge-pill badge-light"><?= $salesordersdisplay->count; ?></span>
+					<span class="pull-right">Page <?= $salesordersdisplay->pagenbr; ?></span>
+				</div>
+			</div>
 			<div class="row mb-3">
 				<div class="col-sm-6">
 					<?= $paginator->generate_showonpage(); ?>
@@ -36,10 +45,10 @@
 					<div class="row">
 						<div class="col-sm-2">
 							<h4>Hold Status</h4>
-							<label>Approved</label>
-							<input class="pull-right" type="checkbox" name="holdtype[]" value="Approved" checked></br>
-							<label>Unapproved</label>
-							<input class="pull-right" type="checkbox" name="holdtype[]" value="Unapproved" checked></br>
+							<input type="checkbox" name="holdstatus[]" value="n" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'n')) ? 'checked' : ''; ?> >
+							<label>&emsp;Approved</label></br>
+							<input type="checkbox" name="holdstatus[]" value="R" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'R')) ? 'checked' : ''; ?> >
+							<label>&emsp;On Review</label>
 						</div>
 						<div class="col-sm-2">
 							<h4>Order #</h4>
@@ -61,7 +70,7 @@
 								</span>
 							</div>
 						</div>
-						<div class="col-sm-2">
+						<div class="col-sm-3">
 							<h4>Order Total</h4>
 							<div class="input-group form-group">
 								<input class="form-control form-group inline input-sm" type="text" name="total_order[]" id="order-total-min" value="<?= $salesordersdisplay->get_filtervalue('total_order'); ?>" placeholder="From Order Total">
@@ -76,7 +85,7 @@
 								</span>
 							</div>
 						</div>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<h4>Order Date</h4>
 							<?php $name = 'order_date[]'; $value = $salesordersdisplay->get_filtervalue('order_date'); ?>
 							<?php include $config->paths->content."common/date-picker.php"; ?>
@@ -89,20 +98,19 @@
 					</div>
 					</br>
 					<div class="row">
-						<div class="form-group col-sm-6">
+						<div class="form-group col-md-6">
 							<button class="btn btn-primary btn-block" type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
 						</div>
 						<?php if ($input->get->filter) : ?>
-							<div class="form-group col-sm-6">
-								<?php $salesordersdisplay->generate_clearsearchlink(); ?>
+							<div class="form-group col-md-6">
+								<?= $salesordersdisplay->generate_clearsearchlink(); ?>
 							</div>
 						<?php endif; ?>
 					</div>
 				</form>
 			</div>
 		</div>
-
-        <div class="list-group">
+		<div class="list-group">
 			<div class="form-group">
 				<div href="#" class="list-group-item list-group-item-action bg-secondary font-weight-bold">
 					<div class="row">
@@ -133,8 +141,12 @@
 						</div>
 					</div>
 				</div>
-	            <?php foreach ($orders as $order) : ?>
-	                <a href="<?= $salesordersdisplay->generate_loaddetailsurl($order); ?>" class="list-group-item list-group-item-action">
+				<?php foreach ($orders as $order) : ?>
+						<?php if ($order->is_approved()) : ?>
+							<a href="<?= $salesordersdisplay->generate_loaddetailsurl($order); ?>" class="list-group-item list-group-item-action" style="background-color:#A0D080;">
+						<?php else : ?>
+							<a href="<?= $salesordersdisplay->generate_loaddetailsurl($order); ?>" class="list-group-item list-group-item-action">
+						<?php endif; ?>
 						<div class="row">
 							<div class="col"><?= $order->ordernumber; ?></br></div>
 							<div class="col"><?= $order->custid; ?></div>
@@ -150,14 +162,14 @@
 							<div class="col text-right">$ <?= $order->total_order; ?></div>
 							<div class="col text-right"><?= DplusDateTime::format_date($order->order_date); ?></div>
 						</div>
-	                </a>
-	            <?php endforeach; ?>
+					</a>
+				<?php endforeach; ?>
 			</div>
 			<div class="align-self-center"><?= $paginator; ?></div>
-        </div>
+		</div>
 		<a href="<?= $pages->get('/')->url; ?>" class="btn btn-primary my-1">
 			<i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Go back to Account Page
 		</a>
-    </div>
+	</div>
 	<!-- end content -->
 <?php include('./_foot.php'); // include footer markup ?>

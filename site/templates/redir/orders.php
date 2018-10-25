@@ -30,6 +30,9 @@
 			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn");
 			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
 			break;
+		case 'load-orders':
+			$session->loc = $pages->get('/user/orders/')->url;
+			break;
 		case 'edit-new-order':
 			$ordn = get_createdordn(session_id());
 			$custID = SalesOrder::find_custid($ordn);

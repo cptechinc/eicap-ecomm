@@ -60,6 +60,10 @@ footer {
 /*==============================================================
 	FUELUX STYLES
 ==============================================================*/
+	.fuelux .datepicker-calendar-days td button, .fuelux .datepicker-calendar-header .title {
+		cursor: pointer;
+	}
+
 	.fuelux .datepicker-calendar-days td.selected.current-day b,
 	.fuelux .datepicker-calendar-days td.selected.current-day button {
 		color: #fff;

@@ -309,7 +309,7 @@
 			return boolval($sql->fetchColumn());
 		}
 	}
-	
+
 	/**
 	 * Returns the Sales Order from the oe_head table
 	 * @param  string $ordn      Sales Order Number
@@ -391,7 +391,7 @@
 		}
 	}
 
-	function get_minorderdate($field, $custID = false, $shipID = false, $debug = false) {
+	function get_minsalesorderdate($field, $custID = false, $shipID = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr("MIN(STR_TO_DATE($field, '%m/%d/%Y'))"));
 		if ($custID) {
