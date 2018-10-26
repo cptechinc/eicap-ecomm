@@ -45,9 +45,9 @@
 					<div class="row">
 						<div class="col-sm-2">
 							<h4>Hold Status</h4>
-							<input type="checkbox" name="holdstatus[]" value="n" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'n')) ? 'checked' : ''; ?> >
+							<input type="checkbox" name="holdstatus[]" value="n" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'n') || empty($salesordersdisplay->filters['holdstatus'])) ? 'checked' : ''; ?> >
 							<label>&emsp;Approved</label></br>
-							<input type="checkbox" name="holdstatus[]" value="R" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'R')) ? 'checked' : ''; ?> >
+							<input type="checkbox" name="holdstatus[]" value="R" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'R') || empty($salesordersdisplay->filters['holdstatus'])) ? 'checked' : ''; ?> >
 							<label>&emsp;On Review</label>
 						</div>
 						<div class="col-sm-2">
@@ -143,11 +143,16 @@
 					</div>
 				</div>
 				<?php foreach ($orders as $order) : ?>
-						<?php if ($order->is_approved()) : ?>
-							<a href="<?= $salesordersdisplay->generate_loaddetailsurl($order); ?>" class="list-group-item list-group-item-action" style="background-color:#A0D080;">
-						<?php else : ?>
-							<a href="<?= $salesordersdisplay->generate_loaddetailsurl($order); ?>" class="list-group-item list-group-item-action">
-						<?php endif; ?>
+					<?php 
+						if ($order->is_approved()) {
+							$class = "bg-success text-white";
+						} elseif ($order->is_onreview()) {
+							$class = "bg-danger text-white";
+						} else {
+							$class = "";
+						}
+					?>
+					<a href="<?= $salesordersdisplay->generate_loaddetailsurl($order); ?>" class="list-group-item list-group-item-action <?= $class; ?>">
 						<div class="row">
 							<div class="col"><?= $order->ordernumber; ?></br></div>
 							<div class="col"><?= $order->custid; ?></div>
