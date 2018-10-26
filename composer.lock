@@ -114,12 +114,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-base.git",
-                "reference": "bf67963e60512a3dfae80cdb6def582ff03670f8"
+                "reference": "dc84bb989c226151a2cab90b9829f0abba4dda60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-base/zipball/bf67963e60512a3dfae80cdb6def582ff03670f8",
-                "reference": "bf67963e60512a3dfae80cdb6def582ff03670f8",
+                "url": "https://api.github.com/repos/cptechinc/dplus-base/zipball/dc84bb989c226151a2cab90b9829f0abba4dda60",
+                "reference": "dc84bb989c226151a2cab90b9829f0abba4dda60",
                 "shasum": ""
             },
             "require": {
@@ -155,7 +155,7 @@
                 "dplus-attributes",
                 "dplus-base"
             ],
-            "time": "2018-10-18T16:15:44+00:00"
+            "time": "2018-10-23T19:35:05+00:00"
         },
         {
             "name": "cptechinc/dplus-content",
@@ -163,12 +163,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-content.git",
-                "reference": "1899a76019c92ba25c1bb48c6adba02b74c1b46d"
+                "reference": "dbde82970b1863bd1054230f8e46ff306a71f98c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-content/zipball/1899a76019c92ba25c1bb48c6adba02b74c1b46d",
-                "reference": "1899a76019c92ba25c1bb48c6adba02b74c1b46d",
+                "url": "https://api.github.com/repos/cptechinc/dplus-content/zipball/dbde82970b1863bd1054230f8e46ff306a71f98c",
+                "reference": "dbde82970b1863bd1054230f8e46ff306a71f98c",
                 "shasum": ""
             },
             "type": "library",
@@ -187,7 +187,7 @@
                 "paginator",
                 "table"
             ],
-            "time": "2018-10-22T14:50:45+00:00"
+            "time": "2018-10-24T21:48:43+00:00"
         },
         {
             "name": "cptechinc/dplus-dpluso",
@@ -195,12 +195,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-dpluso.git",
-                "reference": "167976f59c6308f0b8f9adb429a19cd3cfd3dfcb"
+                "reference": "52f8f2bc022c8a0799c9d4bdc1758f472618bd3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-dpluso/zipball/167976f59c6308f0b8f9adb429a19cd3cfd3dfcb",
-                "reference": "167976f59c6308f0b8f9adb429a19cd3cfd3dfcb",
+                "url": "https://api.github.com/repos/cptechinc/dplus-dpluso/zipball/52f8f2bc022c8a0799c9d4bdc1758f472618bd3e",
+                "reference": "52f8f2bc022c8a0799c9d4bdc1758f472618bd3e",
                 "shasum": ""
             },
             "type": "library",
@@ -232,7 +232,7 @@
                 "order-displays",
                 "user-actions"
             ],
-            "time": "2018-10-18T21:10:20+00:00"
+            "time": "2018-10-25T21:32:15+00:00"
         },
         {
             "name": "cptechinc/dplus-ecomm",
@@ -240,12 +240,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-ecomm.git",
-                "reference": "9ec9cf867511ba08e2eca0b58149e2ef6ac2b42f"
+                "reference": "a927889ef8a4175087aeadf0284a9171f640f7b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-ecomm/zipball/9ec9cf867511ba08e2eca0b58149e2ef6ac2b42f",
-                "reference": "9ec9cf867511ba08e2eca0b58149e2ef6ac2b42f",
+                "url": "https://api.github.com/repos/cptechinc/dplus-ecomm/zipball/a927889ef8a4175087aeadf0284a9171f640f7b5",
+                "reference": "a927889ef8a4175087aeadf0284a9171f640f7b5",
                 "shasum": ""
             },
             "type": "library",
@@ -258,12 +258,26 @@
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Paul Gomez",
+                    "email": "paul@cptechinc.com",
+                    "homepage": "https://www.cptechinc.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Barbara Bullemer",
+                    "email": "barbara@cptechinc.com",
+                    "homepage": "https://www.cptechinc.com",
+                    "role": "Developer"
+                }
+            ],
             "description": "Classes for Dplus Ecomm",
             "homepage": "http://github.com/cptechinc/dplus-ecomm",
             "keywords": [
                 "dplus-ecomm"
             ],
-            "time": "2018-10-22T20:53:21+00:00"
+            "time": "2018-10-22T20:56:56+00:00"
         },
         {
             "name": "cptechinc/dplus-order",
@@ -271,12 +285,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-order.git",
-                "reference": "053a1063ebf64901e79a10f48751e5decb80a87b"
+                "reference": "ebda525483f0a4f0f139d900a52fc3c8543ccade"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-order/zipball/053a1063ebf64901e79a10f48751e5decb80a87b",
-                "reference": "053a1063ebf64901e79a10f48751e5decb80a87b",
+                "url": "https://api.github.com/repos/cptechinc/dplus-order/zipball/ebda525483f0a4f0f139d900a52fc3c8543ccade",
+                "reference": "ebda525483f0a4f0f139d900a52fc3c8543ccade",
                 "shasum": ""
             },
             "type": "library",
@@ -296,7 +310,7 @@
                 "quote",
                 "sales-order"
             ],
-            "time": "2018-10-18T21:16:32+00:00"
+            "time": "2018-10-25T15:13:04+00:00"
         },
         {
             "name": "cptechinc/dplus-processwire",
