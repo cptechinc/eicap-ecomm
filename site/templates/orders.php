@@ -1,14 +1,16 @@
 <?php
 	use Dplus\Base\DplusDateTime;
-
-	$page->title = "Sale Orders";
-	$salesordersdisplay = new Dplus\Ecomm\SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
-	$salesordersdisplay->pagenbr = $input->pageNum;
+	use Dplus\Ecomm\SalesOrdersDisplay;
+	use Dplus\Content\PaginatorBootstrap4;
+	
+	$page->title = "Sales Orders";
+	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
+	$salesordersdisplay->set('pagenbr', $input->pageNum);
 	$salesordersdisplay->generate_filter($input);
 
 	$salesordersdisplay->get_ordercount();
-	$salesordersdisplay->paginationinsertafter = $page->name;
-	$paginator = new Dplus\Content\PaginatorBootstrap4($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
+	$salesordersdisplay->set('paginationinsertafter', $page->name);
+	$paginator = new PaginatorBootstrap4($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
 
 	$orders = $salesordersdisplay->get_orders();
 ?>
@@ -20,9 +22,8 @@
 			</h1>
 		</div>
 	</div>
-	<div class="container page top-margin">
-		<div class="panel-body">
-
+	<div class="container page mt-2">
+		<div>
 			<div class="form-group">
 				<div class="list-group-item list-group-item-action bg-primary text-white font-weight-bold">
 					Total Orders <span class="badge badge-pill badge-light"><?= $salesordersdisplay->count; ?></span>
@@ -75,13 +76,13 @@
 							<div class="input-group form-group">
 								<input class="form-control form-group inline input-sm" type="text" name="total_order[]" id="order-total-min" value="<?= $salesordersdisplay->get_filtervalue('total_order'); ?>" placeholder="From Order Total">
 								<span class="input-group-append">
-									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-min').val('<?= get_minordertotal(); ?>')"> <span class="fa fa-angle-double-down" aria-hidden="true"></span> <span class="sr-only">Min</span> </button>
+									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-min').val('<?= $salesordersdisplay->get_minsalesordertotal(); ?>')"> <span class="fa fa-angle-double-down" aria-hidden="true"></span> <span class="sr-only">Min</span> </button>
 								</span>
 							</div>
 							<div class="input-group form-group">
 								<input class="form-control form-group inline input-sm" type="text" name="total_order[]" id="order-total-max" value="<?= $salesordersdisplay->get_filtervalue('total_order', 1); ?>" placeholder="Through Order Total">
 								<span class="input-group-append">
-									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-max').val('<?= get_maxordertotal(); ?>')"> <span class="fa fa-angle-double-up" aria-hidden="true"></span> <span class="sr-only">Max</span> </button>
+									<button type="button" class="btn btn-outline-secondary input-group-text not-round" onclick="$('#order-total-max').val('<?= $salesordersdisplay->get_maxsalesordertotal(); ?>')"> <span class="fa fa-angle-double-up" aria-hidden="true"></span> <span class="sr-only">Max</span> </button>
 								</span>
 							</div>
 						</div>
@@ -99,11 +100,15 @@
 					</br>
 					<div class="row">
 						<div class="form-group col-md-6">
-							<button class="btn btn-primary btn-block" type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+							<button class="btn btn-primary btn-block" type="submit">
+								Search <i class="fa fa-search" aria-hidden="true"></i>
+							</button>
 						</div>
 						<?php if ($input->get->filter) : ?>
 							<div class="form-group col-md-6">
-								<?= $salesordersdisplay->generate_clearsearchlink(); ?>
+								<a href="<?= $salesordersdisplay->generate_loadurl(); ?>"  class="btn btn-warning btn-block">
+									Clear Search <i class="fa fa-search-minus" aria-hidden="true"></i>
+								</a>
 							</div>
 						<?php endif; ?>
 					</div>

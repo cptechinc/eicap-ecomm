@@ -13,3 +13,9 @@
 			'label' => 'Sales Rep'
 		)
 	);
+	
+	$config->dplus_dplusoroles = array(
+		'slsrep' => 'sales-rep',
+		'slsmgr' => 'sales-manager',
+		'whse'   => 'warehouse'
+	);

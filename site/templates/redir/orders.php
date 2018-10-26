@@ -87,6 +87,11 @@
 			$data = array("DBNAME=$config->dplusdbname", 'UNLOCK' => false, "ORDERNO=$ordn");
 			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
 			break;
+		case 'release-order':
+			$ordn = $input->get->text('ordn');
+			$data = array("DBNAME=$config->dplusdbname", 'RELEASEORDER' => false, "ORDERNO=$ordn");
+			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
+			break;
 	}
 
 	if (!empty($data)) {

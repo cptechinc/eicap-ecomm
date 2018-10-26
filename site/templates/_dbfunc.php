@@ -208,13 +208,36 @@
 /* =============================================================
 	SALES ORDER FUNCTIONS
 ============================================================ */
+	/**
+	 * Counts the Number of Sales Orders in oe_head that match the filter criteria
+	 * @param  bool   $filter      Array of filters and the values to filter for
+	 * @param  bool   $filtertypes Array of filter properties
+	 * @param  bool   $debug       Run in debug? If so, return SQL query
+	 * @return int                 Number of Sales Orders that match the filter criteria
+	 */
 	function count_salesorders($filter = false, $filtertypes = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('COUNT(*)'));
-
+		
+		if (isset($filter['salesperson'])) {
+			$salespeople = $filter['salesperson'];
+			$ordersquery = (new QueryBuilder())->table('oe_head');
+			$ordersquery->field('ordernumber');
+			$ordersquery->where(
+				$ordersquery
+				->orExpr()
+				->where('salesperson_1', $salespeople)
+				->where('salesperson_2', $salespeople)
+				->where('salesperson_3', $salespeople)
+			);
+			$q->where('ordernumber', $ordersquery);
+			unset($filter['salesperson']);
+		}
+		
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
+		
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
 		if ($debug) {
@@ -224,17 +247,41 @@
 			return $sql->fetchColumn();
 		}
 	}
-
-	function get_salesordersorderdate($limit = 10, $page = 1, $sortrule, $filter = false, $filtertypes = false, $useclass = false, $debug = false) {
+	
+	/**
+	 * Returns an array of SalesOrder that match the filter criteria
+	 * @param  int    $limit       Number of Records to Return
+	 * @param  int    $page        Page Number
+	 * @param  string $sortrule    Sort (ASC)ENDING | (DESC)ENDING
+	 * @param  bool   $filter      Array of filters and their values
+	 * @param  bool   $filtertypes Array of filter properties
+	 * @param  bool   $useclass    Return records as SalesOrder class?
+	 * @param  bool   $debug       Run in Debug? If so, return SQL Query
+	 * @return array               Sales Orders that match the filter criteria
+	 */
+	function get_salesorders($limit = 10, $page = 1, $sortrule, $filter = false, $filtertypes = false, $useclass = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
-		$q->field('oe_head.*');
-		$q->field($q->expr("STR_TO_DATE(order_date, '%m/%d/%Y') as dateoforder"));
-		$q->where('type', 'O');
+		
+		if (isset($filter['salesperson'])) {
+			$salespeople = $filter['salesperson'];
+			$ordersquery = (new QueryBuilder())->table('oe_head');
+			$ordersquery->field('ordernumber');
+			$ordersquery->where(
+				$ordersquery
+				->orExpr()
+				->where('salesperson_1', $salespeople)
+				->where('salesperson_2', $salespeople)
+				->where('salesperson_3', $salespeople)
+			);
+			$q->where('ordernumber', $ordersquery);
+			unset($filter['salesperson']);
+		}
+		
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
 		$q->limit($limit, $q->generate_offset($page, $limit));
-		$q->order('dateoforder ' . $sortrule);
+		$q->order('order_date' . $sortrule);
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
 		if ($debug) {
@@ -249,8 +296,35 @@
 		}
 	}
 
+	/**
+	 * Returns an array of SalesOrder that match the filter criteria
+	 * @param  int    $limit       Number of Records to Return
+	 * @param  int    $page        Page Number
+	 * @param  string $sortrule    Sort (ASC)ENDING | (DESC)ENDING
+	 * @param  string $orderby     Column / Property to sort on
+	 * @param  bool   $filter      Array of filters and their values
+	 * @param  bool   $filtertypes Array of filter properties
+	 * @param  bool   $useclass    Return records as SalesOrder class?
+	 * @param  bool   $debug       Run in Debug? If so, return SQL Query
+	 * @return array               Sales Orders that match the filter criteria
+	 */
 	function get_salesorders_orderby($limit = 10, $page = 1, $sortrule, $orderby, $filter = false, $filtertypes = false, $useclass = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
+		
+		if (isset($filter['salesperson'])) {
+			$ordersquery = (new QueryBuilder())->table('oe_head');
+			$ordersquery->field('ordernumber');
+			$ordersquery->where(
+				$ordersquery
+				->orExpr()
+				->where('salesperson_1', $filter['salesperson'])
+				->where('salesperson_2', $filter['salesperson'])
+				->where('salesperson_3', $filter['salesperson'])
+			);
+			$q->where('ordernumber', $ordersquery);
+			unset($filter['salesperson']);
+		}
+		
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
@@ -266,27 +340,7 @@
 				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrder');
 				return $sql->fetchAll();
 			}
-			return $sql->fetchAll(PDO::FETCH_ASSOC);
-		}
-	}
-
-	function get_salesorders($limit = 10, $page = 1, $filter = false, $filtertypes = false, $useclass = false, $debug = false) {
-		$q = (new QueryBuilder())->table('oe_head');
-		if (!empty($filter)) {
-			$q->generate_filters($filter, $filtertypes);
-		}
-		$q->limit($limit, $q->generate_offset($page, $limit));
-		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
-
-		if ($debug) {
-			return $q->generate_sqlquery($q->params);
-		} else {
-			$sql->execute($q->params);
-			if ($useclass) {
-				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrder');
-				return $sql->fetchAll();
-			}
-			return $sql->fetchAll(PDO::FETCH_ASSOC);
+			return $sql->fetchAll();
 		}
 	}
 
@@ -353,12 +407,20 @@
 		}
 	}
 
-	function get_orderdetails($sessionID, $ordn, $useclass = false, $debug = false) {
+	/**
+	 * Returns an array of SalesOrderDetail for an Order
+	 * @param  string $sessionID Session Identifier
+	 * @param  string $ordn      Sales Order Number
+	 * @param  bool   $useclass  Use Class? Or return as array
+	 * @param  bool   $debug     Run in debug? If so return SQL Query
+	 * @return array             Sales Order Details
+	 */
+	function get_orderdetails($sessionID, $ordn, $useclass = false, $debug) {
 		$q = (new QueryBuilder())->table('ordrdet');
 		$q->where('sessionid', $sessionID);
 		$q->where('orderno', $ordn);
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
-
+		
 		if ($debug) {
 			return $q->generate_sqlquery($q->params);
 		} else {
@@ -391,14 +453,40 @@
 		}
 	}
 
-	function get_minsalesorderdate($field, $custID = false, $shipID = false, $debug = false) {
+	/**
+	 * Returns the Min Order Date for Sales Orders that meets the filter criteria
+	 * @param  string $custID      Customer ID, if blank will not filter to one customer
+	 * @param  string $shipID      Customer Shipto ID
+	 * @param  string $field       Which Sales Order Date Property
+	 * @param  bool   $filter      Array of filters and their values
+	 * @param  bool   $filtertypes Array of filter properties
+	 * @param  bool   $debug       Run in debug? If so return SQL Query
+	 * @return string              Min Sales Order Date
+	 */
+	function get_minsalesorderdate($field, $custID = false, $shipID = false, $filter, $filtertypes, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
-		$q->field($q->expr("MIN(STR_TO_DATE($field, '%m/%d/%Y'))"));
-		if ($custID) {
-			$q->where('custid', $custID);
+		$q->field($q->expr("MIN($field)"));
+		
+		if (isset($filter['salesperson'])) {
+			$ordersquery = (new QueryBuilder())->table('oe_head');
+			$ordersquery->field('ordernumber');
+			$ordersquery->where(
+				$ordersquery
+				->orExpr()
+				->where('salesperson_1', $filter['salesperson'])
+				->where('salesperson_2', $filter['salesperson'])
+				->where('salesperson_3', $filter['salesperson'])
+			);
+			$q->where('ordernumber', $ordersquery);
+			unset($filter['salesperson']);
 		}
-		if ($shipID) {
-			$q->where('shiptoid', $shipID);
+		
+		if (!empty($custID)) {
+			$q->where('custid', $custID);
+
+			if (!(empty($shipID))) {
+				$q->where('shiptoid', $shipID);
+			}
 		}
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
@@ -410,10 +498,33 @@
 		}
 	}
 
-	function get_maxordertotal($custID = false, $shipID = false, $debug = false) {
+	/**
+	 * Returns the Max Order Total for Sales Orders that
+	 * @param  string $custID      Customer ID, if blank will not filter to one customer
+	 * @param  string $shipID      Customer Shipto Id
+	 * @param  bool   $filter      Array of filters and their values
+	 * @param  bool   $filtertypes Array of filter properties
+	 * @param  bool   $debug       Run in debug? If so return SQL Query
+	 * @return float               Max Sales Order Total
+	 */
+	function get_maxsalesordertotal($custID = '', $shipID = '', $filter, $filtertypes, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('MAX(total_order)'));
-
+		
+		if (isset($filter['salesperson'])) {
+			$ordersquery = (new QueryBuilder())->table('oe_head');
+			$ordersquery->field('ordernumber');
+			$ordersquery->where(
+				$ordersquery
+				->orExpr()
+				->where('salesperson_1', $filter['salesperson'])
+				->where('salesperson_2', $filter['salesperson'])
+				->where('salesperson_3', $filter['salesperson'])
+			);
+			$q->where('ordernumber', $ordersquery);
+			unset($filter['salesperson']);
+		}
+		
 		if (!empty($custID)) {
 			$q->where('custid', $custID);
 
@@ -430,11 +541,34 @@
 			return $sql->fetchColumn();
 		}
 	}
-
-	function get_minordertotal($custID = false, $shipID = false, $debug = false) {
+	
+	/**
+	 * Returns the Min Order Total for Sales Orders that
+	 * @param  string $custID      Customer ID, if blank will not filter to one customer
+	 * @param  string $shipID      Customer Shipto ID
+	 * @param  bool   $filter      Array of filters and their values
+	 * @param  bool   $filtertypes Array of filter properties
+	 * @param  bool   $debug       Run in debug? If so return SQL Query
+	 * @return float               Min Sales Order Total
+	 */
+	function get_minsalesordertotal($custID = '', $shipID = '', $filter, $filtertypes, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('MIN(total_order)'));
-
+		
+		if (isset($filter['salesperson'])) {
+			$ordersquery = (new QueryBuilder())->table('oe_head');
+			$ordersquery->field('ordernumber');
+			$ordersquery->where(
+				$ordersquery
+				->orExpr()
+				->where('salesperson_1', $filter['salesperson'])
+				->where('salesperson_2', $filter['salesperson'])
+				->where('salesperson_3', $filter['salesperson'])
+			);
+			$q->where('ordernumber', $ordersquery);
+			unset($filter['salesperson']);
+		}
+		
 		if (!empty($custID)) {
 			$q->where('custid', $custID);
 

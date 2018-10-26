@@ -35,16 +35,6 @@ $config->scripts->append(hash_templatefile('scripts/main.js'));
 
 $site = $pages->get('/config/');
 
-
-$user->loggedin = is_userloggedin(session_id());
-
-if ($user->loggedin) {
-	setup_user(session_id());
-} elseif ($page->template != 'login' && $page->template != 'redir') {
-	header('location: ' . $pages->get('template=login')->url());
-	exit;
-}
-
 $page->filename = $_SERVER['REQUEST_URI'];
 // BUILD AND INSTATIATE CLASSES
 $page->fullURL = new \Purl\Url($page->httpUrl);
@@ -53,6 +43,18 @@ $page->fullURL->path = '';
 if (!empty($page->filename) && $page->filename != '/') {
 	$page->fullURL->join($page->filename);
 }
+
+$user->loggedin = is_userloggedin(session_id());
+
+if ($user->loggedin) {
+	setup_user(session_id());
+} elseif ($page->template != 'login' && $page->template != 'redir') {
+	$session->redirecturl = $page->fullURL->getUrl(); 
+	header('location: ' . $pages->get('template=login')->url());
+	exit;
+}
+
+
 
 $page->stringerbell = new Dplus\Base\StringerBell();
 
