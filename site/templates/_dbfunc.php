@@ -938,15 +938,15 @@
 		}
 	}
 
-	function get_customer($custID, $shiptoID = false, $debug = false) {
+	function get_customer($custID, $shiptoID = false, $contactID = '', $debug = false) {
 		$q = (new QueryBuilder())->table('custindex');
 		$q->where('custid', $custID);
 
 		if ($shiptoID) {
 			$q->where('shiptoid', $shiptoID);
-			$q->where('source', Contact::$types['customer-shipto']);
+			//$q->where('source', Contact::$types['customer-shipto']);
 		} else {
-			$q->where('source', Contact::$types['customer']);
+			//$q->where('source', Contact::$types['customer']);
 		}
 
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
