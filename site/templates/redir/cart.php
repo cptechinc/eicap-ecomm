@@ -1,4 +1,5 @@
 <?php
+    use Dplus\ProcessWire\DplusWire;
     /**
     * CART REDIRECT
     *  @param string $action
@@ -30,6 +31,12 @@
 	*		ITEMID=$itemID
 	*		QTY=$qty
 	*		break;
+    *   case 'add-multiple-items':
+	*		DBNAME=$config->dplusdbname
+	*		CARTDET
+	*		ITEMID=$itemID
+	*		QTY=$qty
+	*		break;
 	*	case 'quick-update-line':
 	*	    DBNAME=$config->dplusdbname
 	*		CARTDET
@@ -52,6 +59,23 @@
 			if (!empty($cart->shipid)) {$data[] = "SHIPTOID=$cart->shipid"; }
             $session->data = $data;
             $session->addtocart = 'You added ' . $qty . ' of ' . $itemID . ' to your cart';
+            $session->loc = $config->pages->cart;
+            break;
+        case 'add-multiple-items':
+            $cart = CartQuote::load(session_id());
+            $itemids = $input->post->itemID;
+            $qtys = $input->post->qty;
+            $data = array("DBNAME=$config->dplusdbname", "CARTADDMULTIPLE", "CUSTID=$custID");
+            $data[] = empty($cart->custid) ? "CUSTID=$config->defaultid" : "CUSTID=$cart->custid";
+            if (!empty($cart->shipid)) {$data[] = "SHIPTOID=$cart->shipid"; }
+            for ($i = 0; $i < sizeof($itemids); $i++) {
+        		$itemID = str_pad(DplusWire::wire('sanitizer')->text($itemids[$i]), 30, ' ');
+        		$qty = DplusWire::wire('sanitizer')->text($qtys[$i]);
+
+        		if (empty($qty)) {$qty = "0"; }
+        		$data[] = "ITEMID=".$itemID."QTY=".$qty;
+        	}
+            $session->addtocart = sizeof($itemIDs);
             $session->loc = $config->pages->cart;
             break;
         case 'quick-update-line':
