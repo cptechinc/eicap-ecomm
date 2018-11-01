@@ -72,8 +72,9 @@
         		$itemID = str_pad(DplusWire::wire('sanitizer')->text($itemids[$i]), 30, ' ');
         		$qty = DplusWire::wire('sanitizer')->text($qtys[$i]);
 
-        		if (empty($qty)) {$qty = "0"; }
-        		$data[] = "ITEMID=".$itemID."QTY=".$qty;
+                if (!empty($qty)) {
+					$data[] = "ITEMID={$itemID}QTY=$qty";
+				}
         	}
             $session->addtocart = sizeof($itemIDs);
             $session->loc = $config->pages->cart;
