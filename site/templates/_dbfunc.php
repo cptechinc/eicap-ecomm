@@ -174,12 +174,40 @@
 			return $sql->fetch();
 		}
 	}
+	/* =============================================================
+		ITEM GROUP FUNCTIONS
+	============================================================ */
+		function get_itemgroups($debug = false) {
+			$q = (new QueryBuilder())->table('itemgroup');
+			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
+			if ($debug) {
+				return $q->generate_sqlquery($q->params);
+			} else {
+				$sql->execute($q->params);
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'ItemGroup');
+				return $sql->fetchAll();
+			}
+		}
+
+		function get_itemgroup($famID, $debug = false) {
+			$q = (new QueryBuilder())->table('itemgroup');
+			$q->where('famID', $famID);
+			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+			if ($debug) {
+				return $q->generate_sqlquery($q->params);
+			} else {
+				$sql->execute($q->params);
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'ItemGroup');
+				return $sql->fetch();
+			}
+		}
 /* =============================================================
 	PRODUCT FUNCTIONS
 ============================================================ */
 	function get_products($debug = false) {
-		$q = (new QueryBuilder())->table('itemmaster');
+		$q = (new QueryBuilder())->table('im');
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
 		if ($debug) {
@@ -192,7 +220,7 @@
 	}
 
 	function get_product($itemid, $debug = false) {
-		$q = (new QueryBuilder())->table('itemmaster');
+		$q = (new QueryBuilder())->table('im');
 		$q->where('itemid', $itemid);
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
@@ -201,6 +229,33 @@
 		} else {
 			$sql->execute($q->params);
 			$sql->setFetchMode(PDO::FETCH_CLASS, 'Product');
+			return $sql->fetch();
+		}
+	}
+	
+	function get_items($debug = false) {
+		$q = (new QueryBuilder())->table('itemmaster');
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			$sql->setFetchMode(PDO::FETCH_CLASS, 'ItemMasterItem');
+			return $sql->fetchAll();
+		}
+	}
+
+	function get_item($itemid, $debug = false) {
+		$q = (new QueryBuilder())->table('itemmaster');
+		$q->where('itemid', $itemid);
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			$sql->setFetchMode(PDO::FETCH_CLASS, 'ItemMasterItem');
 			return $sql->fetch();
 		}
 	}
@@ -852,6 +907,16 @@
 /* =============================================================
 	CUSTOMER INDEX FUNCTIONS
 ============================================================ */
+	function get_customertypesforuser($loginID) {
+		$user_processwire = DplusWire::wire('users')->get($loginID);
+		$customertypes = array();
+		foreach (array_keys(DplusWire::wire('config')->customertypes) as $customertype) {
+			if ($user_processwire->hasRole($customertype)) {
+				$customertypes[] = $customertype;
+			}
+		}
+		return $customertypes;
+	}
 	/**
 	 * Returns the Number of custindex records that match the search
 	 * and filters it by user permissions
@@ -863,7 +928,7 @@
 	function count_searchcustindex($query, $loginID = '', $debug = false) {
 		$loginID = (!empty($loginID)) ? $loginID : DplusWire::wire('user')->loginid;
 		$user = LogmUser::load($loginID);
-		$SHARED_ACCOUNTS = DplusWire::wire('config')->sharedaccounts;
+		
 		$search = QueryBuilder::generate_searchkeyword($query);
 		$groupedcustindexquery = (new QueryBuilder())->table('custindex')->group('custid, shiptoid');
 
@@ -871,8 +936,9 @@
 		$q->field($q->expr('COUNT(*)'));
 
 		// CHECK if Users has restrictions by Application Config, then User permissions
-		if ($user->get_dplusrole() == DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'] && DplusWire::wire('pages')->get('/config/')->restrict_allowedcustomers) {
-			$custpermquery = (new QueryBuilder())->table('custperm')->field('custid, shiptoid')->where('loginid', [$loginID, $SHARED_ACCOUNTS]);
+		if (in_array($user->get_dplusrole(), array(DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'], DplusWire::wire('config')->user_roles['sales-manager']['dplus-code']))) {
+			$customertypes = get_customertypesforuser($loginID);
+			$custpermquery = (new QueryBuilder())->table('custperm')->field('custid, shiptoid')->where('typecode', $customertypes);
 			$q->table($groupedcustindexquery, 'custgrouped');
 			$q->where('(custid, shiptoid)','in', $custpermquery);
 		} else {
@@ -910,12 +976,12 @@
 		$search = '%'.str_replace(' ', '%', str_replace('-', '', addslashes($keyword))).'%';
 		$q = (new QueryBuilder())->table('custindex');
 
-		if ($user->get_dplusrole() == DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'] && DplusWire::wire('pages')->get('/config/')->restrict_allowedcustomers) {
-			$permquery = (new QueryBuilder())->table('custperm');
-			$permquery->field('custid, shiptoid');
-			$permquery->where('loginid', [$loginID, $SHARED_ACCOUNTS]);
-			$q->where('(custid, shiptoid)','in', $permquery);
+		if (in_array($user->get_dplusrole(), array(DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'], DplusWire::wire('config')->user_roles['sales-manager']['dplus-code']))) {
+			$customertypes = get_customertypesforuser($loginID);
+			$custpermquery = (new QueryBuilder())->table('custperm')->field('custid, shiptoid')->where('typecode', $customertypes);
+			$q->where('(custid, shiptoid)','in', $custpermquery);
 		}
+		
 		$fieldstring = implode(", ' ', ", array_keys(Contact::generate_classarray()));
 
 		$q->where($q->expr("UCASE(REPLACE(CONCAT($fieldstring), '-', '')) LIKE UCASE([])", [$search]));

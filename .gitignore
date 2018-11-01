@@ -11,6 +11,7 @@ dw_php_codehinting.config
 site/config.php
 project.cson
 vendor/
+site/templates/test.php
 
 # Processwire Directories
 site/modules
