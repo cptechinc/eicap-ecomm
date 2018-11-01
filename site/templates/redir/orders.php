@@ -1,4 +1,5 @@
 <?php
+	use Dplus\ProcessWire\DplusWire;
 	$requestmethod = $input->requestMethod('POST') ? 'post' : 'get';
 	$filename = $input->$requestmethod->sessionID ? $input->$requestmethod->text('sessionID') : session_id();
 	$action = $input->$requestmethod->text('action');
@@ -10,6 +11,12 @@
 	*
 	*
 	* switch ($action) {
+	*   case 'add-multiple-items':
+	*		DBNAME=$config->dplusdbname
+	*		ORDERDET
+	*		ITEMID=$itemID
+	*		QTY=$qty
+	*		break;
 	*	case 'get-order-details':
 	*		DBNAME=$config->DBNAME
 	*		ORDERDET=$ordn
@@ -58,7 +65,7 @@
 			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
 			break;
 		case 'add-to-order':
-            $sessionID = session_id();
+			$sessionID = session_id();
 			$itemID = $input->$requestmethod->text('itemID');
 			$qty = $input->$requestmethod->text('qty');
 			$ordn = $input->$requestmethod->text('ordn');
@@ -70,6 +77,23 @@
 			} else {
 				$session->loc = $input->$requestmethod->text('page');
 			}
+			break;
+		case 'add-multiple-items':
+			$ordn = $input->post->text('ordn');
+			$itemids = $input->post->itemID;
+			$qtys = $input->post->qty;
+			$custID = SalesOrder::find_custid($ordn);
+			$data = array("DBNAME=$config->dplusdbname", "ORDERADDMULTIPLE", "ORDERNO=$ordn");
+
+			for ($i = 0; $i < sizeof($itemids); $i++) {
+				$itemID = str_pad(DplusWire::wire('sanitizer')->text($itemids[$i]), 30, ' ');
+				$qty = DplusWire::wire('sanitizer')->text($qtys[$i]);
+
+				if (!empty($qty)) {
+					$data[] = "ITEMID={$itemID}QTY=$qty";
+				}
+			}
+			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
 			break;
 		case 'remove-line-get':
 			$ordn = $input->get->text('ordn');

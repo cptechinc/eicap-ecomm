@@ -4,7 +4,7 @@
     $ordn = $input->get->text('ordn');
     $orderdisplay = new Dplus\Dpluso\OrderDisplays\SalesOrderDisplay(session_id(), $page->fullURL, '', $ordn);
     $order = $orderdisplay->get_order();
-    $page->title = "Order #$ordn";
+    $page->title = "Order #$ordn for ".Customer::get_customernamefromid($order->custid);;
 ?>
 <?php include('./_head.php'); // include header markup ?>
 	<div class="container page top-margin">
@@ -12,6 +12,11 @@
         <?php if ($order->is_onreview()) : ?>
             <div class="alert alert-danger" role="alert">
                 <strong><i class="fa fa-warning" aria-hidden="true"></i>&nbsp;Pending Order!</strong>&nbsp;&nbsp;This order will be processed once it is approved.
+            </div>
+        <?php endif; ?>
+        <?php if ($order->is_approved()) : ?>
+            <div class="alert alert-success" role="alert">
+                <strong><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Approved Order!</strong>&nbsp;&nbsp;This order has been approved.
             </div>
         <?php endif; ?>
         <h5 class="font-weight-bold">Ordered on <?= DplusDateTime::format_date($order->order_date); ?></h5>
@@ -65,22 +70,22 @@
         <table class="table table-striped table-borderless">
 				<thead class="bg-secondary text-white font-weight-bold">
                     <div class="row">
-                        <th class="col-sm-7">Item ID</th>
-    					<th class="col-sm-1 text-right">Qty</th>
-    					<th class="col-sm-2 text-right">Price</th>
-                        <th class="col-sm-2 text-right">Total Price</th>
+                        <th class="col-sm-3">Item ID</th>
+    					<th class="col-sm-3 text-right">Qty</th>
+    					<th class="col-sm-3 text-right">Price</th>
+                        <th class="col-sm-3 text-right">Total Price</th>
                     </div>
 				</thead>
                 <?php $details = $orderdisplay->get_orderdetails($order); ?>
                 <?php foreach ($details as $detail) : ?>
                 <tr>
-                    <td class="col-sm-7">
+                    <td class="col-sm-3">
                         <?= $detail->itemid; ?></br>
                         <small><?= $detail->desc1; ?></small>
                     </td>
-                    <td class="col-sm-1 text-right"><?= number_format($detail->qty, 0); ?></td>
-                    <td class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($detail->price); ?></td>
-                    <td class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($detail->totalprice); ?></td>
+                    <td class="col-sm-3 text-right"><?= number_format($detail->qty, 0); ?></td>
+                    <td class="col-sm-3 text-right">$ <?= $page->stringerbell->format_money($detail->price); ?></td>
+                    <td class="col-sm-3 text-right">$ <?= $page->stringerbell->format_money($detail->totalprice); ?></td>
                 </tr>
                 <?php endforeach; ?>
         </table>
@@ -90,16 +95,16 @@
                 <div class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($order->subtotal_tax); ?></div>
             </div>
             <div class="row">
-                <div class="col-sm-10 text-right">Shipping:</div>
-                <div class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($order->total_freight); ?></div>
+                <div class="col-sm-9 text-right">Shipping:</div>
+                <div class="col-sm-3 text-right">$ <?= $page->stringerbell->format_money($order->total_freight); ?></div>
             </div>
             <div class="row">
-                <div class="col-sm-10 text-right">Tax:</div>
-                <div class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($order->total_tax); ?></div>
+                <div class="col-sm-9 text-right">Tax:</div>
+                <div class="col-sm-3 text-right">$ <?= $page->stringerbell->format_money($order->total_tax); ?></div>
             </div>
             <div class="row font-weight-bold">
-                <div class="col-sm-10 text-right">Total:</div>
-                <div class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($order->total_order); ?></div>
+                <div class="col-sm-9 text-right">Total:</div>
+                <div class="col-sm-3 text-right">$ <?= $page->stringerbell->format_money($order->total_order); ?></div>
             </div>
         </div>
         <div class="row">

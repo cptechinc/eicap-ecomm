@@ -16,6 +16,9 @@
                         </li>
                     <?php endif; ?>
                 <?php endforeach; ?>
+                        <li class="nav-item">
+                            <a class="text-white nav-link" href="<?= $pages->get('template=orders')->url; ?>"><?= $pages->get('template=orders')->title; ?></a>
+                        </li>
             </ul>
             <ul class="nav navbar-nav navbar-right hidden-sm">
                 <?php //if($page->editable()) echo "<li class='edit'><a href='$page->editUrl'>Edit</a></li>"; ?>
