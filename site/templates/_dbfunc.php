@@ -928,21 +928,19 @@
 	function count_searchcustindex($query, $loginID = '', $debug = false) {
 		$loginID = (!empty($loginID)) ? $loginID : DplusWire::wire('user')->loginid;
 		$user = LogmUser::load($loginID);
-		
 		$search = QueryBuilder::generate_searchkeyword($query);
-		$groupedcustindexquery = (new QueryBuilder())->table('custindex')->group('custid, shiptoid');
 
-		$q = new QueryBuilder();
+		$q = (new QueryBuilder())->table('custindex');
 		$q->field($q->expr('COUNT(*)'));
 
 		// CHECK if Users has restrictions by Application Config, then User permissions
 		if (in_array($user->get_dplusrole(), array(DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'], DplusWire::wire('config')->user_roles['sales-manager']['dplus-code']))) {
 			$customertypes = get_customertypesforuser($loginID);
-			$custpermquery = (new QueryBuilder())->table('custperm')->field('custid, shiptoid')->where('typecode', $customertypes);
-			$q->table($groupedcustindexquery, 'custgrouped');
-			$q->where('(custid, shiptoid)','in', $custpermquery);
-		} else {
-			$q->table($groupedcustindexquery, 'custgrouped');
+			
+			if (!empty($customertypes)) {
+				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
+				$q->where('(custid, shiptoid)','in', $custpermquery);
+			}
 		}
 
 		$fieldstring = implode(", ' ', ", array_keys(Contact::generate_classarray()));
@@ -978,8 +976,10 @@
 
 		if (in_array($user->get_dplusrole(), array(DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'], DplusWire::wire('config')->user_roles['sales-manager']['dplus-code']))) {
 			$customertypes = get_customertypesforuser($loginID);
-			$custpermquery = (new QueryBuilder())->table('custperm')->field('custid, shiptoid')->where('typecode', $customertypes);
-			$q->where('(custid, shiptoid)','in', $custpermquery);
+			if (!empty($customertypes)) {
+				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
+				$q->where('(custid, shiptoid)','in', $custpermquery);
+			}
 		}
 		
 		$fieldstring = implode(", ' ', ", array_keys(Contact::generate_classarray()));

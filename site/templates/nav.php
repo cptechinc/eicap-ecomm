@@ -8,17 +8,15 @@
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav mr-auto">
                 <?php $homepage = $pages->get('/'); ?>
-        		<?php $children = $homepage->children(); ?>
+        		<?php $children = $homepage->children('template!=user-page|cart|build-items'); ?>
                 <?php foreach ($children as $child) : ?>
-                    <?php if ($child->template != 'user-page' && $child->template != 'cart') : ?>
-                        <li class="nav-item">
-                            <a class="text-white nav-link" href="<?= $child->url; ?>"><?= $child->title; ?></a>
-                        </li>
-                    <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="text-white nav-link" href="<?= $child->url; ?>"><?= $child->title; ?></a>
+                    </li>
                 <?php endforeach; ?>
-                        <li class="nav-item">
-                            <a class="text-white nav-link" href="<?= $pages->get('template=orders')->url; ?>"><?= $pages->get('template=orders')->title; ?></a>
-                        </li>
+                <li class="nav-item">
+                    <a class="text-white nav-link" href="<?= $pages->get('template=orders')->url; ?>"><?= $pages->get('template=orders')->title; ?></a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right hidden-sm">
                 <?php //if($page->editable()) echo "<li class='edit'><a href='$page->editUrl'>Edit</a></li>"; ?>
