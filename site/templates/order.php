@@ -44,7 +44,7 @@
                 <legend class="font-weight-bold text-danger">Order Summary</legend>
                 <div class="row">
                     <div class="col-sm-7">Subtotal:</div>
-                    <div class="col-sm-5 text-right">$ <?= $page->stringerbell->format_money($order->subtotal_nontax); ?></div>
+                    <div class="col-sm-5 text-right">$ <?= $page->stringerbell->format_money($order->subtotal_tax); ?></div>
                 </div>
                 <div class="row">
                     <div class="col-sm-7">Shipping:</div>
@@ -87,7 +87,7 @@
         <div class="pb-5">
             <div class="row">
                 <div class="col-sm-10 text-right">Subtotal:</div>
-                <div class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($order->subtotal_nontax); ?></div>
+                <div class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($order->subtotal_tax); ?></div>
             </div>
             <div class="row">
                 <div class="col-sm-10 text-right">Shipping:</div>
