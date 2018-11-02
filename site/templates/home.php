@@ -7,7 +7,7 @@
 			</div>
 		</div>
 		<div class="row bg-primary rounded">
-			<div class="col-sm-4 mt-3">
+			<div class="col-sm-3 mt-3">
 				<div class="card bg-white">
 					<a href="<?= $pages->get('/products/')->url; ?>">
 						<div class="card-body">
@@ -17,7 +17,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-sm-4 mt-3">
+			<div class="col-sm-3 mt-3">
 				<div class="card bg-white">
 					<a href="<?= $pages->get('/user/orders/')->url; ?>">
 						<div class="card-body">
@@ -27,7 +27,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-sm-4 my-3">
+			<div class="col-sm-3 my-3">
 				<div class="card bg-white">
 					<a href="<?= $pages->get('/cart/')->url; ?>">
 						<div class="card-body">
@@ -37,6 +37,28 @@
 					</a>
 				</div>
 			</div>
+			<?php if ($user->hasRole('admin')) : ?>
+				<div class="col-sm-3 my-3">
+					<div class="card bg-white">
+						<a href="<?= $pages->get('template=build-items')->url; ?>">
+							<div class="card-body">
+								<h1 class="text-center text-danger"><i class="fa fa-wrench fa-2x" aria-hidden="true"></i></h1>
+								<p class="card-text font-weight-bold text-center text-danger">Rebuild Items</p>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-sm-3 my-3">
+					<div class="card bg-white">
+						<a href="<?php $pages->get('template=build-items')->url; ?>">
+							<div class="card-body">
+								<h1 class="text-center text-danger"><i class="fa fa-users fa-2x" aria-hidden="true"></i></h1>
+								<p class="card-text font-weight-bold text-center text-danger">User Admininstration</p>
+							</div>
+						</a>
+					</div>
+				</div>
+			<?php endif; ?>
 		</div>
 	</div>
 	<!-- end content -->

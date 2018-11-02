@@ -60,15 +60,9 @@
 							<h4>Cust ID</h4>
 							<div class="input-group form-group">
 								<input class="form-control form-group inline input-sm" type="text" name="custid[]" id="sales-order-cust-from" value="<?= $salesordersdisplay->get_filtervalue('custid'); ?>" placeholder="From CustID">
-								<span class="input-group-append">
-									<button type="button" class="btn btn-outline-secondary input-group-text not-round get-custid-search" data-field="#sales-order-cust-from"> <i class="fa fa-search" aria-hidden="true"></i> <span class="sr-only">Search</span> </button>
-								</span>
 							</div>
 							<div class="input-group form-group">
 								<input class="form-control form-group inline input-sm" type="text" name="custid[]" id="sales-order-cust-to" value="<?= $salesordersdisplay->get_filtervalue('custid', 1); ?>" placeholder="Through CustID">
-								<span class="input-group-append">
-									<button type="button" class="btn btn-outline-secondary input-group-text not-round get-custid-search" data-field="#sales-order-cust-to"> <i class="fa fa-search" aria-hidden="true"></i> <span class="sr-only">Search</span> </button>
-								</span>
 							</div>
 						</div>
 						<div class="col-sm-3">

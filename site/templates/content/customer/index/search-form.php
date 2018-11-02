@@ -13,7 +13,7 @@
     </div>
     <div>
         <?php
-            if (!empty($input->get->q) || !empty($input->get->function)) {
+            //if (!empty($input->get->q) || !empty($input->get->function)) {
                 switch ($input->get->text('function')) {
                     case 'cart':
                         include($config->paths->content."customer/index/cart-list.php");
@@ -22,7 +22,7 @@
                         include($config->paths->content."customer/index/cart-list.php");
                         break;
                 }
-            }
+            //}
         ?>
     </div>
 </form>

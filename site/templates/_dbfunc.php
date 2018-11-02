@@ -178,7 +178,7 @@
 		ITEM GROUP FUNCTIONS
 	============================================================ */
 		function get_itemgroups($debug = false) {
-			$q = (new QueryBuilder())->table('itemgroup');
+			$q = (new QueryBuilder())->table('itemgroups');
 			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
 			if ($debug) {
@@ -190,9 +190,9 @@
 			}
 		}
 
-		function get_itemgroup($famID, $debug = false) {
-			$q = (new QueryBuilder())->table('itemgroup');
-			$q->where('famID', $famID);
+		function get_itemgroup($itemgroup, $debug = false) {
+			$q = (new QueryBuilder())->table('itemgroups');
+			$q->where('code', $itemgroup);
 			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
 			if ($debug) {
@@ -438,7 +438,6 @@
 			return $sql->fetch();
 		}
 	}
-
 
 	/**
 	 * Returns SalesOrderEdit object for Editable Sales Order
@@ -911,7 +910,7 @@
 		$user_processwire = DplusWire::wire('users')->get($loginID);
 		$customertypes = array();
 		foreach (array_keys(DplusWire::wire('config')->customertypes) as $customertype) {
-			if ($user_processwire->hasRole($customertype)) {
+			if ($user_processwire->hasRole("program-$customertype")) {
 				$customertypes[] = $customertype;
 			}
 		}

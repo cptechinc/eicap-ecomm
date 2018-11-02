@@ -11,11 +11,16 @@
 		'sales-rep' => array(
 			'dplus-code' => 'slsrep',
 			'label' => 'Sales Rep'
-		)
+		),
+		'admin' => array(
+			'dplus-code' => 'admin',
+			'label' => 'Admin'
+		),
 	);
 	
 	$config->dplus_dplusoroles = array(
 		'slsrep' => 'sales-rep',
 		'slsmgr' => 'sales-manager',
-		'whse'   => 'warehouse'
+		'whse'   => 'warehouse',
+		'admin'  => 'admin'
 	);
