@@ -1,5 +1,4 @@
 <?php include('./_head.php'); // include header markup ?>
-
 	<div class="container page">
 		<div class="row mt-5 mb-1">
 			<div class="col-sm-12">
@@ -11,8 +10,18 @@
 				<div class="card bg-white">
 					<a href="<?= $pages->get('/products/')->url; ?>">
 						<div class="card-body">
-							<h1 class="text-center text-danger"><i class="fa fa fa-database fa-2x" aria-hidden="true"></i></h1>
+							<h1 class="text-center text-danger"><i class="fa fa-database fa-2x" aria-hidden="true"></i></h1>
 							<p class="card-text font-weight-bold text-center text-danger">Products</p>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-sm-3 mt-3">
+				<div class="card bg-white">
+					<a href="<?= $pages->get('/customers/')->url; ?>">
+						<div class="card-body">
+							<h1 class="text-center text-danger"><i class="fa fa-user fa-2x" aria-hidden="true"></i></h1>
+							<p class="card-text font-weight-bold text-center text-danger">Customers</p>
 						</div>
 					</a>
 				</div>

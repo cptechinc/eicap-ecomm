@@ -906,16 +906,7 @@
 /* =============================================================
 	CUSTOMER INDEX FUNCTIONS
 ============================================================ */
-	function get_customertypesforuser($loginID) {
-		$user_processwire = DplusWire::wire('users')->get($loginID);
-		$customertypes = array();
-		foreach (array_keys(DplusWire::wire('config')->customertypes) as $customertype) {
-			if ($user_processwire->hasRole("program-$customertype")) {
-				$customertypes[] = $customertype;
-			}
-		}
-		return $customertypes;
-	}
+	
 	/**
 	 * Returns the Number of custindex records that match the search
 	 * and filters it by user permissions
@@ -933,8 +924,9 @@
 		$q->field($q->expr('COUNT(*)'));
 
 		// CHECK if Users has restrictions by Application Config, then User permissions
-		if (in_array($user->get_dplusrole(), array(DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'], DplusWire::wire('config')->user_roles['sales-manager']['dplus-code']))) {
+		if ($user->is_salesrep() || $user->is_salesmanager()) {
 			$customertypes = get_customertypesforuser($loginID);
+			$customertypes = array_map('strtoupper', $customertypes);
 			
 			if (!empty($customertypes)) {
 				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
@@ -973,8 +965,10 @@
 		$search = '%'.str_replace(' ', '%', str_replace('-', '', addslashes($keyword))).'%';
 		$q = (new QueryBuilder())->table('custindex');
 
-		if (in_array($user->get_dplusrole(), array(DplusWire::wire('config')->user_roles['sales-rep']['dplus-code'], DplusWire::wire('config')->user_roles['sales-manager']['dplus-code']))) {
+		if ($user->is_salesrep() || $user->is_salesmanager()) {
 			$customertypes = get_customertypesforuser($loginID);
+			$customertypes = array_map('strtoupper', $customertypes);
+			
 			if (!empty($customertypes)) {
 				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
 				$q->where('(custid, shiptoid)','in', $custpermquery);

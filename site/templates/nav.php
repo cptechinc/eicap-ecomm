@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav mr-auto">
                 <?php $homepage = $pages->get('/'); ?>
-        		<?php $children = $homepage->children('template!=user-page|cart|build-items'); ?>
+        		<?php $children = $homepage->children('template!=user-page|cart|build-items|site-admin'); ?>
                 <?php foreach ($children as $child) : ?>
                     <li class="nav-item">
                         <a class="text-white nav-link" href="<?= $child->url; ?>"><?= $child->title; ?></a>

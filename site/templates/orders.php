@@ -7,7 +7,16 @@
 	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->set('pagenbr', $input->pageNum);
 	$salesordersdisplay->generate_filter($input);
-
+	
+	
+	if ($user->hasRole('slsmgr')) {
+		$filters = $salesordersdisplay->filters;
+		$programs = get_programtypesforuser($user->loginid);
+		$reps = find_salesrepidsbyprograms($programs);
+		$filters['salesperson'] = $reps;
+		$salesordersdisplay->set('filters', $filters);
+	}
+	
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->set('paginationinsertafter', $page->name);
 	$paginator = new PaginatorBootstrap4($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
@@ -143,9 +152,7 @@
 				</div>
 				<?php foreach ($orders as $order) : ?>
 					<?php 
-						if ($order->is_approved()) {
-							$class = "bg-success text-white";
-						} elseif ($order->is_onreview()) {
+						if ($order->is_onreview()) {
 							$class = "bg-danger text-white";
 						} else {
 							$class = "";

@@ -111,7 +111,8 @@ function hash_templatefile($filename) {
 
 /**
  * Writes an array one datem per line into the dplus directory
- * @param	array $data	Array of Lines for the request
+ * @param array  $data	   Array of Lines for the request
+ * @param string $filename Filename
  * @return void
  */
 function write_dplusfile($data, $filename) {
@@ -153,6 +154,62 @@ function curl_get($url) {
 		DplusWire::wire('user')->salespersonid = $loginrecord['salespersonid'];
 		DplusWire::wire('user')->mainrole = $user->get_dplusrole();
 		DplusWire::wire('user')->addRole($user->get_dplusrole());
+		$roles = DplusWire::wire('users')->get("name=$user->loginid")->roles;
+		
+		foreach ($roles as $role) {
+			DplusWire::wire('user')->addRole($role->name);
+		}
+	}
+	
+	function get_customertypesforuser($loginID) {
+		$user_processwire = DplusWire::wire('users')->get($loginID);
+		$customertypes = array();
+		
+		foreach (array_keys(DplusWire::wire('config')->customertypes) as $customertype) {
+			if ($user_processwire->hasRole("program-$customertype")) {
+				$customertypes[] = $customertype;
+			}
+		}
+		return $customertypes;
+	}
+	
+	function get_programtypesforuser($loginID) {
+		$user_processwire = DplusWire::wire('users')->get($loginID);
+		$programs = array();
+		
+		foreach (array_keys(DplusWire::wire('config')->customertypes) as $customertype) {
+			if ($user_processwire->hasRole("program-$customertype")) {
+				$programs[] = "program-$customertype";
+			}
+		}
+		return $programs;
+	}
+	
+	function find_salesrepsbyprograms(array $programs) {
+		$reps = array();
+		$programstring = implode(',', $programs);
+	    
+	    $repsfortype = DplusWire::wire('users')->find("template=user,roles=$programstring");
+		
+	    foreach ($repsfortype as $rep) {
+	        $reps[] = $rep->name;
+	    }
+		return $reps;
+	}
+	
+	function find_salesrepidsbyprograms(array $programs) {
+		$reps = array();
+		$programstring = implode(',', $programs);
+	    
+	    $repsfortype = DplusWire::wire('users')->find("template=user,roles=$programstring");
+		
+	    foreach ($repsfortype as $rep) {
+			$user = LogmUser::load($rep->name);
+			if (!empty($user->roleid)) {
+				$reps[] = $user->roleid;
+			}
+	    }
+		return $reps;
 	}
 
 	/**
