@@ -11,8 +11,7 @@
 	
 	if ($user->hasRole('slsmgr')) {
 		$filters = $salesordersdisplay->filters;
-		$programs = get_programtypesforuser($user->loginid);
-		$reps = find_salesrepidsbyprograms($programs);
+		$reps = find_salesrepidsbyprograms(get_programtypesforuser($user->loginid));
 		$filters['salesperson'] = $reps;
 		$salesordersdisplay->set('filters', $filters);
 	}
@@ -51,7 +50,7 @@
 			<div id="orders-search-div" class="<?= (empty($salesordersdisplay->filters)) ? 'collapse' : ''; ?>">
 				<form action="<?= $salesordersdisplay->pageurl->getUrl(); ?>" method="get" data-ordertype="sales-orders" data-loadinto="#orders-panel" data-focus="#orders-panel" data-modal="#ajax-modal" class="orders-search-form allow-enterkey-submit">
 					<input type="hidden" name="filter" value="filter">
-
+					
 					<div class="row">
 						<div class="col-sm-2">
 							<h4>Hold Status</h4>

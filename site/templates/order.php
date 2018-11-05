@@ -68,31 +68,31 @@
 
         <h3 class="font-weight-bold text-danger mt-4">Order Details</h3>
         <table class="table table-striped table-borderless">
-				<thead class="bg-secondary text-white font-weight-bold">
-                    <div class="row">
-                        <th class="col-sm-3">Item ID</th>
-    					<th class="col-sm-3 text-right">Qty</th>
-    					<th class="col-sm-3 text-right">Price</th>
-                        <th class="col-sm-3 text-right">Total Price</th>
-                    </div>
-				</thead>
-                <?php $details = $orderdisplay->get_orderdetails($order); ?>
-                <?php foreach ($details as $detail) : ?>
-                <tr>
-                    <td class="col-sm-3">
-                        <?= $detail->itemid; ?></br>
-                        <small><?= $detail->desc1; ?></small>
-                    </td>
-                    <td class="col-sm-3 text-right"><?= number_format($detail->qty, 0); ?></td>
-                    <td class="col-sm-3 text-right">$ <?= $page->stringerbell->format_money($detail->price); ?></td>
-                    <td class="col-sm-3 text-right">$ <?= $page->stringerbell->format_money($detail->totalprice); ?></td>
-                </tr>
+			<thead class="bg-secondary text-white font-weight-bold">
+                <div class="row">
+                    <th>Item ID</th>
+					<th class="text-right">Qty</th>
+					<th class="text-right">Price</th>
+                    <th class="text-right">Total Price</th>
+                </div>
+			</thead>
+            <?php $details = $orderdisplay->get_orderdetails($order); ?>
+            <?php foreach ($details as $detail) : ?>
+            <tr>
+                <td>
+                    <?= $detail->itemid; ?></br>
+                    <small><?= $detail->desc1; ?></small>
+                </td>
+                <td class="text-right"><?= number_format($detail->qty, 0); ?></td>
+                <td class="text-right">$ <?= $page->stringerbell->format_money($detail->price); ?></td>
+                <td class="text-right">$ <?= $page->stringerbell->format_money($detail->totalprice); ?></td>
+            </tr>
                 <?php endforeach; ?>
         </table>
         <div class="pb-5">
             <div class="row">
-                <div class="col-sm-10 text-right">Subtotal:</div>
-                <div class="col-sm-2 text-right">$ <?= $page->stringerbell->format_money($order->subtotal_tax); ?></div>
+                <div class="col-sm-9 text-right">Subtotal:</div>
+                <div class="col-sm-3 text-right">$ <?= $page->stringerbell->format_money($order->subtotal_tax); ?></div>
             </div>
             <div class="row">
                 <div class="col-sm-9 text-right">Shipping:</div>
@@ -113,10 +113,10 @@
                     <i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Back to Orders Page
                 </a>
             </div>
-            <?php if ($user->hasRole($config->user_roles['sales-manager']['dplus-code'])) : ?>
+            <?php if ($user->hasRole($config->user_roles['sales-manager']['dplus-code']) || $user->hasRole($config->user_roles['admin']['dplus-code'])) : ?>
                 <div class="col">
-                    <?php if ($order->can_editapproved()) : ?>
-                        <a href="#" class="btn btn-warning float-right">
+                    <?php if (!$order->is_approved()) : ?>
+                        <a href="<?= $orderdisplay->generate_releaseurl($order); ?>" class="btn btn-warning float-right">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Approve Sales Order
                         </a>
                     <?php endif; ?>
