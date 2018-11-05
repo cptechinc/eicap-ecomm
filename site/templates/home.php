@@ -59,10 +59,10 @@
 				</div>
 				<div class="col-sm-3 my-3">
 					<div class="card bg-white">
-						<a href="<?php $pages->get('template=build-items')->url; ?>">
+						<a href="<?= $pages->get('template=site-admin')->url; ?>">
 							<div class="card-body">
 								<h1 class="text-center text-danger"><i class="fa fa-users fa-2x" aria-hidden="true"></i></h1>
-								<p class="card-text font-weight-bold text-center text-danger">User Admininstration</p>
+								<p class="card-text font-weight-bold text-center text-danger">Program Administration</p>
 							</div>
 						</a>
 					</div>

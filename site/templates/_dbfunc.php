@@ -278,13 +278,16 @@
 			$salespeople = $filter['salesperson'];
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
-			$ordersquery->where(
-				$ordersquery
-				->orExpr()
-				->where('salesperson_1', $salespeople)
-				->where('salesperson_2', $salespeople)
-				->where('salesperson_3', $salespeople)
-			);
+			if (!empty($salespeople)) {
+				$ordersquery->where(
+					$ordersquery
+					->orExpr()
+					->where('salesperson_1', $salespeople)
+					->where('salesperson_2', $salespeople)
+					->where('salesperson_3', $salespeople)
+				);
+			}
+			
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
@@ -321,13 +324,15 @@
 			$salespeople = $filter['salesperson'];
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
-			$ordersquery->where(
-				$ordersquery
-				->orExpr()
-				->where('salesperson_1', $salespeople)
-				->where('salesperson_2', $salespeople)
-				->where('salesperson_3', $salespeople)
-			);
+			if (!empty($salespeople)) {
+				$ordersquery->where(
+					$ordersquery
+					->orExpr()
+					->where('salesperson_1', $salespeople)
+					->where('salesperson_2', $salespeople)
+					->where('salesperson_3', $salespeople)
+				);
+			}
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
@@ -369,13 +374,15 @@
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
-			$ordersquery->where(
-				$ordersquery
-				->orExpr()
-				->where('salesperson_1', $filter['salesperson'])
-				->where('salesperson_2', $filter['salesperson'])
-				->where('salesperson_3', $filter['salesperson'])
-			);
+			if (!empty($salespeople)) {
+				$ordersquery->where(
+					$ordersquery
+					->orExpr()
+					->where('salesperson_1', $salespeople)
+					->where('salesperson_2', $salespeople)
+					->where('salesperson_3', $salespeople)
+				);
+			}
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
@@ -524,13 +531,16 @@
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
-			$ordersquery->where(
-				$ordersquery
-				->orExpr()
-				->where('salesperson_1', $filter['salesperson'])
-				->where('salesperson_2', $filter['salesperson'])
-				->where('salesperson_3', $filter['salesperson'])
-			);
+			$salespeople = $filter['salesperson'];
+			if (!empty($salespeople)) {
+				$ordersquery->where(
+					$ordersquery
+					->orExpr()
+					->where('salesperson_1', $salespeople)
+					->where('salesperson_2', $salespeople)
+					->where('salesperson_3', $salespeople)
+				);
+			}
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
@@ -568,13 +578,17 @@
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
-			$ordersquery->where(
-				$ordersquery
-				->orExpr()
-				->where('salesperson_1', $filter['salesperson'])
-				->where('salesperson_2', $filter['salesperson'])
-				->where('salesperson_3', $filter['salesperson'])
-			);
+			$salespeople = $filter['salesperson'];
+			
+			if (!empty($salespeople)) {
+				$ordersquery->where(
+					$ordersquery
+					->orExpr()
+					->where('salesperson_1', $salespeople)
+					->where('salesperson_2', $salespeople)
+					->where('salesperson_3', $salespeople)
+				);
+			}
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
@@ -612,13 +626,17 @@
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
-			$ordersquery->where(
-				$ordersquery
-				->orExpr()
-				->where('salesperson_1', $filter['salesperson'])
-				->where('salesperson_2', $filter['salesperson'])
-				->where('salesperson_3', $filter['salesperson'])
-			);
+			$salespeople = $filter['salesperson'];
+			
+			if (!empty($salespeople)) {
+				$ordersquery->where(
+					$ordersquery
+					->orExpr()
+					->where('salesperson_1', $salespeople)
+					->where('salesperson_2', $salespeople)
+					->where('salesperson_3', $salespeople)
+				);
+			}
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}

@@ -12,21 +12,32 @@
 				<div class="col">
 					<div class="border-bottom border-primary mb-3">
 						<span class="h3 font-weight-bold ">Users</span>
-						<span class="float-right">View Menu</span>
+						<span class="float-right"><a href="<?= $page->child('name=users-admin')->url; ?>">View Menu</a></span>
 					</div>
-					
-					<div class="list-group">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>User</th> <th>Program</th> <th>Role</th>
+							</tr>
+						</thead>
 						<?php foreach ($users->find('template=user') as $user) : ?>
-							<div class="list-group-item list-group-item-action">
-								<?= $user->name; ?>
-							</div>
+							<?php
+								$logmuser = LogmUser::load($user->name);
+								$programs = get_customertypesforuser($user->name);
+								$dplusrole = $logmuser ? $config->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
+							?>
+							<tr>
+								<td><?= $user->name; ?></td>
+								<td><?= implode(', ', $programs); ?></td>
+								<td><?= $dplusrole; ?></td>
+							</tr>
 						<?php endforeach; ?>
-					</div>
+					</table>
 				</div>
 				<div class="col">
 					<div class="border-bottom border-primary mb-3">
 						<span class="h3 font-weight-bold">Programs</span>
-						<span class="float-right">View Menu</span>
+						<span class="float-right"><a href="<?= $page->child('name=programs')->url; ?>">View Menu</a></span>
 					</div>
 					<div class="list-group">
 						<?php foreach ($pages->get('/config/programs/')->children() as $program) : ?>
