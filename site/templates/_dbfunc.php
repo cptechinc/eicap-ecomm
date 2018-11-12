@@ -372,8 +372,10 @@
 		$q = (new QueryBuilder())->table('oe_head');
 		
 		if (isset($filter['salesperson'])) {
+			$salespeople = $filter['salesperson'];
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
+			
 			if (!empty($salespeople)) {
 				$ordersquery->where(
 					$ordersquery
