@@ -1,5 +1,4 @@
 <?php include('./_head-blank.php'); ?>
-
 	<div class="container page d-flex">
         <form method="POST" action="<?= $pages->get('template=account')->child('template=redir')->url(); ?>" class="form-signin text-center">
             <input type="hidden" name="action" value="login">

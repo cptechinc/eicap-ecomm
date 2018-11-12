@@ -20,13 +20,19 @@
 								<th>User</th> <th>Program</th> <th>Role</th>
 							</tr>
 						</thead>
-						<?php foreach ($users->find('template=user') as $user) : ?>
+						<?php foreach ($users->find('template=user, name!=guest|apache') as $user) : ?>
 							<?php
 								$logmuser = LogmUser::load($user->name);
 								$programs = get_customertypesforuser($user->name);
-								$dplusrole = $logmuser ? $config->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
+								$dplusrole = $logmuser ? $config->user_roles[$logmuser->get_dplusorole()]['label'] : 'Unknown Logm User';
+								
+								if (!$logmuser) {
+									$rowclass = 'bg-warning';
+								} else {
+									$rowclass = '';
+								}
 							?>
-							<tr>
+							<tr  class="<?= $rowclass; ?>">
 								<td><?= $user->name; ?></td>
 								<td><?= implode(', ', $programs); ?></td>
 								<td><?= $dplusrole; ?></td>

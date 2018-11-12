@@ -16,7 +16,7 @@
 				</a>
 			</div>
 			<div class="list-group">
-				<?php foreach ($users->find('template=user, name!=guest') as $appuser) : ?>
+				<?php foreach ($users->find('template=user, name!=guest|apache') as $appuser) : ?>
 					<div class="list-group-item list-group-item-action">
 						<h4><?= $appuser->name; ?></h4>
 						<?php
