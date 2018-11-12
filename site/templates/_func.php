@@ -232,7 +232,8 @@ function curl_get($url) {
 		$logins = find_salesrepsbyprograms($programs);
 		
 		foreach ($logins as $login) {
-			$user = LogmUser::load($login->name);
+			$user = LogmUser::load($login);
+			
 			if (!empty($user->roleid)) {
 				$reps[] = $user->roleid;
 			}
@@ -266,7 +267,7 @@ function curl_get($url) {
 	
 	function import_logmintoprocesswire() {
 		$userlist = array();
-		$logmusers = LogmUser::get_userlist();
+		$logmusers = LogmUser::load_userlist();
 		
 		foreach ($logmusers as $logmuser) {
 			$u = DplusWire::wire('users')->get("name=$logmuser->loginid");
@@ -283,5 +284,5 @@ function curl_get($url) {
 				$userlist[$logmuser->loginid] = true;
 			}
 		}
-		
+		return $userlist;
 	}
