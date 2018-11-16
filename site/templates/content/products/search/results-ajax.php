@@ -1,9 +1,9 @@
-<?php 
+<?php
 	use Dplus\Content\PaginatorBootstrap4;
-	
+
 	$ajax = 'data-loadinto=".modal-content" data-focus=".modal-content"';
-	$paginator = new PaginatorBootstrap4($input->pageNum, 400, $page->fullURL, $page->name, $ajax);
-	
+	$paginator = new PaginatorBootstrap4($input->pageNum, $products->count, $page->fullURL, $page->name, $ajax);
+
 	if ($input->get->ordn) {
 		$formaction = "{$config->pages->orders}redir/";
 	} else {
@@ -14,7 +14,7 @@
 <div class="form-group">
 	<?php include "{$config->paths->content}products/search/form-ajax.php"; ?>
 </div>
-<form action="<?= "{$config->pages->orders}redir/"; ?>" method="post">
+<form action="<?= $formaction; ?>" method="post">
 	<input type="hidden" name="action" value="add-multiple-items">
 	<input type="hidden" name="page" value="<?= $page->fullURL->getUrl(); ?>">
 	<?php if ($input->get->ordn) : ?>
@@ -33,6 +33,7 @@
 			<div class="col-sm-8 form-group">
 				<h5 class="card-title"><?= $product->itemid; ?></h5>
 				<p class="card-text"><?= ucwords(strtolower($product->title)); ?></p>
+				<p class="card-text"><?= htmlspecialchars_decode(ucwords(strtolower($product->name2))); ?></p>
 			</div>
 			<div class="col-sm-2 form-group">
 				<div class="row">
@@ -44,8 +45,12 @@
 			</div>
 		</div>
 	<?php endforeach; ?>
-	<div class="float-right">
-		<button class="btn btn-success" type="submit">Add Items to Order</button>
-	</div>
+	<?php if ($products->count > 0) : ?>
+		<div class="float-right">
+			<button class="btn btn-success" type="submit">Add Items to Order</button>
+		</div>
+	<?php endif; ?>
 </form>
-<?= $paginator; ?>
+<?php if ($products->count > 0) : ?>
+	<?= $paginator; ?>
+<?php endif; ?>
