@@ -13,10 +13,11 @@
 		$filters['salesperson'] = find_salesrepidsbyprograms(get_programtypesforuser($user->loginid));
 		$salesordersdisplay->set('filters', $filters);
 	}
+	
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->set('paginationinsertafter', $page->name);
-	$paginator = new PaginatorBootstrap4($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, $salesordersdisplay->ajaxdata);
-
+	$paginator = new PaginatorBootstrap4($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, !empty($salesordersdisplay->ajaxdata) ? $salesordersdisplay->ajaxdata : '');
+	
 	$orders = $salesordersdisplay->get_orders();
 ?>
 <?php include('./_head.php'); // include header markup ?>
@@ -27,7 +28,6 @@
 			</h1>
 		</div>
 	</div>
-	<?= $salesordersdisplay->get_orders(true); ?>
 	<div class="container page mt-2">
 		<div>
 			<div class="form-group">

@@ -1,3 +1,10 @@
+<?php 
+	if ($input->get->ordn) {
+		$formaction = "{$config->pages->orders}redir/";
+	} else {
+		$formaction = "{$config->pages->cart}redir/";
+	}
+?>
 <h1 class="text-danger font-weight-bold border-bottom border-primary mb-4"><?= $page->title; ?></h1>
 <div class="form-group">
 	<?php include "{$config->paths->content}products/search/form.php"; ?>
@@ -14,41 +21,24 @@
 				<div class="card-body">
 					<h5 class="card-title"><?= $product->itemid; ?></h5>
 					<p class="card-text"><?= htmlspecialchars_decode(ucwords(strtolower($product->title))); ?></p>
-					
-					<?php if ($input->get->ordn) : ?>
-						<form class="form-inline" action="<?= "{$config->pages->orders}/redir/"; ?>" method="post">
-							<input type="hidden" name="action" value="add-to-order">
+					<p class="card-text"><?= htmlspecialchars_decode(ucwords(strtolower($product->name2))); ?></p>
+					<form class="form-inline" action="<?= $formaction; ?>" method="post">
+						<input type="hidden" name="action" value="add-to-order">
+						<?php if ($input->get->ordn) : ?>
 							<input type="hidden" name="ordn" value="<?= $input->get->text('ordn'); ?>">
-							<input type="hidden" name="itemID" value="<?= $product->itemid; ?>">
-							<input type="hidden" name="page" value="<?= $page->fullURL->getUrl(); ?>">
-							<div class="row">
-								<div class="col">
-									Qty
-									<input class="form-control" type="text" name="qty" size="4" value="1">
-								</div>
-								<div class="col">
-									<button class="btn btn-success" type="submit">Add to Order</button>
-								</div>
+						<?php endif; ?>
+						<input type="hidden" name="itemID" value="<?= $product->itemid; ?>">
+						<input type="hidden" name="page" value="<?= $page->fullURL->getUrl(); ?>">
+						<div class="row">
+							<div class="col">
+								Qty
+								<input class="form-control" type="text" name="qty" size="4" value="1">
 							</div>
-						</form>
-					<?php else :?>
-						<form class="form-inline" action="<?= "{$config->pages->cart}/redir/"; ?>" method="post">
-							<input type="hidden" name="action" value="add-to-cart">
-							<input type="hidden" name="itemID" value="<?= $product->itemid; ?>">
-							<input type="hidden" name="page" value="<?= $page->fullURL->getUrl(); ?>">
-							<div class="row">
-								<div class="col">
-									Qty
-									<input class="form-control" type="text" name="qty" size="4" value="1">
-								</div>
-								<div class="col">
-									<button class="btn btn-success" type="submit">
-										<i class="fa fa-cart-plus" aria-hidden="true"></i> Add to Cart
-									</button>
-								</div>
+							<div class="col">
+								<button class="btn btn-success" type="submit">Add to Order</button>
 							</div>
-						</form>
-					<?php endif; ?>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
