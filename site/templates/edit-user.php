@@ -20,6 +20,7 @@
 			}
 		}
 		$edituser->save();
+		$edituser->of(true);
 	}
 	$page->title = "Editing User $edituser->name";
 	$dplusrole = $logmuser ? $config->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
