@@ -2,7 +2,7 @@
 	use Dplus\Content\PaginatorBootstrap4;
 	
 	$ajax = 'data-loadinto=".modal-content" data-focus=".modal-content"';
-	$paginator = new PaginatorBootstrap4($input->pageNum, 400, $page->fullURL, $page->name, $ajax);
+	$paginator = new PaginatorBootstrap4($input->pageNum, $resultcount, $page->fullURL, $page->name, $ajax);
 	
 	if ($input->get->ordn) {
 		$formaction = "{$config->pages->orders}redir/";
