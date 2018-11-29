@@ -19,7 +19,9 @@
 						<?php endif; ?>
 						<div class="card-body">
 							<h5 class="card-title"><?= $product->itemid; ?></h5>
-							<p class="card-text"><?= ucwords(strtolower($product->title)); ?></p>
+							<p class="card-text"><?= htmlspecialchars_decode(ucwords(strtolower($product->title))); ?></p>
+							<p class="card-text"><?= htmlspecialchars_decode(ucwords(strtolower($product->name2))); ?></p>
+							
 							<form class="form-inline" action="<?= $config->pages->root. 'cart/redir/'; ?>" method="post">
 								<input type="hidden" name="action" value="add-to-cart">
 								<input type="hidden" name="itemID" value="<?= $product->itemid; ?>">

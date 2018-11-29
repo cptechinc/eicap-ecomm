@@ -22,6 +22,7 @@
 					<h5 class="card-title"><?= $product->itemid; ?></h5>
 					<p class="card-text"><?= htmlspecialchars_decode(ucwords(strtolower($product->title))); ?></p>
 					<p class="card-text"><?= htmlspecialchars_decode(ucwords(strtolower($product->name2))); ?></p>
+					<p class="card-text"><?= ucwords(strtolower($product->itemgroup)); ?></p>
 					<form class="form-inline" action="<?= $formaction; ?>" method="post">
 						<input type="hidden" name="action" value="add-to-order">
 						<?php if ($input->get->ordn) : ?>
