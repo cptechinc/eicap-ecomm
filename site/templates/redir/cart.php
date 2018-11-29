@@ -50,6 +50,17 @@
 	**/
 
     switch ($action) {
+        case 'add-to-order':
+            $cart = CartQuote::load(session_id());
+            $itemID = $input->$requestmethod->text('itemID');
+            $qty = $input->$requestmethod->text('qty');
+            $data = array("DBNAME=$config->dplusdbname", "CARTDET", "ITEMID=$itemID", "QTY=$qty");
+            $data[] = empty($cart->custid) ? "CUSTID=$config->defaultid" : "CUSTID=$cart->custid";
+			if (!empty($cart->shipid)) {$data[] = "SHIPTOID=$cart->shipid"; }
+            $session->data = $data;
+            $session->addtocart = 'You added ' . $qty . ' of ' . $itemID . ' to your cart';
+            $session->loc = $config->pages->cart;
+            break;
         case 'add-to-cart':
             $cart = CartQuote::load(session_id());
             $itemID = $input->$requestmethod->text('itemID');
