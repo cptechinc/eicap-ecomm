@@ -270,19 +270,24 @@ function curl_get($url) {
 		$logmusers = LogmUser::load_userlist();
 		
 		foreach ($logmusers as $logmuser) {
-			$u = DplusWire::wire('users')->get("name=$logmuser->loginid");
-			
-			if (!get_class($u) == 'ProcessWire\Page') {
-				$u = new User();
-				$u->of(false);
-				$u->name = $logmuser->name;
-				$u->email = $logmuser->email;
-				$u->pass = "P@55word";
-				$u->addRole($logmuser->get_dplusorole());
-				$userlist[$logmuser->loginid] = $u->save();
+			if ($logmuser->loginid != 'apache') {
+				$u = DplusWire::wire('users')->get("name=$logmuser->loginid");
+				
+				if (get_class($u) !== 'ProcessWire\Page' && get_class($u) !== 'ProcessWire\User') {
+					$u = new User();
+					$u->of(false);
+					$u->name = $logmuser->loginid;
+					$u->email = $logmuser->email;
+					$u->pass = "P@55word";
+					$u->addRole($logmuser->get_dplusorole());
+				    $userlist[$logmuser->loginid] = $u->save();
+				} else {
+					$userlist[$logmuser->loginid] = true;
+				}
 			} else {
-				$userlist[$logmuser->loginid] = true;
+				$userlist[$logmuser->loginid] = false;
 			}
+			
 		}
 		return $userlist;
 	}
