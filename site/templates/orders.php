@@ -2,7 +2,7 @@
 	use Dplus\Base\DplusDateTime;
 	use Dplus\Ecomm\SalesOrdersDisplay;
 	use Dplus\Content\PaginatorBootstrap4;
-	
+
 	$page->title = "Sales Orders";
 	$salesordersdisplay = new SalesOrdersDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordersdisplay->set('pagenbr', $input->pageNum);
@@ -13,11 +13,11 @@
 		$filters['salesperson'] = find_salesrepidsbyprograms(get_programtypesforuser($user->loginid));
 		$salesordersdisplay->set('filters', $filters);
 	}
-	
+
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->set('paginationinsertafter', $page->name);
 	$paginator = new PaginatorBootstrap4($salesordersdisplay->pagenbr, $salesordersdisplay->count, $salesordersdisplay->pageurl->getUrl(), $salesordersdisplay->paginationinsertafter, !empty($salesordersdisplay->ajaxdata) ? $salesordersdisplay->ajaxdata : '');
-	
+
 	$orders = $salesordersdisplay->get_orders();
 ?>
 <?php include('./_head.php'); // include header markup ?>
@@ -44,17 +44,16 @@
 					<button class="btn btn-primary toggle-order-search pull-right" type="button" data-toggle="collapse" data-target="#orders-search-div" aria-expanded="false" aria-controls="orders-search-div">Toggle Search <i class="fa fa-search" aria-hidden="true"></i></button>
 				</div>
 			</div>
-
 			<div id="orders-search-div" class="<?= (empty($salesordersdisplay->filters)) ? 'collapse' : ''; ?>">
 				<form action="<?= $salesordersdisplay->pageurl->getUrl(); ?>" method="get" data-ordertype="sales-orders" data-loadinto="#orders-panel" data-focus="#orders-panel" data-modal="#ajax-modal" class="orders-search-form allow-enterkey-submit">
 					<input type="hidden" name="filter" value="filter">
-					
+
 					<div class="row">
 						<div class="col-sm-2">
 							<h4>Hold Status</h4>
-							<input type="checkbox" name="holdstatus[]" value="n" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'n') || empty($salesordersdisplay->filters['holdstatus'])) ? 'checked' : ''; ?> >
+							<input type="checkbox" name="holdstatus[]" value="n" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'n')) ? 'checked' : ''; ?> >
 							<label>&emsp;Approved</label></br>
-							<input type="checkbox" name="holdstatus[]" value="R" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'R') || empty($salesordersdisplay->filters['holdstatus'])) ? 'checked' : ''; ?> >
+							<input type="checkbox" name="holdstatus[]" value="R" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'R')) ? 'checked' : ''; ?> >
 							<label>&emsp;On Review</label>
 						</div>
 						<div class="col-sm-2">
@@ -148,7 +147,7 @@
 					</div>
 				</div>
 				<?php foreach ($orders as $order) : ?>
-					<?php 
+					<?php
 						if ($order->is_onreview()) {
 							$class = "bg-danger text-white";
 						} else {
