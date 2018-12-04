@@ -174,9 +174,9 @@
 			return $sql->fetch();
 		}
 	}
-	/* =============================================================
-		ITEM GROUP FUNCTIONS
-	============================================================ */
+/* =============================================================
+	ITEM GROUP FUNCTIONS
+============================================================ */
 		function get_itemgroups($debug = false) {
 			$q = (new QueryBuilder())->table('itemgroups');
 			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
@@ -232,7 +232,7 @@
 			return $sql->fetch();
 		}
 	}
-	
+
 	function get_items($debug = false) {
 		$q = (new QueryBuilder())->table('itemmaster');
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
@@ -273,7 +273,7 @@
 	function count_salesorders($filter = false, $filtertypes = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('COUNT(*)'));
-		
+
 		if (isset($filter['salesperson'])) {
 			$salespeople = $filter['salesperson'];
 			$ordersquery = (new QueryBuilder())->table('oe_head');
@@ -287,15 +287,15 @@
 					->where('salesperson_3', $salespeople)
 				);
 			}
-			
+
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
-		
+
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
 		if ($debug) {
@@ -305,7 +305,7 @@
 			return $sql->fetchColumn();
 		}
 	}
-	
+
 	/**
 	 * Returns an array of SalesOrder that match the filter criteria
 	 * @param  int    $limit       Number of Records to Return
@@ -319,7 +319,7 @@
 	 */
 	function get_salesorders($limit = 10, $page = 1, $sortrule, $filter = false, $filtertypes = false, $useclass = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
-		
+
 		if (isset($filter['salesperson'])) {
 			$salespeople = $filter['salesperson'];
 			$ordersquery = (new QueryBuilder())->table('oe_head');
@@ -336,7 +336,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
@@ -370,12 +370,12 @@
 	 */
 	function get_salesorders_orderby($limit = 10, $page = 1, $sortrule, $orderby, $filter = false, $filtertypes = false, $useclass = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
-		
+
 		if (isset($filter['salesperson'])) {
 			$salespeople = $filter['salesperson'];
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
-			
+
 			if (!empty($salespeople)) {
 				$ordersquery->where(
 					$ordersquery
@@ -388,7 +388,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
@@ -483,7 +483,7 @@
 		$q->where('sessionid', $sessionID);
 		$q->where('orderno', $ordn);
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
-		
+
 		if ($debug) {
 			return $q->generate_sqlquery($q->params);
 		} else {
@@ -529,7 +529,7 @@
 	function get_minsalesorderdate($field, $custID = false, $shipID = false, $filter, $filtertypes, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr("MIN($field)"));
-		
+
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
@@ -546,7 +546,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($custID)) {
 			$q->where('custid', $custID);
 
@@ -576,12 +576,12 @@
 	function get_maxsalesordertotal($custID = '', $shipID = '', $filter, $filtertypes, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('MAX(total_order)'));
-		
+
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
 			$salespeople = $filter['salesperson'];
-			
+
 			if (!empty($salespeople)) {
 				$ordersquery->where(
 					$ordersquery
@@ -594,7 +594,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($custID)) {
 			$q->where('custid', $custID);
 
@@ -611,7 +611,7 @@
 			return $sql->fetchColumn();
 		}
 	}
-	
+
 	/**
 	 * Returns the Min Order Total for Sales Orders that
 	 * @param  string $custID      Customer ID, if blank will not filter to one customer
@@ -624,12 +624,12 @@
 	function get_minsalesordertotal($custID = '', $shipID = '', $filter, $filtertypes, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('MIN(total_order)'));
-		
+
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
 			$salespeople = $filter['salesperson'];
-			
+
 			if (!empty($salespeople)) {
 				$ordersquery->where(
 					$ordersquery
@@ -642,7 +642,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($custID)) {
 			$q->where('custid', $custID);
 
@@ -926,7 +926,7 @@
 /* =============================================================
 	CUSTOMER INDEX FUNCTIONS
 ============================================================ */
-	
+
 	/**
 	 * Returns the Number of custindex records that match the search
 	 * and filters it by user permissions
@@ -947,7 +947,7 @@
 		if ($user->is_salesrep() || $user->is_salesmanager()) {
 			$customertypes = get_customertypesforuser($loginID);
 			$customertypes = array_map('strtoupper', $customertypes);
-			
+
 			if (!empty($customertypes)) {
 				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
 				$q->where('(custid, shiptoid)','in', $custpermquery);
@@ -988,13 +988,13 @@
 		if ($user->is_salesrep() || $user->is_salesmanager()) {
 			$customertypes = get_customertypesforuser($loginID);
 			$customertypes = array_map('strtoupper', $customertypes);
-			
+
 			if (!empty($customertypes)) {
 				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
 				$q->where('(custid, shiptoid)','in', $custpermquery);
 			}
 		}
-		
+
 		$fieldstring = implode(", ' ', ", array_keys(Contact::generate_classarray()));
 
 		$q->where($q->expr("UCASE(REPLACE(CONCAT($fieldstring), '-', '')) LIKE UCASE([])", [$search]));
@@ -1078,5 +1078,23 @@
 			} else {
 				$sql->execute($q->params);
 				return $sql->fetchColumn();
+			}
+		}
+
+
+		function get_usercustomers($loginID, $typecodes, $debug = false) {
+			$q = (new QueryBuilder())->table('custindex');
+			$q->where('splogin1', $loginID);
+			foreach ($typecodes as $typecode) {
+				$q->where('typecode', $typecode);
+			}
+
+			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+			if ($debug) {
+				return $q->generate_sqlquery($q->params);
+			} else {
+				$sql->execute($q->params);
+				return $sql->fetchAll();
 			}
 		}
