@@ -1,15 +1,34 @@
 <?php
-	$userID = $user->loginid; //TODO: better way of doing this
+	// TODO: when you delete program from user, customers are still held in table, but do not display
+
+	$userID = $input->get->text('user');
 	$edituser = $users->get("name=$userID");
 	$edituser->of(false);
 	$logmuser = LogmUser::load($userID);
+
 	$programs = $pages->get('/config/programs/')->children();
+    $typecodes = get_customertypesforuser($userID);
+    $customers = get_typecodescustomers($typecodes, $debug = false);
+
+	if ($input->requestMethod('POST')) {
+		foreach ($customers as $customer) {
+			$custID = $customer['custid'];
+			if (($input->post->text($custID)) == "Y") {
+				if (!does_userhavecustomer($userID, $custID)) {
+					add_usercustomer($userID, $custID, $debug = false);
+				}
+			} else {
+				if (does_userhavecustomer($userID, $custID)) {
+					remove_usercustomer($userID, $custID, $debug = false);
+				}
+			}
+		}
+		// $edituser->save();
+		// $edituser->of(true);
+	}
 
 	$page->title = "Editing Customers for $userID";
 	$dplusrole = $logmuser ? $config->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
-
-    $typecodes = get_customertypesforuser($userID);
-    $customers = get_usercustomers($userID, $typecodes, $debug = false);
 ?>
 <?php include('./_head.php'); // include header markup ?>
 	<div class='container top-margin'>
@@ -23,13 +42,13 @@
 		<?php if ($user->hasRole('admin')) : ?>
 			<form action="<?= $page->fullURL->getUrl(); ?>" method="post">
 				<div class="row">
-					<div class="col-3">
+					<div class="col-4">
 						<h5>User</h5>
 						<div class="form-group mb-2">
 							<input type="text" readonly class="form-control-plaintext" name="user" value="<?= $edituser->name; ?>">
 						</div>
 					</div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <h5>Programs</h5>
                         <div class="form-group">
                             <?php foreach ($programs as $program) : ?>
@@ -41,22 +60,17 @@
     						<?php endforeach; ?>
                         </div>
 					</div>
-                    <div class="col-3">
-						<h5>Current Customers</h5>
-                        <div class="form-group">
-                            <?php foreach ($customers as $customer) : ?>
-							    <p><?= ucwords(strtolower($customer['name'])); ?></p>
-                            <?php endforeach; ?>
-                        </div>
-					</div>
-					<div class="col-3">
+                    <div class="col-4">
 						<h5>Customers</h5>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" name="" value="Y" >
-							<label class="form-check-label">
-								Customer
-							</label>
-						</div>
+						<?php foreach ($customers as $customer) : ?>
+							<?php $custID = $customer['custid']; ?>
+	                        <div class="form-check">
+								<input class="form-check-input" type="checkbox" name="<?= $custID; ?>" value="Y" <?= does_userhavecustomer($userID, $custID) ? 'checked' : ''; ?>>
+							    <label class="form-check-label">
+									<?= ucwords(strtolower($customer['name'])); ?>
+								</label>
+	                        </div>
+						<?php endforeach; ?>
 					</div>
 				</div>
 				<hr>

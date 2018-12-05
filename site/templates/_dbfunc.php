@@ -1081,14 +1081,9 @@
 			}
 		}
 
-
-		function get_usercustomers($loginID, $typecodes, $debug = false) {
+		function get_typecodescustomers($typecodes, $debug = false) {
 			$q = (new QueryBuilder())->table('custindex');
-			$q->where('splogin1', $loginID);
-			foreach ($typecodes as $typecode) {
-				$q->where('typecode', $typecode);
-			}
-
+			$q->where('typecode', $typecodes);
 			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
 			if ($debug) {
@@ -1096,5 +1091,51 @@
 			} else {
 				$sql->execute($q->params);
 				return $sql->fetchAll();
+			}
+		}
+
+		function does_userhavecustomer($loginID, $custID, $debug = false) {
+			$q = (new QueryBuilder())->table('dpluso1.usercustomers'); //TODO: would only work when dpluso1 was added
+			$q->field('COUNT(*)');
+			$q->where('salesrep', $loginID);
+			$q->where('custid', $custID);
+			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+			if ($debug) {
+				return $q->generate_sqlquery($q->params);
+			} else {
+				$sql->execute($q->params);
+				return boolval($sql->fetchColumn());
+			}
+		}
+
+		function add_usercustomer($loginID, $custID, $debug = false) {
+			$q = (new QueryBuilder())->table('dpluso1.usercustomers'); //TODO: would only work when dpluso1 was added
+			$q->mode('insert');
+			$q->set('salesrep', $loginID);
+			$q->set('custid', $custID);
+			$q->set('date', date('Ymd'));
+			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+			if ($debug) {
+				return $q->generate_sqlquery($q->params);
+			} else {
+				$sql->execute($q->params);
+				return DplusWire::wire('dplusdatabase')->prepare($q->render());
+			}
+		}
+
+		function remove_usercustomer($loginID, $custID, $debug = false) {
+			$q = (new QueryBuilder())->table('dpluso1.usercustomers'); //TODO: would only work when dpluso1 was added
+			$q->mode('delete');
+			$q->where('salesrep', $loginID);
+			$q->where('custid', $custID);
+			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+			if ($debug) {
+				return $q->generate_sqlquery($q->params);
+			} else {
+				$sql->execute($q->params);
+				return DplusWire::wire('dplusdatabase')->prepare($q->render());
 			}
 		}

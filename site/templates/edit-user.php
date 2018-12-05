@@ -1,14 +1,14 @@
-<?php 
+<?php
 	$userID = $input->get->text('user');
 	$edituser = $users->get("name=$userID");
 	$edituser->of(false);
 	$logmuser = LogmUser::load($userID);
 	$programs = $pages->get('/config/programs/')->children();
-	
+
 	if ($input->requestMethod('POST')) {
 		foreach ($programs as $program) {
 			$programcode = get_processwireprogramcode($program->name);
-			
+
 			if (strtoupper($input->post->text($programcode)) == "Y") {
 				if (!$edituser->hasRole($programcode)) {
 					$edituser->addRole($programcode);
@@ -59,6 +59,9 @@
 						<?php endforeach; ?>
 					</div>
 				</div>
+				<a href="<?= $page->child('name=edit-user-customers')->url."?user=$userID"; ?>" class="btn btn-warning">
+					<i class="fa fa-pencil" aria-hidden="true"></i> Edit User Customers
+				</a>
 				<hr>
 				<div class="row">
 					<div class="col">
