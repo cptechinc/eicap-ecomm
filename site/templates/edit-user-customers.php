@@ -1,14 +1,31 @@
 <?php
-	// TODO: when you delete program from user, customers are still held in table, but do not display
-
 	$userID = $input->get->text('user');
 	$edituser = $users->get("name=$userID");
 	$edituser->of(false);
 	$logmuser = LogmUser::load($userID);
 
 	$programs = $pages->get('/config/programs/')->children();
+
     $typecodes = get_customertypesforuser($userID);
     $customers = get_typecodescustomers($typecodes, $debug = false);
+
+	$programnames = Array();
+	foreach ($programs as $program) {
+		$programnames[] = $program->name;
+	}
+
+	$typecodestoremove = array_diff($programnames, $typecodes);
+
+	if ($typecodestoremove) {
+		$customerstoremove = get_typecodescustomers($typecodestoremove, $debug = false);
+		foreach ($customerstoremove as $customertoremove) {
+			$custID = $customertoremove['custid'];
+			if (does_userhavecustomer($userID, $custID)) {
+				remove_usercustomer($userID, $custID, $debug = false);
+			}
+		}
+	}
+
 
 	if ($input->requestMethod('POST')) {
 		foreach ($customers as $customer) {
