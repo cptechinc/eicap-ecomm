@@ -22,6 +22,27 @@
 		$edituser->save();
 		$edituser->of(true);
 	}
+
+	$typecodes = get_customertypesforuser($userID);
+    $customers = get_typecodescustomers($typecodes, $debug = false);
+
+	$programnames = Array();
+	foreach ($programs as $program) {
+		$programnames[] = $program->name;
+	}
+
+	$typecodestoremove = array_diff($programnames, $typecodes);
+
+	if ($typecodestoremove) {
+		$customerstoremove = get_typecodescustomers($typecodestoremove, $debug = false);
+		foreach ($customerstoremove as $customertoremove) {
+			$custID = $customertoremove['custid'];
+			if (does_userhavecustomer($userID, $custID)) {
+				remove_usercustomer($userID, $custID, $debug = false);
+			}
+		}
+	}
+
 	$page->title = "Editing User $edituser->name";
 	$dplusrole = $logmuser ? $config->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
 ?>

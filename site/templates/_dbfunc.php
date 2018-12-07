@@ -1094,6 +1094,10 @@
 			}
 		}
 
+	/* =============================================================
+		USER FUNCTIONS
+	============================================================ */
+
 		function does_userhavecustomer($loginID, $custID, $debug = false) {
 			$q = (new QueryBuilder())->table('dpluso1.usercustomers'); //TODO: would only work when dpluso1 was added
 			$q->field('COUNT(*)');
