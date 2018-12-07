@@ -1,7 +1,7 @@
 <?php
 	use Dplus\Dpluso\Customer\CustomerIndex;
 	use Dplus\Content\PaginatorBootstrap4;
-	
+
 	$pageurl = new Purl\Url($page->fullURL->getUrl());
 	$pageurl->path = $config->pages->customer;
 	$pageurl->query->set('function', 'cart');
@@ -11,7 +11,6 @@
 	$resultscount = $custindex->count_searchcustindex($input->get->text('q'));
 	$paginator = new PaginatorBootstrap4($custindex->pagenbr, $resultscount, $custindex->pageurl, 'customers', $custindex->ajaxdata);
 ?>
-
 <div id="cust-results">
 	<table id="cust-index" class="table table-striped table-bordered">
 		<thead>
@@ -23,17 +22,19 @@
 			<?php if ($resultscount > 0) : ?>
 				<?php $customers = $custindex->search_custindexpaged($input->get->text('q'), $input->pageNum); ?>
 				<?php foreach ($customers as $cust) : ?>
-					<tr>
-						<td>
-							<a href="<?= $cust->generate_setcartcustomerurl(); ?>">
-								<?= $page->stringerbell->highlight($cust->custid, $input->get->text('q'));?>
-							</a> &nbsp; <span class="glyphicon glyphicon-share"></span>
-						</td>
-						<td><?= $page->stringerbell->highlight($cust->name, $input->get->q); ?></td>
-						<td><?= $page->stringerbell->highlight($cust->shiptoid, $input->get->q); ?></td>
-						<td><?= $page->stringerbell->highlight($cust->generate_address(), $input->get->q); ?></td>
-						<td><a href="tel:<?= $cust->phone; ?>" title="Click To Call"><?= $page->stringerbell->highlight($cust->phone, $input->get->q); ?></a></td>
-					</tr>
+					<?php if (does_userhavecustomer($user->name, $cust->custid)) : ?>
+						<tr>
+							<td>
+								<a href="<?= $cust->generate_setcartcustomerurl(); ?>">
+									<?= $page->stringerbell->highlight($cust->custid, $input->get->text('q'));?>
+								</a> &nbsp; <span class="glyphicon glyphicon-share"></span>
+							</td>
+							<td><?= $page->stringerbell->highlight($cust->name, $input->get->q); ?></td>
+							<td><?= $page->stringerbell->highlight($cust->shiptoid, $input->get->q); ?></td>
+							<td><?= $page->stringerbell->highlight($cust->generate_address(), $input->get->q); ?></td>
+							<td><a href="tel:<?= $cust->phone; ?>" title="Click To Call"><?= $page->stringerbell->highlight($cust->phone, $input->get->q); ?></a></td>
+						</tr>
+					<?php endif; ?>
 				<?php endforeach; ?>
 			<?php else : ?>
 				<td colspan="5">
