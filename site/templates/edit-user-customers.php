@@ -22,8 +22,6 @@
 				}
 			}
 		}
-		// $edituser->save();
-		// $edituser->of(true);
 	}
 
 	$page->title = "Editing Customers for $userID";
@@ -62,11 +60,10 @@
                     <div class="col-4">
 						<h5>Customers</h5>
 						<?php foreach ($customers as $customer) : ?>
-							<?php $custID = $customer['custid']; ?>
 	                        <div class="form-check">
-								<input class="form-check-input" type="checkbox" name="<?= $custID; ?>" value="Y" <?= does_userhavecustomer($userID, $custID) ? 'checked' : ''; ?>>
+								<input class="form-check-input" type="checkbox" name="<?= $custID; ?>" value="Y" <?= does_userhavecustomer($userID, $customer->custid) ? 'checked' : ''; ?>>
 							    <label class="form-check-label">
-									<?= ucwords(strtolower($customer['name'])); ?>
+									<?= ucwords(strtolower($customer->name)); ?>
 								</label>
 	                        </div>
 						<?php endforeach; ?>

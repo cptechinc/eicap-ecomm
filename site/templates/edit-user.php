@@ -23,22 +23,22 @@
 		$edituser->of(true);
 	}
 
+	// IF user has customers in programs he doesn't belong in delete them
 	$typecodes = get_customertypesforuser($userID);
-    $customers = get_typecodescustomers($typecodes, $debug = false);
 
-	$programnames = Array();
+	$programnames = array();
 	foreach ($programs as $program) {
 		$programnames[] = $program->name;
 	}
 
 	$typecodestoremove = array_diff($programnames, $typecodes);
 
-	if ($typecodestoremove) {
-		$customerstoremove = get_typecodescustomers($typecodestoremove, $debug = false);
+	if (!empty($typecodestoremove)) {
+		$customerstoremove = get_typecodescustomers($typecodestoremove);
 		foreach ($customerstoremove as $customertoremove) {
-			$custID = $customertoremove['custid'];
+			$custID = $customertoremove->custid;
 			if (does_userhavecustomer($userID, $custID)) {
-				remove_usercustomer($userID, $custID, $debug = false);
+				remove_usercustomer($userID, $custID);
 			}
 		}
 	}
@@ -80,9 +80,11 @@
 						<?php endforeach; ?>
 					</div>
 				</div>
-				<a href="<?= $page->child('name=edit-user-customers')->url."?user=$userID"; ?>" class="btn btn-warning">
-					<i class="fa fa-pencil" aria-hidden="true"></i> Edit User Customers
-				</a>
+				<?php if ($logmuser->is_salesrep()) : ?>
+					<a href="<?= $page->child('name=edit-user-customers')->url."?user=$userID"; ?>" class="btn btn-warning">
+						<i class="fa fa-pencil" aria-hidden="true"></i> Edit User Customers
+					</a>
+				<?php endif; ?>
 				<hr>
 				<div class="row">
 					<div class="col">

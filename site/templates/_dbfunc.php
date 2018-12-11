@@ -944,13 +944,20 @@
 		$q->field($q->expr('COUNT(*)'));
 
 		// CHECK if Users has restrictions by Application Config, then User permissions
-		if ($user->is_salesrep() || $user->is_salesmanager()) {
+		if ($user->is_salesmanager()) {
 			$customertypes = get_customertypesforuser($loginID);
 			$customertypes = array_map('strtoupper', $customertypes);
 
 			if (!empty($customertypes)) {
 				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
 				$q->where('(custid, shiptoid)','in', $custpermquery);
+			}
+		} elseif ($user->is_salesrep()) {
+			$customers = get_usercustomers($loginID);
+			$customers = array_map('strtoupper', $customers);
+
+			if (!empty($customers)) {
+				$q->where('custid', $customers);
 			}
 		}
 
@@ -985,13 +992,20 @@
 		$search = '%'.str_replace(' ', '%', str_replace('-', '', addslashes($keyword))).'%';
 		$q = (new QueryBuilder())->table('custindex');
 
-		if ($user->is_salesrep() || $user->is_salesmanager()) {
+		if ($user->is_salesmanager()) {
 			$customertypes = get_customertypesforuser($loginID);
 			$customertypes = array_map('strtoupper', $customertypes);
 
 			if (!empty($customertypes)) {
 				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
 				$q->where('(custid, shiptoid)','in', $custpermquery);
+			}
+		} elseif ($user->is_salesrep()) {
+			$customers = get_usercustomers($loginID);
+			$customers = array_map('strtoupper', $customers);
+
+			if (!empty($customers)) {
+				$q->where('custid', $customers);
 			}
 		}
 
@@ -1090,6 +1104,7 @@
 				return $q->generate_sqlquery($q->params);
 			} else {
 				$sql->execute($q->params);
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'Customer');
 				return $sql->fetchAll();
 			}
 		}
@@ -1098,8 +1113,15 @@
 		USER FUNCTIONS
 	============================================================ */
 
+		/**
+		 * Checks to see if user has access to customer
+		 * @param  string  $loginID   User login ID
+		 * @param  string  $custID    Customer ID
+		 * @param  boolean $debug     Run in debug? IF so, return SQL query
+		 * @return boolean            Does user have access to customer?
+		 */
 		function does_userhavecustomer($loginID, $custID, $debug = false) {
-			$q = (new QueryBuilder())->table('dpluso1.usercustomers'); //TODO: would only work when dpluso1 was added
+			$q = (new QueryBuilder())->table('usercustomers');
 			$q->field('COUNT(*)');
 			$q->where('salesrep', $loginID);
 			$q->where('custid', $custID);
@@ -1113,8 +1135,15 @@
 			}
 		}
 
+		/**
+		 * Adds customer from user's customer table
+		 * @param  string  $loginID  User login ID
+		 * @param  string  $custID   Customer ID
+		 * @param  boolean $debug    Run in debug? IF so, return SQL query
+		 * @return string            SQL Query
+		 */
 		function add_usercustomer($loginID, $custID, $debug = false) {
-			$q = (new QueryBuilder())->table('dpluso1.usercustomers'); //TODO: would only work when dpluso1 was added
+			$q = (new QueryBuilder())->table('usercustomers');
 			$q->mode('insert');
 			$q->set('salesrep', $loginID);
 			$q->set('custid', $custID);
@@ -1129,8 +1158,15 @@
 			}
 		}
 
+		/**
+		 * Removes customer from user's customer table
+		 * @param  string  $loginID  User login ID
+		 * @param  string  $custID   Customer ID
+		 * @param  boolean $debug    Run in debug? IF so, return SQL query
+		 * @return string            SQL Query
+		 */
 		function remove_usercustomer($loginID, $custID, $debug = false) {
-			$q = (new QueryBuilder())->table('dpluso1.usercustomers'); //TODO: would only work when dpluso1 was added
+			$q = (new QueryBuilder())->table('usercustomers');
 			$q->mode('delete');
 			$q->where('salesrep', $loginID);
 			$q->where('custid', $custID);
@@ -1141,5 +1177,25 @@
 			} else {
 				$sql->execute($q->params);
 				return DplusWire::wire('dplusdatabase')->prepare($q->render());
+			}
+		}
+
+		/**
+		 * Returns the customers the user has access to
+		 * @param  string  $loginID  User login ID
+		 * @param  boolean $debug    Run in debug? IF so, return SQL query
+		 * @return Customer          Customer
+		 */
+		function get_usercustomers($loginID, $debug = false) {
+			$q = (new QueryBuilder())->table('usercustomers');
+			$q->field('custid');
+			$q->where('salesrep', $loginID);
+			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+			if ($debug) {
+				return $q->generate_sqlquery($q->params);
+			} else {
+				$sql->execute($q->params);
+				return $sql->fetchAll(PDO::FETCH_COLUMN);
 			}
 		}
