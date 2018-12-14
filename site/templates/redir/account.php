@@ -33,7 +33,7 @@
 			$session->loc = $config->pages->index.'redir/';
 			break;
 		case 'logout':
-			$data = array('DBNAME' => $config->dplusdbname, 'LOGOUT' => false);
+			$data = array("DBNAME=$config->dplusdbname", 'LOGOUT');
 			$session->loc = $config->pages->login;
 			$session->remove('shipID');
 			$session->remove('custID');
