@@ -1,5 +1,5 @@
 <h1 class="text-danger font-weight-bold border-bottom border-primary mb-4"><?= $page->title; ?></h1>
-<form action="<?= $pages->get('/customers/')->url; ?>" method="get">
+<form action="<?= $pages->get('/customers/')->url; ?>" method="get" id="cust-index-search-form">
     <div class="form-group">
         <?php if ($input->get->function) : ?>
             <input type="hidden" name="function" class="function" value="<?= $input->get->text('function'); ?>">
