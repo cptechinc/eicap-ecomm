@@ -28,7 +28,7 @@
                 <?php //if($page->editable()) echo "<li class='edit'><a href='$page->editUrl'>Edit</a></li>"; ?>
                 <?php if ($user->loggedin) : ?>
                     <li class="nav-item">
-                        <a href="<?= $homepage->url; ?>" class="text-white nav-link">
+                        <a href="<?= $pages->get('/')->url; ?>" class="text-white nav-link">
                             <i class="fa fa-user text-white" aria-hidden="true"></i>&nbsp;User : <span class="font-weight-bold"><?= $user->fullname; ?></span>
                         </a>
                     </li>
