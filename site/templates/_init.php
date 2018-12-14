@@ -48,8 +48,8 @@ $user->loggedin = is_userloggedin(session_id());
 
 if ($user->loggedin) {
 	setup_user(session_id());
-} elseif ($page->template != 'login' && $page->template != 'redir') {
-	$session->redirecturl = $page->fullURL->getUrl(); 
+} elseif ($page->template != 'login' && $page->template != 'redir' && $page->template != 'build-items') {
+	$session->redirecturl = $page->fullURL->getUrl();
 	header('location: ' . $pages->get('template=login')->url());
 	exit;
 }

@@ -18,3 +18,7 @@ system of Dplus Online. It combines both of them and has its own custom parts to
 | Sales Rep     | Only their assigned Group | No                |
 | Sales Manager | Only their assigned Group | Yes               |
 | Admin         | Any                       | Yes               |
+
+
+## CRON update Web Items and customers
+Add to Cron `curl inventory.eicap.org/?key={$key} > /dev/null 2>&1`
