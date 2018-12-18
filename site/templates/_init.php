@@ -57,6 +57,7 @@ if ($user->loggedin) {
 
 
 $page->stringerbell = new Dplus\Base\StringerBell();
+$page->htmlwriter = new Dplus\Content\HTMLWriter();
 
 // SET CONFIG PROPERTIES
 if ($input->get->modal) {

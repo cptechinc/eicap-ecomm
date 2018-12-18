@@ -26,6 +26,10 @@ footer {
 	margin-top: 32px;
 }
 
+.highlight {background: #efcc00; }
+a .highlight {color: #000;}
+.highlight a {color: #0f7864; }
+
 /**************************************
  	Login Styles
  **************************************/

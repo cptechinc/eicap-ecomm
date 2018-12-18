@@ -1,7 +1,7 @@
 <?php
 	use Dplus\Dpluso\Customer\CustomerIndex;
 	use Dplus\Content\PaginatorBootstrap4;
-	
+
 	$pageurl = new Purl\Url($page->fullURL->getUrl());
 	$pageurl->path = $config->pages->customer;
 	$pageurl->query->set('function', 'cart');
@@ -26,13 +26,13 @@
 					<tr>
 						<td>
 							<a href="<?= $cust->generate_setcartcustomerurl(); ?>">
-								<?= $page->stringerbell->highlight($cust->custid, $input->get->text('q'));?>
+								<?= $page->htmlwriter->highlight($cust->custid, $input->get->text('q'));?>
 							</a> &nbsp; <span class="glyphicon glyphicon-share"></span>
 						</td>
-						<td><?= $page->stringerbell->highlight($cust->name, $input->get->q); ?></td>
-						<td><?= $page->stringerbell->highlight($cust->shiptoid, $input->get->q); ?></td>
-						<td><?= $page->stringerbell->highlight($cust->generate_address(), $input->get->q); ?></td>
-						<td><a href="tel:<?= $cust->phone; ?>" title="Click To Call"><?= $page->stringerbell->highlight($cust->phone, $input->get->q); ?></a></td>
+						<td><?= $page->htmlwriter->highlight($cust->name, $input->get->q); ?></td>
+						<td><?= $page->htmlwriter->highlight($cust->shiptoid, $input->get->q); ?></td>
+						<td><?= $page->htmlwriter->highlight($cust->generate_address(), $input->get->q); ?></td>
+						<td><a href="tel:<?= $cust->phone; ?>" title="Click To Call"><?= $page->htmlwriter->highlight($cust->phone, $input->get->q); ?></a></td>
 					</tr>
 				<?php endforeach; ?>
 			<?php else : ?>
