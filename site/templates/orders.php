@@ -121,27 +121,27 @@
 				<div href="#" class="list-group-item list-group-item-action bg-secondary font-weight-bold">
 					<div class="row">
 						<div class="col">
-							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("ordernumber") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+							<a href="<?= $salesordersdisplay->generate_sortbyURL("ordernumber") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
 								Order # <?= $salesordersdisplay->tablesorter->generate_sortsymbol('ordernumber'); ?>
 							</a>
 						</div>
 						<div class="col">
-							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("custid") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+							<a href="<?= $salesordersdisplay->generate_sortbyURL("custid") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
 								Customer <?= $salesordersdisplay->tablesorter->generate_sortsymbol('custid'); ?>
 							</a>
 						</div>
 						<div class="col">
-							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("shiptoid") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+							<a href="<?= $salesordersdisplay->generate_sortbyURL("shiptoid") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
 								Ship-To <?= $salesordersdisplay->tablesorter->generate_sortsymbol('shiptoid'); ?>
 							</a>
 						</div>
 						<div class="col text-right">
-							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("total_order") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+							<a href="<?= $salesordersdisplay->generate_sortbyURL("total_order") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
 								Order Totals <?= $salesordersdisplay->tablesorter->generate_sortsymbol('total_order'); ?>
 							</a>
 						</div>
 						<div class="col text-right">
-							<a href="<?= $salesordersdisplay->generate_tablesortbyurl("order_date") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
+							<a href="<?= $salesordersdisplay->generate_sortbyURL("order_date") ; ?>" class="load-link text-white" <?= $salesordersdisplay->ajaxdata; ?>>
 								Order Date <?= $salesordersdisplay->tablesorter->generate_sortsymbol('order_date'); ?>
 							</a>
 						</div>
@@ -155,7 +155,7 @@
 							$class = "";
 						}
 					?>
-					<a href="<?= $salesordersdisplay->generate_loaddetailsurl($order); ?>" class="list-group-item list-group-item-action <?= $class; ?>">
+					<a href="<?= $salesordersdisplay->generate_loaddetailsURL($order); ?>" class="list-group-item list-group-item-action <?= $class; ?>">
 						<div class="row">
 							<div class="col"><?= $order->ordernumber; ?></br></div>
 							<div class="col"><?= $order->custid; ?></div>

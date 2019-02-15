@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b85676f6a7fd1f03b8f94a625ef4061",
+    "content-hash": "fa058cb9813b06e47011fcc9cb9fa1e9",
     "packages": [
         {
             "name": "atk4/core",
@@ -114,12 +114,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-base.git",
-                "reference": "bba73cdc52843c248b93189f47b7574aa39e9d3d"
+                "reference": "39d9c684749e0b55a9a1877c685fab7412533623"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-base/zipball/bba73cdc52843c248b93189f47b7574aa39e9d3d",
-                "reference": "bba73cdc52843c248b93189f47b7574aa39e9d3d",
+                "url": "https://api.github.com/repos/cptechinc/dplus-base/zipball/39d9c684749e0b55a9a1877c685fab7412533623",
+                "reference": "39d9c684749e0b55a9a1877c685fab7412533623",
                 "shasum": ""
             },
             "require": {
@@ -156,7 +156,7 @@
                 "dplus-attributes",
                 "dplus-base"
             ],
-            "time": "2018-12-13T15:40:09+00:00"
+            "time": "2018-12-18T18:54:01+00:00"
         },
         {
             "name": "cptechinc/dplus-content",
@@ -196,12 +196,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-dpluso.git",
-                "reference": "c417956ac3d87bd8a6b8b5f18da4ed84c49251d9"
+                "reference": "e0d237cb4dd5596c6b103b3888ba3ccb55cfe51e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-dpluso/zipball/c417956ac3d87bd8a6b8b5f18da4ed84c49251d9",
-                "reference": "c417956ac3d87bd8a6b8b5f18da4ed84c49251d9",
+                "url": "https://api.github.com/repos/cptechinc/dplus-dpluso/zipball/e0d237cb4dd5596c6b103b3888ba3ccb55cfe51e",
+                "reference": "e0d237cb4dd5596c6b103b3888ba3ccb55cfe51e",
                 "shasum": ""
             },
             "type": "library",
@@ -233,7 +233,7 @@
                 "order-displays",
                 "user-actions"
             ],
-            "time": "2018-12-03T17:51:54+00:00"
+            "time": "2019-01-08T19:34:51+00:00"
         },
         {
             "name": "cptechinc/dplus-ecomm",
@@ -241,12 +241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-ecomm.git",
-                "reference": "b11ef37861fd6d981ecdfeb23b8d06d53dc4578b"
+                "reference": "96bb1f87a453ab4de909b0b2dd19087da14e2f22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-ecomm/zipball/b11ef37861fd6d981ecdfeb23b8d06d53dc4578b",
-                "reference": "b11ef37861fd6d981ecdfeb23b8d06d53dc4578b",
+                "url": "https://api.github.com/repos/cptechinc/dplus-ecomm/zipball/96bb1f87a453ab4de909b0b2dd19087da14e2f22",
+                "reference": "96bb1f87a453ab4de909b0b2dd19087da14e2f22",
                 "shasum": ""
             },
             "type": "library",
@@ -279,7 +279,7 @@
             "keywords": [
                 "dplus-ecomm"
             ],
-            "time": "2018-12-13T17:26:56+00:00"
+            "time": "2018-12-19T15:29:27+00:00"
         },
         {
             "name": "cptechinc/dplus-items",
@@ -287,12 +287,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-items.git",
-                "reference": "c4913c5df6a969761e90d5d0f928625dea282f7d"
+                "reference": "fe98a4172af9efa29e66f0dd84c05f7830de194e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-items/zipball/c4913c5df6a969761e90d5d0f928625dea282f7d",
-                "reference": "c4913c5df6a969761e90d5d0f928625dea282f7d",
+                "url": "https://api.github.com/repos/cptechinc/dplus-items/zipball/fe98a4172af9efa29e66f0dd84c05f7830de194e",
+                "reference": "fe98a4172af9efa29e66f0dd84c05f7830de194e",
                 "shasum": ""
             },
             "type": "library",
@@ -307,7 +307,7 @@
             "keywords": [
                 "items"
             ],
-            "time": "2018-11-12T15:24:33+00:00"
+            "time": "2019-02-12T16:29:47+00:00"
         },
         {
             "name": "cptechinc/dplus-order",
@@ -315,12 +315,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-order.git",
-                "reference": "850589b07c75ccbeeea7de083db71776a5fcbbc8"
+                "reference": "36835a4842e10aae5a033acd2f75fd415b15c35e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-order/zipball/850589b07c75ccbeeea7de083db71776a5fcbbc8",
-                "reference": "850589b07c75ccbeeea7de083db71776a5fcbbc8",
+                "url": "https://api.github.com/repos/cptechinc/dplus-order/zipball/36835a4842e10aae5a033acd2f75fd415b15c35e",
+                "reference": "36835a4842e10aae5a033acd2f75fd415b15c35e",
                 "shasum": ""
             },
             "type": "library",
@@ -340,7 +340,7 @@
                 "quote",
                 "sales-order"
             ],
-            "time": "2018-11-09T22:13:13+00:00"
+            "time": "2019-02-05T15:02:17+00:00"
         },
         {
             "name": "cptechinc/dplus-processwire",
@@ -695,6 +695,190 @@
                 "upc"
             ],
             "time": "2017-09-28T19:23:19+00:00"
+        },
+        {
+            "name": "symfony/polyfill-ctype",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-ctype.git",
+                "reference": "82ebae02209c21113908c229e9883c419720738a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/82ebae02209c21113908c229e9883c419720738a",
+                "reference": "82ebae02209c21113908c229e9883c419720738a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-ctype": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.11-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                },
+                {
+                    "name": "Gert de Pagter",
+                    "email": "BackEndTea@gmail.com"
+                }
+            ],
+            "description": "Symfony polyfill for ctype functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "ctype",
+                "polyfill",
+                "portable"
+            ],
+            "time": "2019-02-06T07:57:58+00:00"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
+                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.11-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2019-02-06T07:57:58+00:00"
+        },
+        {
+            "name": "twig/twig",
+            "version": "2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "d1596b6ccf609fb83a5804d3280c2f4335f08b9a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d1596b6ccf609fb83a5804d3280c2f4335f08b9a",
+                "reference": "d1596b6ccf609fb83a5804d3280c2f4335f08b9a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "symfony/polyfill-ctype": "^1.8",
+                "symfony/polyfill-mbstring": "^1.3"
+            },
+            "require-dev": {
+                "psr/container": "^1.0",
+                "symfony/debug": "^2.7",
+                "symfony/phpunit-bridge": "^3.4.19|^4.1.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "https://twig.symfony.com/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2019-02-15T07:44:47+00:00"
         }
     ],
     "packages-dev": [],
@@ -708,7 +892,8 @@
         "cptechinc/dplus-content": 20,
         "cptechinc/dplus-dpluso": 20,
         "cptechinc/dplus-ecomm": 20,
-        "cptechinc/dplus-items": 20
+        "cptechinc/dplus-items": 20,
+        "twig/twig": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
