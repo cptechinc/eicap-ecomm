@@ -1,0 +1,19 @@
+<div class='container top-margin'>
+    <div class="form-group">
+        <h1 class="text-danger font-weight-bold border-bottom border-primary">{{ products.title }}</h1>
+    </div>
+</div>
+<div class='container page top-margin'>
+
+    <div class="form-group">
+        <?php include "{$config->paths->content}products/product-search-form.php"; ?>
+    </div>
+    <ul class="product-list">
+        {% for item_category in item_categories %}
+            <a href="{{ item_category.url }}">
+                <li>{{ item_category.title }}</li>
+            </a>
+        {% endfor %}
+    </ul>
+</div>
+<!-- end content -->

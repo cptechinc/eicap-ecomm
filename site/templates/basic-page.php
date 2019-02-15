@@ -3,7 +3,7 @@
 	<div class='container page'>
 		<div class="row">
 			<div class="col-sm-12">
-				<?php echo "<h1>" . $page->get('headline|title') . "</h1>";
+				<?php // echo "<h1>" . $page->get('headline|title') . "</h1>";
 				echo $page->body;
 				renderNav($page->children); ?>
 			</div>
