@@ -13,13 +13,15 @@
 	}
 
 	$resultcount = $pages->count($selector);
-	$products = $pages->find($selector);
+	$items = $pages->find($selector);
 
 	if ($input->get->ordn) {
 		$formaction = "{$config->pages->orders}redir/";
 		$ordn = $input->get->ordn;
+		$action = "add-to-order";
 	} else {
 		$formaction = "{$config->pages->cart}redir/";
+		$action = "add-to-order";
 	}
 
 	if ($config->ajax) {
@@ -28,6 +30,6 @@
 			include('./_include-ajax-modal.php');
 		}
 	} else {
-		$page->body = $config->twig->render('products/results.twig', ['page' => $page, 'page_title' => $page->title, 'products' => $products, 'search' => $search, 'ordn' => $ordn, 'formaction' => $formaction]);
+		$page->body = $config->twig->render('products/item.twig', ['page' => $page, 'page_title' => $page->title, 'items' => $items, 'search' => $search, 'ordn' => $ordn, 'formaction' => $formaction, 'action' => $action]);
 		include __DIR__ . "/basic-page.php";
 	}

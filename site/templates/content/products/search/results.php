@@ -1,4 +1,5 @@
-<?php 
+<!-- CONVERTED TO TWIG -->
+<?php
 	if ($input->get->ordn) {
 		$formaction = "{$config->pages->orders}redir/";
 	} else {
