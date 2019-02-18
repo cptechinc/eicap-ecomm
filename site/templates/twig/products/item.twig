@@ -18,6 +18,7 @@
                         <h5 class="card-title">{{ item.itemid }}</h5>
                         <p class="card-text">{{ item.title }}</p>
                         <p class="card-text">{{ item.name2 }}</p>
+                        <p class="card-text">{{ item.itemgroup }}</p>
 
                         <form class="form-inline" action="<?= $config->pages->root. 'cart/redir/'; ?>" method="post">
                             <input type="hidden" name="action" value="add-to-cart">

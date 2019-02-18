@@ -8,5 +8,5 @@
 		$ordn = $input->get->ordn;
 	}
 
-	$page->body =  $config->twig->render('products/item-categories.twig', ['item_categories' => $item_categories, 'products' => $products, 'search' => $search, 'ordn' => $ordn]);
+	$page->body = $config->twig->render('products/item-categories.twig', ['item_categories' => $item_categories, 'products' => $products, 'search' => $search, 'ordn' => $ordn]);
 	include __DIR__ . "/basic-page.php";
