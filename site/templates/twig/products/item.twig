@@ -4,9 +4,7 @@
     </div>
 </div>
 <div class='container page top-margin'>
-    <div class="form-group">
-        <?php include "{$config->paths->content}products/search/form.php"; ?>
-    </div>
+    {% include 'products/search.twig' %}
     <div class="row">
         {% for item in items %}
             <div class="col-12 col-sm-4 form-group">
@@ -33,10 +31,10 @@
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
 </div>
-<!-- end content -->

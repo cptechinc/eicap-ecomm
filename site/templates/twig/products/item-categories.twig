@@ -4,10 +4,7 @@
     </div>
 </div>
 <div class='container page top-margin'>
-
-    <div class="form-group">
-        <?php include "{$config->paths->content}products/product-search-form.php"; ?>
-    </div>
+    {% include 'products/search.twig' %}
     <ul class="product-list">
         {% for item_category in item_categories %}
             <a href="{{ item_category.url }}">
@@ -16,4 +13,3 @@
         {% endfor %}
     </ul>
 </div>
-<!-- end content -->
