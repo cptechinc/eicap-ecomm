@@ -15,12 +15,19 @@
 	$resultcount = $pages->count($selector);
 	$products = $pages->find($selector);
 
+	if ($input->get->ordn) {
+		$formaction = "{$config->pages->orders}redir/";
+		$ordn = $input->get->ordn;
+	} else {
+		$formaction = "{$config->pages->cart}redir/";
+	}
+
 	if ($config->ajax) {
 		$page->body = $config->paths->content."products/search/results-ajax.php";
 		if ($config->modal) {
 			include('./_include-ajax-modal.php');
 		}
 	} else {
-		$page->body = $config->paths->content."products/search/results.php";
-		include('./_include-page.php');
+		$page->body = $config->twig->render('products/results.twig', ['page' => $page, 'page_title' => $page->title, 'products' => $products, 'search' => $search, 'ordn' => $ordn, 'formaction' => $formaction]);
+		include __DIR__ . "/basic-page.php";
 	}
