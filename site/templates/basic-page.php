@@ -5,7 +5,7 @@
 			<div class="col-sm-12">
 				<?php // echo "<h1>" . $page->get('headline|title') . "</h1>";
 				echo $page->body;
-				renderNav($page->children); ?>
+				// renderNav($page->children); ?>
 			</div>
 		</div>
 	</div>
