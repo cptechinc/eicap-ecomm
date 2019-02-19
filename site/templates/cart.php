@@ -5,11 +5,12 @@
 	if (!empty($cart->custid) && $cart->custid != $config->defaultcustid) {
         $details = get_cartdetails(session_id());
 
-        $formaction = $config->pages->root.'cart/redir/';
         $search = $pages->get('/products/search/');
         $customers = $pages->get('/customers/');
-        $delete_line = $config->pages->root.'cart/redir/?action=remove-line&line=';
-        $create_salesorder = $config->pages->cart."redir/?action=create-sales-order";
+
+        $formaction = $config->pages->root.'cart/redir/';
+        $delete_line = $formaction. '?action=remove-line&line=';
+        $create_salesorder = $formaction. '?action=create-sales-order';
 
 		$page->title = "Cart for ".Customer::get_customernamefromid($cart->custid);
         // $page->body = "{$config->paths->content}cart/cart-outline.php";
@@ -21,5 +22,5 @@
 		$page->body = "{$config->paths->content}customer/index/search-form.php";
 	}
 
-	include('./_include-page.php');
+	// include('./_include-page.php');
 ?>
