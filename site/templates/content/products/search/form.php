@@ -1,3 +1,4 @@
+<!-- CONVERTED TO TWIG -->
 <form action="<?= $pages->get('template=products-search')->url; ?>" method="GET">
     <?php if ($input->get->ordn) : ?>
         <input type="hidden" name="ordn" value="<?php $input->get->text('ordn'); ?>">

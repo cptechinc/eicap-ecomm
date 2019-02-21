@@ -1,10 +1,14 @@
 <?php
+	use Dplus\Content\PaginatorBootstrap4;
+
 	$q = $input->get->text('q');
 	$page->title = $input->get->q ? "Searching for '$q'" : "Search Products";
 
 	// Processwire Selectors
 	// https://processwire.com/api/selectors/
 	$selector = "template=product|imitem, title|body|itemid|name1|name2%=$q";
+
+	$search = $pages->get('template=products-search');
 
 	if ($config->ajax) {
 		$limit = 10;
@@ -25,9 +29,15 @@
 	}
 
 	if ($config->ajax) {
-		$page->body = $config->paths->content."products/search/results-ajax.php";
+		$ajax = 'data-loadinto=".modal-content" data-focus=".modal-content"';
+		$paginator = new PaginatorBootstrap4($input->pageNum, $resultcount, $page->fullURL, $page->name, $ajax);
+
+		$modal_id = 'item-search';
+		// $page->body = $config->paths->content."products/search/results-ajax.php";
+		$page->body = $config->twig->render('products/item-ajax.twig', ['page' => $page, 'page_title' => $page->title, 'items' => $items, 'search' => $search, 'ordn' => $ordn, 'formaction' => $formaction, 'action' => $action, 'modal_id' => $modal_id, 'paginator' => $paginator]);
 		if ($config->modal) {
-			include('./_include-ajax-modal.php');
+			// include('./_include-ajax-modal.php');
+			include __DIR__ . "/_include-ajax-modal.php";
 		}
 	} else {
 		$page->body = $config->twig->render('products/item.twig', ['page' => $page, 'page_title' => $page->title, 'items' => $items, 'search' => $search, 'ordn' => $ordn, 'formaction' => $formaction, 'action' => $action]);

@@ -6,6 +6,6 @@
         </button>
     </div>
     <div class="modal-body">
-        <?php include($page->body); ?>
+        <?php echo $page->body; ?>
     </div>
 </div>

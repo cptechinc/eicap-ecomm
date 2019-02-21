@@ -1,5 +1,5 @@
 <div class="form-group">
-    <form action="{{ search.url }}" method="GET">
+    <form action="{{ search.url }}" method="GET" id="{{ modal_id }}">
         {% if ordn %}
             <input type="hidden" name="ordn" value="{{ ordn }}">
         {% endif %}
