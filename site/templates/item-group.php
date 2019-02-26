@@ -1,24 +1,22 @@
 <?php
 	use Dplus\Content\PaginatorBootstrap4;
 
-	$items = $page->children();
-	$search = $pages->get('template=products-search');
-	$formaction = "{$config->pages->cart}redir/";
-	$action = "add-to-cart";
+	$limit = 10;
+	$start = $input->pageNum > 1 ? $input->pageNum * $limit : 0;
+	$selector = "limit=$limit, start=$start";
 
-	if ($input->get->ordn) {
-		$ordn = $input->get->ordn;
-	}
+	$items = $page->children($selector);
+	$search = $pages->get('template=products-search');
+	$page->formaction = "{$config->pages->cart}redir/";
+	$page->action = "add-to-cart";
+
+	$page->ordn = ($input->get->ordn) ? $input->get->text('ordn') : false;
 
 	$resultcount = $page->numChildren();
-
-	$limit = 10;
-	$pagenbr = $input->pageNum;
-	$start = $input->pageNum > 1 ? $input->pageNum * $limit : 0;
 
 	$totalpages = ceil($resultcount/$limit);
 
 	$paginator = new PaginatorBootstrap4($input->pageNum, $resultcount, $page->fullURL, $page->name);
 
-	$page->body = $config->twig->render('products/item.twig', ['items' => $items, 'page' => $page, 'page_title' => $page->title, 'search' => $search, 'ordn' => $ordn, 'formaction' => $formaction, 'action' => $action, 'paginator' => $paginator]);
+	$page->body = $config->twig->render('products/item-list.twig', ['items' => $items, 'page' => $page, 'search' => $search, 'paginator' => $paginator]);
 	include __DIR__ . "/basic-page.php";

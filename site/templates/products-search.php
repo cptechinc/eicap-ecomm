@@ -16,12 +16,19 @@
 	$items = $pages->find($selector);
 
 	if ($input->get->ordn) {
-		$formaction = "{$config->pages->orders}redir/";
-		$ordn = $input->get->ordn;
-		$action = "add-to-order";
+		$page->formaction = "{$config->pages->orders}redir/";
+		$page->ordn = $input->get->text('ordn');
+		$page->action = "add-to-order";
 	} else {
-		$formaction = "{$config->pages->cart}redir/";
-		$action = "add-to-cart";
+		$page->formaction = "{$config->pages->cart}redir/";
+		$page->action = "add-to-cart";
+		$page->ordn = false;
+	}
+
+	if ($input->get->page) {
+		$returnurl = $input->get->text('page');
+	} else {
+		$returnurl = $page->url;
 	}
 
 	if ($config->ajax) {
@@ -30,13 +37,13 @@
 
 		$modal_id = 'item-search';
 		// $page->body = $config->paths->content."products/search/results-ajax.php";
-		$page->body = $config->twig->render('products/item-ajax.twig', ['page' => $page, 'page_title' => $page->title, 'items' => $items, 'search' => $search, 'ordn' => $ordn, 'formaction' => $formaction, 'action' => $action, 'modal_id' => $modal_id, 'paginator' => $paginator]);
+		$page->body = $config->twig->render('products/item-ajax.twig', ['page' => $page, 'items' => $items, 'search' => $search, 'modal_id' => $modal_id, 'returnurl' => $returnurl, 'paginator' => $paginator]);
 		if ($config->modal) {
 			// include('./_include-ajax-modal.php');
 			include __DIR__ . "/_include-ajax-modal.php";
 		}
 	} else {
 		$paginator = new PaginatorBootstrap4($input->pageNum, $resultcount, $page->fullURL, $page->name);
-		$page->body = $config->twig->render('products/item.twig', ['page' => $page, 'page_title' => $page->title, 'items' => $items, 'search' => $search, 'q' => $q, 'ordn' => $ordn, 'formaction' => $formaction, 'action' => $action, 'paginator' => $paginator]);
+		$page->body = $config->twig->render('products/item-list.twig', ['page' => $page, 'items' => $items, 'search' => $search, 'q' => $q, 'paginator' => $paginator]);
 		include __DIR__ . "/basic-page.php";
 	}

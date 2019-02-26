@@ -1,9 +1,9 @@
-<form class="form-inline" action="{{ formaction }}" method="post">
-    <input type="hidden" name="action" value="{{ action }}">
+<form class="form-inline" action="{{ page.formaction }}" method="post">
+    <input type="hidden" name="action" value="{{ page.action }}">
     <input type="hidden" name="itemID" value="{{ item.itemid }}">
     <input type="hidden" name="page" value="{{ page.url }}">
-    {% if ordn %}
-        <input type="hidden" name="ordn" value="{{ ordn }}">
+    {% if page.ordn %}
+        <input type="hidden" name="ordn" value="{{ page.ordn }}">
     {% endif %}
     <div class="row">
         <div class="col">

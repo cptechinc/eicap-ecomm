@@ -1,7 +1,7 @@
 <div class="form-group">
     <form action="{{ search.url }}" method="GET" id="{{ modal_id }}">
-        {% if ordn %}
-            <input type="hidden" name="ordn" value="{{ ordn }}">
+        {% if page.ordn %}
+            <input type="hidden" name="ordn" value="{{ page.ordn }}">
         {% endif %}
         <div class="input-group">
             <input type="text" class="form-control cust-index-search" name="q" placeholder="ItemID, Description">
