@@ -1,0 +1,21 @@
+<nav class="text-center">
+    <ul class="pagination">
+        <li class="page-item {{ (paginator.pagenbr == 1) ? 'disabled' : '' }}">
+            <a href="{{ paginator.paginate(paginator.pagenbr - 1) }}" class="page-link" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% for i in (paginator.pagenbr - 3)..(paginator.pagenbr + 4) %}
+            {% if i > 0 and i <= paginator.get_totalpages() %}
+                <li class="page-item {{ (paginator.pagenbr == i) ? 'active' : '' }}">
+                    <a href="{{ paginator.paginate(i) }}" class="page-link">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        <li class="page-item {{ (paginator.pagenbr == paginator.get_totalpages()) ? 'disabled' : '' }}">
+            <a href="{{ paginator.paginate(paginator.pagenbr + 1) }}" aria-label="Next" class="page-link">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
