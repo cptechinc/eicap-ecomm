@@ -28,7 +28,7 @@
 			</div>
 			<div class="col-sm-3 mt-3">
 				<div class="card bg-white">
-					<a href="<?= $pages->get('/user/orders/')->url; ?>">
+					<a href="<?= $pages->get('/data/orders/')->url; ?>">
 						<div class="card-body">
 							<h1 class="text-center text-danger"><i class="fa fa-list-alt fa-2x" aria-hidden="true"></i></h1>
 							<p class="card-text font-weight-bold text-center text-danger">Open Orders</p>
