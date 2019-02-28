@@ -13,6 +13,6 @@
     $salesmngr = $user->hasRole($config->user_roles['sales-manager']['dplus-code']);
     $admin = $user->hasRole($config->user_roles['admin']['dplus-code']);
 
-    $page->body = $config->twig->render('orders/order.twig', ['page_title' => $page->title, 'orderdisplay' => $orderdisplay, 'dplusdatetime' => $dplusdatetime, 'ordn' => $ordn, 'order' => $order, 'customer' => $customer, 'salesmngr' => $salesmngr, 'admin' => $admin]);
+    $page->body = $config->twig->render('orders/order.twig', ['page' => $page, 'page_title' => $page->title, 'orderdisplay' => $orderdisplay, 'dplusdatetime' => $dplusdatetime, 'ordn' => $ordn, 'order' => $order, 'customer' => $customer, 'salesmngr' => $salesmngr, 'admin' => $admin]);
 	include __DIR__ . "/basic-page.php";
 ?>
