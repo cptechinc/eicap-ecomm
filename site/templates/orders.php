@@ -8,11 +8,16 @@
 	$salesordersdisplay->set('pagenbr', $input->pageNum);
 	$salesordersdisplay->generate_filter($input);
 
+	$dplusdatetime = new DplusDateTime();
+
 	if ($user->hasRole('slsmgr')) {
 		$filters = $salesordersdisplay->filters;
 		$filters['salesperson'] = find_salesrepidsbyprograms(get_programtypesforuser($user->loginid));
 		$salesordersdisplay->set('filters', $filters);
 	}
+
+	$filters = $salesordersdisplay->filters;
+	$input = $input->get->filter;
 
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->set('paginationinsertafter', $page->name);
@@ -20,6 +25,6 @@
 
 	$orders = $salesordersdisplay->get_orders();
 
-	$page->body = $config->twig->render('orders/orders.twig', ['page' => $page, 'salesordersdisplay' => $salesordersdisplay, 'filters' => $filters, 'orders' => $orders, 'paginator' => $paginator]);
+	$page->body = $config->twig->render('orders/orders.twig', ['page' => $page, 'salesordersdisplay' => $salesordersdisplay, 'dplusdatetime' => $dplusdatetime, 'filters' => $filters, 'input' => $input, 'orders' => $orders, 'paginator' => $paginator]);
 	include __DIR__ . "/basic-page.php";
 ?>

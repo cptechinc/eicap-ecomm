@@ -16,16 +16,16 @@
 		</div>
 	</div>
 
-	<div id="orders-search-div" class="<?= (empty($salesordersdisplay->filters)) ? 'collapse' : ''; ?>">
+	<div id="orders-search-div" class="{% if filters is empty %}collapse{% else %}''{% endif %}">
 		<form action="{{ salesordersdisplay.generate_searchURL() }}" method="get" data-ordertype="sales-orders" data-loadinto="#orders-panel" data-focus="#orders-panel" data-modal="#ajax-modal" class="orders-search-form allow-enterkey-submit">
 			<input type="hidden" name="filter" value="filter">
 
 			<div class="row">
 				<div class="col-sm-2">
 					<h4>Hold Status</h4>
-					<input type="checkbox" name="holdstatus[]" value="n" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'n')) ? 'checked' : ''; ?> >
+					<input type="checkbox" name="holdstatus[]" value="n" {{ salesordersdisplay.has_filtervalue('holdstatus', 'n') ? 'checked' : '' }} >
 					<label>&emsp;Approved</label></br>
-					<input type="checkbox" name="holdstatus[]" value="R" <?= ($salesordersdisplay->has_filtervalue('holdstatus', 'R')) ? 'checked' : ''; ?> >
+					<input type="checkbox" name="holdstatus[]" value="R" {{ salesordersdisplay.has_filtervalue('holdstatus', 'R') ? 'checked' : '' }} >
 					<label>&emsp;On Review</label>
 				</div>
 				<div class="col-sm-2">
@@ -59,12 +59,14 @@
 				</div>
 				<div class="col-sm-2">
 					<h4>Order Date</h4>
-					<?php $name = 'order_date[]'; $value = $salesordersdisplay->get_filtervalue('order_date'); ?>
-					<?php include $config->paths->content."common/date-picker.php"; ?>
+					{% set name = 'order_date[]' %}
+                    {% set value = salesordersdisplay.get_filtervalue('order_date') %}
+					{% include 'date-picker.twig' %}
 					<label class="small text-muted">From Date </label>
 
-					<?php $name = 'order_date[]'; $value = $salesordersdisplay->get_filtervalue('order_date', 1); ?>
-					<?php include $config->paths->content."common/date-picker.php"; ?>
+                    {% set name = 'order_date[]' %}
+                    {% set value = salesordersdisplay.get_filtervalue('order_date', 1) %}
+					{% include 'date-picker.twig' %}
 					<label class="small text-muted">Through Date </label>
 				</div>
 			</div>
@@ -75,13 +77,13 @@
 						Search <i class="fa fa-search" aria-hidden="true"></i>
 					</button>
 				</div>
-				<?php if ($input->get->filter) : ?>
+				{% if input %}
 					<div class="form-group col-md-6">
 						<a href="{{ salesordersdisplay.generate_loadurl() }}"  class="btn btn-warning btn-block">
 							Clear Search <i class="fa fa-search-minus" aria-hidden="true"></i>
 						</a>
 					</div>
-				<?php endif; ?>
+				{% endif %}
 			</div>
 			<hr class="bg-danger">
 		</form>
@@ -95,27 +97,27 @@
 			<div class="row">
 				<div class="col">
 					<a href="{{ salesordersdisplay.generate_sortbyURL('ordernumber') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
-						Order # {{ salesordersdisplay.tablesorter.generate_sortsymbol('ordernumber') }}
+						Order # {{ salesordersdisplay.tablesorter.generate_sortsymbol('ordernumber')|raw }}
 					</a>
 				</div>
 				<div class="col">
 					<a href="{{ salesordersdisplay.generate_sortbyURL('custid') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
-						Customer {{ salesordersdisplay.tablesorter.generate_sortsymbol('custid') }}
+						Customer {{ salesordersdisplay.tablesorter.generate_sortsymbol('custid')|raw }}
 					</a>
 				</div>
 				<div class="col">
 					<a href="{{ salesordersdisplay.generate_sortbyURL('shiptoid') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
-						Ship-To {{ salesordersdisplay.tablesorter.generate_sortsymbol('shiptoid') }}
+						Ship-To {{ salesordersdisplay.tablesorter.generate_sortsymbol('shiptoid')|raw }}
 					</a>
 				</div>
 				<div class="col text-right">
 					<a href="{{ salesordersdisplay.generate_sortbyURL('total_order') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
-						Order Totals {{ salesordersdisplay.tablesorter.generate_sortsymbol('total_order') }}
+						Order Totals {{ salesordersdisplay.tablesorter.generate_sortsymbol('total_order')|raw }}
 					</a>
 				</div>
 				<div class="col text-right">
 					<a href="{{ salesordersdisplay.generate_sortbyURL('order_date') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
-						Order Date {{ salesordersdisplay.tablesorter.generate_sortsymbol('order_date') }}
+						Order Date {{ salesordersdisplay.tablesorter.generate_sortsymbol('order_date')|raw }}
 					</a>
 				</div>
 			</div>
@@ -132,16 +134,21 @@
 					<div class="col">{{ order.ordernumber }}</br></div>
 					<div class="col">{{ order.custid }}</div>
 					<div class="col">
-						<?php $address = $order->shipto_address1.' '; ?>
-						<?php $address .= (!empty($order->shipto_address2)) ? $order->shipto_address2 : ''; ?>
-						<?php $address .= "<br>"; ?>
-						<?php $address .= $order->shipto_city.", ". $order->shipto_state.' ' . $order->shipto_zip; ?>
-						<?php if (!empty($order->shiptoid)) : ?>
-							<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" data-html="true" title="<?= $address; ?>">{{ order.shiptoid }}</button>
-						<?php endif; ?>
+						{% set address = order.shipto_address1 ~ '<br>' %}
+                        {% if order.shipto_address2 is not empty %}
+                            {% set shipto_address2 = order.shipto_address2 %}
+                        {% else %}
+                            {% set shipto_address2 = '' %}
+                        {% endif %}
+						{% set address = address ~ shipto_address2 %}
+						{% set address = address ~ "<br>" %}
+						{% set address = address ~ order.shipto_city ~ ", " ~ order.shipto_state ~ ' ' ~ order.shipto_zip %}
+						{% if order.shiptoid is not empty %}
+							<button type="button" class="btn btn-default btn-block" data-toggle="tooltip" data-placement="top" data-html="true" title="{{ address }}">{{ order.shiptoid }}</button>
+						{% endif %}
 					</div>
 					<div class="col text-right">$ {{ order.total_order }}</div>
-					<div class="col text-right"><?= DplusDateTime::format_date($order->order_date); ?></div>
+					<div class="col text-right">{{ dplusdatetime.format_date(order.order_date) }}</div>
 				</div>
 			</a>
 		{% endfor %}
