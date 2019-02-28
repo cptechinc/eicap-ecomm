@@ -35,10 +35,10 @@
 		case 'get-order-details':
 			$ordn = $input->$requestmethod->text('ordn');
 			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn");
-			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
+			$session->loc = $pages->get('/data/orders/order/')->url."?ordn=$ordn";
 			break;
 		case 'load-orders':
-			$session->loc = $pages->get('/user/orders/')->url;
+			$session->loc = $pages->get('/data/orders/')->url;
 			break;
 		case 'edit-new-order':
 			$ordn = get_createdordn(session_id());
@@ -109,12 +109,12 @@
 		case 'unlock-order':
 			$ordn = $input->get->text('ordn');
 			$data = array("DBNAME=$config->dplusdbname", 'UNLOCK', "ORDERNO=$ordn");
-			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
+			$session->loc = $pages->get('/data/orders/order/')->url."?ordn=$ordn";
 			break;
 		case 'release-order':
 			$ordn = $input->get->text('ordn');
 			$data = array("DBNAME=$config->dplusdbname", 'RELEASEORDER', "ORDERNO=$ordn");
-			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
+			$session->loc = $pages->get('/data/orders/order/')->url."?ordn=$ordn";
 			break;
 	}
 
