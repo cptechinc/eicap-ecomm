@@ -6,8 +6,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% if (resultscount > 0) %}
-            {% set customers = custindex.search_custindexpaged(input, input.pageNum) %}
+			{% if (paginator.count > 0) %}
+            	{% set customers = custindex.search_custindexpaged(input, input.pageNum) %}
 				{% for cust in customers %}
 					<tr>
 						<td>
@@ -18,7 +18,7 @@
 						<td>{{ page.htmlwriter.highlight(cust.name, input)|raw  }}</td>
 						<td>{{ page.htmlwriter.highlight(cust.shiptoid, input)|raw  }}</td>
 						<td>{{ page.htmlwriter.highlight(cust.generate_address(), input)|raw  }}</td>
-						<td><a href="tel:<?= $cust->phone; ?>" title="Click To Call">{{ page.htmlwriter.highlight(cust.phone, input)|raw  }}</a></td>
+						<td><a href="tel:{{ cust.phone }}" title="Click To Call">{{ page.htmlwriter.highlight(cust.phone, input)|raw  }}</a></td>
 					</tr>
 				{% endfor %}
 			{% else %}
@@ -30,7 +30,7 @@
 	</table>
 	<div class="d-flex flex-column">
 		<div class="align-self-center">
-			{{ paginator|raw }}
+			{% include 'paginator.twig' %}
 		</div>
 	</div>
 </div>
