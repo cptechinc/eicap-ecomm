@@ -96,27 +96,27 @@
 		<div href="#" class="list-group-item list-group-item-action bg-secondary font-weight-bold">
 			<div class="row">
 				<div class="col">
-					<a href="{{ salesordersdisplay.generate_sortbyURL('ordernumber') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
+					<a href="{{ salesordersdisplay.generate_sortbyURL('ordernumber') }}" class="text-white" {{ salesordersdisplay.ajaxdata }}>
 						Order # {{ salesordersdisplay.tablesorter.generate_sortsymbol('ordernumber')|raw }}
 					</a>
 				</div>
 				<div class="col">
-					<a href="{{ salesordersdisplay.generate_sortbyURL('custid') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
+					<a href="{{ salesordersdisplay.generate_sortbyURL('custid') }}" class="text-white" {{ salesordersdisplay.ajaxdata }}>
 						Customer {{ salesordersdisplay.tablesorter.generate_sortsymbol('custid')|raw }}
 					</a>
 				</div>
 				<div class="col">
-					<a href="{{ salesordersdisplay.generate_sortbyURL('shiptoid') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
+					<a href="{{ salesordersdisplay.generate_sortbyURL('shiptoid') }}" class="text-white" {{ salesordersdisplay.ajaxdata }}>
 						Ship-To {{ salesordersdisplay.tablesorter.generate_sortsymbol('shiptoid')|raw }}
 					</a>
 				</div>
 				<div class="col text-right">
-					<a href="{{ salesordersdisplay.generate_sortbyURL('total_order') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
-						Order Totals {{ salesordersdisplay.tablesorter.generate_sortsymbol('total_order')|raw }}
+					<a href="{{ salesordersdisplay.generate_sortbyURL('total_order') }}" class="text-white" {{ salesordersdisplay.ajaxdata }}>
+						Order Totals {{ salesordersdisplay.tablesorter.generate_sortsymbol('total_order') }}
 					</a>
 				</div>
 				<div class="col text-right">
-					<a href="{{ salesordersdisplay.generate_sortbyURL('order_date') }}" class="load-link text-white" {{ salesordersdisplay.ajaxdata }}>
+					<a href="{{ salesordersdisplay.generate_sortbyURL('order_date') }}" class="text-white" {{ salesordersdisplay.ajaxdata }}>
 						Order Date {{ salesordersdisplay.tablesorter.generate_sortsymbol('order_date')|raw }}
 					</a>
 				</div>
@@ -124,7 +124,7 @@
 		</div>
         {% include 'orders/orders-details.twig' %}
 	</div>
-	<div class="align-self-center">{{ paginator|raw }}</div>
+	<div class="align-self-center">{% include 'paginator.twig' %}</div>
 </div>
 
 <a href="{{ pages.get('/').url }}" class="btn btn-primary my-1">
