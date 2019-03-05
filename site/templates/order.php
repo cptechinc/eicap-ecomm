@@ -8,8 +8,8 @@
 
         if (SalesOrder::exists($ordn)) {
             $order = $orderdisplay->get_order();
-            $customer = Customer::load($order, $custid);
-            $page->title = "Order #$ordn for ".Customer::get_customernamefromid($order->custid);
+            $customer = Customer::load($order->custid, $order->shiptoid);
+            $page->title = "Order #$ordn for $customer->name";
 
             $dplusdatetime = new DplusDateTime();
             $salesmngr = $user->hasRole($config->user_roles['sales-manager']['dplus-code']);
