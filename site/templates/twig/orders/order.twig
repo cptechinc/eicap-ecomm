@@ -22,7 +22,7 @@
             {{ customer.name }} ({{ order.custid }})<br>
             {{ customer.addr1 }}<br>
             {% if customer.addr2 is not empty %}
-                {{ customer.addr2 ~ "<br>" }}
+                {{ customer.addr2 }}<br>
             {% else %}
                 {{ '' }}
             {% endif %}
@@ -35,7 +35,7 @@
             {{ order.shipto_name }} {{ order.shiptoid }}<br>
             {{ order.shipto_address1 }}<br>
             {% if order.addr2 is not empty %}
-                {{ order.addr2 ~ "<br>" }}
+                {{ order.addr2 }}<br>
             {% else %}
                 {{ '' }}
             {% endif %}

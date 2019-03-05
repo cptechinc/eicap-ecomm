@@ -8,6 +8,6 @@
 	$searchitems = $pages->get('/products/search/')->url.'?ordn=';
 	$ordersredir = $config->pages->orders.'redir/';
 
-	$page->body = $config->twig->render('orders/edit-order.twig', ['page' => $page, 'page_title' => $page->title, 'editorderdisplay' => $editorderdisplay, 'ordn' => $ordn, 'order' => $order, 'searchitems' => $searchitems, 'ordersredir' => $ordersredir]);
+	$page->body = $config->twig->render('orders/edit-order.twig', ['page' => $page, 'editorderdisplay' => $editorderdisplay, 'ordn' => $ordn, 'order' => $order, 'searchitems' => $searchitems, 'ordersredir' => $ordersredir]);
 	include __DIR__ . "/basic-page.php";
 ?>
