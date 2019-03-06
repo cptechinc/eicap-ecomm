@@ -1,10 +1,10 @@
 <h1 class="text-danger font-weight-bold border-bottom border-primary my-4">{{ page.title }}</h1>
 <div class="form-group">
     <!-- Button trigger modal -->
-    <a href="{{ search.url }}" class="btn btn-primary cart-item-search">
+    <a href="{{ pages.get('/products/search/').url }}" class="btn btn-primary cart-item-search">
         Search Items
     </a>
-    <a href="{{ customers.url }}" class="btn btn-danger">
+    <a href="{{ pages.get('/customers/').url }}" class="btn btn-danger">
         Change Customer
     </a>
 </div>

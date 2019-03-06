@@ -7,7 +7,6 @@
 	// Processwire Selectors
 	// https://processwire.com/api/selectors/
 	$selector = "template=product|imitem, title|body|itemid|name1|name2%=$q";
-	$search = $pages->get('template=products-search');
 	$limit = 10;
 	$start = $input->pageNum > 1 ? $input->pageNum * $limit : 0;
 	$selector .= ", limit=$limit, start=$start";
@@ -37,13 +36,13 @@
 
 		$modal_id = 'item-search';
 		// $page->body = $config->paths->content."products/search/results-ajax.php";
-		$page->body = $config->twig->render('products/item-ajax.twig', ['page' => $page, 'items' => $items, 'search' => $search, 'modal_id' => $modal_id, 'returnurl' => $returnurl, 'paginator' => $paginator]);
+		$page->body = $config->twig->render('products/item-ajax.twig', ['page' => $page, 'pages' => $pages, 'items' => $items, 'modal_id' => $modal_id, 'returnurl' => $returnurl, 'paginator' => $paginator]);
 		if ($config->modal) {
 			// include('./_include-ajax-modal.php');
 			include __DIR__ . "/_include-ajax-modal.php";
 		}
 	} else {
 		$paginator = new PaginatorBootstrap4($input->pageNum, $resultcount, $page->fullURL, $page->name);
-		$page->body = $config->twig->render('products/item-list.twig', ['page' => $page, 'items' => $items, 'search' => $search, 'q' => $q, 'paginator' => $paginator]);
+		$page->body = $config->twig->render('products/item-list.twig', ['page' => $page, 'items' => $items, 'q' => $q, 'paginator' => $paginator]);
 		include __DIR__ . "/basic-page.php";
 	}
