@@ -93,7 +93,7 @@
 					$data[] = "ITEMID={$itemID}QTY=$qty";
 				}
 			}
-			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
+			$session->loc = $pages->get('template=edit-order')->url."?ordn=$ordn";
 			break;
 		case 'remove-line-get':
 			$ordn = $input->get->text('ordn');
