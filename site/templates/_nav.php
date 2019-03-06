@@ -14,7 +14,7 @@
 
         <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav mr-auto">
-        		<?php $children = $pages->get('/')->children('template!=cart|build-items|site-admin'); ?>
+        		<?php $children = $pages->get('/')->children('template!=cart|build-items|site-admin|user-page'); ?>
                 <?php foreach ($children as $child) : ?>
                     <li class="nav-item">
                         <a class="text-white nav-link" href="<?= $child->url; ?>"><?= $child->title; ?></a>
