@@ -25,6 +25,6 @@
 
 	$orders = $salesordersdisplay->get_orders();
 
-	$page->body = $config->twig->render('orders/orders.twig', ['page' => $page, 'salesordersdisplay' => $salesordersdisplay, 'dplusdatetime' => $dplusdatetime, 'filters' => $filters, 'input' => $input, 'orders' => $orders, 'paginator' => $paginator]);
+	$page->body = $config->twig->render('orders/orders.twig', ['page' => $page, 'pages' => $pages, 'salesordersdisplay' => $salesordersdisplay, 'dplusdatetime' => $dplusdatetime, 'filters' => $filters, 'input' => $input, 'orders' => $orders, 'paginator' => $paginator]);
 	include __DIR__ . "/basic-page.php";
 ?>
