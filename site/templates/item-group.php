@@ -2,8 +2,7 @@
 	use Dplus\Content\PaginatorBootstrap4;
 
 	$limit = 10;
-	$start = $input->pageNum > 1 ? $input->pageNum * $limit : 0;
-	$selector = "limit=$limit, start=$start";
+	$selector = "limit=$limit";
 
 	$items = $page->children($selector);
 	$search = $pages->get('template=products-search');
