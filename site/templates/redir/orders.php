@@ -104,7 +104,6 @@
 			$custID = SalesOrder::find_custid($ordn);
 			$data = array("DBNAME=$config->dplusdbname", "SALEDET", "ORDERNO=$ordn", "LINENO=$linenbr", "QTY=0", "CUSTID=$custID");
 			$session->loc = $pages->get('template=edit-order')->url."?ordn=$ordn";
-			$session->editdetail = true;
 			break;
 		case 'unlock-order':
 			$ordn = $input->get->text('ordn');
