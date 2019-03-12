@@ -5,5 +5,5 @@
 
 	$page->ordn = ($input->get->ordn) ? $input->get->text('ordn') : false;
 
-	$page->body = $config->twig->render('products/item-categories.twig', ['page' => $page, 'item_categories' => $item_categories, 'search' => $search, 'ordn' => $ordn]);
+	$page->body = $config->twig->render('products/item-categories.twig', ['page' => $page, 'pages' => $pages, 'item_categories' => $item_categories, 'search' => $search, 'ordn' => $ordn]);
 	include __DIR__ . "/basic-page.php";

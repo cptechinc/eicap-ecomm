@@ -43,6 +43,6 @@
 		}
 	} else {
 		$paginator = new PaginatorBootstrap4($input->pageNum, $resultcount, $page->fullURL, $page->name);
-		$page->body = $config->twig->render('products/item-list.twig', ['page' => $page, 'items' => $items, 'q' => $q, 'paginator' => $paginator]);
+		$page->body = $config->twig->render('products/item-list.twig', ['page' => $page, 'pages' => $pages, 'items' => $items, 'q' => $q, 'paginator' => $paginator]);
 		include __DIR__ . "/basic-page.php";
 	}
