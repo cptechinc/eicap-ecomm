@@ -16,7 +16,7 @@
 		</div>
 	</div>
 
-	<div id="orders-search-div" class="{% if filters is empty %}collapse{% else %}''{% endif %}">
+	<div id="orders-search-div" class="{% if input.get.filter is empty %}collapse{% else %}''{% endif %}">
 		<form action="{{ salesordersdisplay.generate_searchURL() }}" method="get" data-ordertype="sales-orders" data-loadinto="#orders-panel" data-focus="#orders-panel" data-modal="#ajax-modal" class="orders-search-form allow-enterkey-submit">
 			<input type="hidden" name="filter" value="filter">
 
@@ -61,12 +61,12 @@
 					<h4>Order Date</h4>
 					{% set name = 'order_date[]' %}
                     {% set value = salesordersdisplay.get_filtervalue('order_date') %}
-					{% include 'date-picker.twig' %}
+					{% include 'common/date-picker.twig' %}
 					<label class="small text-muted">From Date </label>
 
                     {% set name = 'order_date[]' %}
                     {% set value = salesordersdisplay.get_filtervalue('order_date', 1) %}
-					{% include 'date-picker.twig' %}
+					{% include 'common/date-picker.twig' %}
 					<label class="small text-muted">Through Date </label>
 				</div>
 			</div>
@@ -124,9 +124,9 @@
 		</div>
         {% include 'orders/orders-details.twig' %}
 	</div>
-	<div class="align-self-center">{% include 'paginator.twig' %}</div>
+	<div class="align-self-center">{% include 'common/paginator.twig' %}</div>
 </div>
 
 <a href="{{ pages.get('/').url }}" class="btn btn-primary my-1">
-	<i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Go back to Account Page
+	<i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Go back
 </a>
