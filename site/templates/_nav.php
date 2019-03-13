@@ -7,4 +7,4 @@
 
     $children = $pages->get('/')->children('template!=cart|build-items|site-admin|user-page');
 
-    $config->twig->display('nav.twig', ['bg' => $bg, 'pages' => $pages, 'site' => $site, 'children' => $children, 'user' => $user, 'config' => $config]);
+    echo $config->twig->render('nav.twig', ['bg' => $bg, 'pages' => $pages, 'site' => $site, 'children' => $children, 'user' => $user, 'config' => $config]);
