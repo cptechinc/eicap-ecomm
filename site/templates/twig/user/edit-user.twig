@@ -1,5 +1,5 @@
 <h1 class="text-danger font-weight-bold border-bottom border-primary my-4">{{ page.title }}</h1>
-{% if edituser.hasRole('admin') %}
+{% if edituser.is_admin() %}
 	<form action="{{ page.fullURL.getUrl() }}" method="post">
 		<div class="row">
 			<div class="col-4">

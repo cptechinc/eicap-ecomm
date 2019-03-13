@@ -12,19 +12,17 @@
             $page->title = "Order #$ordn for $customer->name";
 
             $dplusdatetime = new DplusDateTime();
-            $salesmngr = $user->hasRole($config->user_roles['sales-manager']['dplus-code']);
-            $admin = $user->hasRole($config->user_roles['admin']['dplus-code']);
 
-            $page->body = $config->twig->render('orders/order.twig', ['page' => $page, 'page_title' => $page->title, 'orderdisplay' => $orderdisplay, 'dplusdatetime' => $dplusdatetime, 'ordn' => $ordn, 'order' => $order, 'customer' => $customer, 'salesmngr' => $salesmngr, 'admin' => $admin]);
+            $page->body = $config->twig->render('orders/order.twig', ['page' => $page, 'user' => $user, 'orderdisplay' => $orderdisplay, 'dplusdatetime' => $dplusdatetime, 'order' => $order, 'customer' => $customer]);
         } else {
             $page->title = "Error: Order #$ordn could not be loaded";
             $msg = "Order #$ordn may not exist or an error occured during loading";
-            $page->body = $config->twig->render('error-page.twig', ['title' => $page->title, 'msg' => $msg]);
+            $page->body = $config->twig->render('common/error-page.twig', ['title' => $page->title, 'msg' => $msg]);
         }
     } else {
         $page->title = "Error: Order # was not provided";
         $msg = "Order # was not provided";
-        $page->body = $config->twig->render('error-page.twig', ['title' => $page->title, 'msg' => $msg]);
+        $page->body = $config->twig->render('common/error-page.twig', ['title' => $page->title, 'msg' => $msg]);
     }
 
 	include __DIR__ . "/basic-page.php";

@@ -1,4 +1,4 @@
-<h1 class="text-danger font-weight-bold border-bottom border-primary my-4">{{ page_title }}</h1>
+<h1 class="text-danger font-weight-bold border-bottom border-primary my-4">{{ page.title }}</h1>
 {% if order.is_onreview() %}
     <div class="alert alert-danger" role="alert">
         <strong><i class="fa fa-warning" aria-hidden="true"></i>&nbsp;Pending Order!</strong>&nbsp;&nbsp;This order will be processed once it is approved.
@@ -99,7 +99,7 @@
             <i class="fa fa-arrow-circle-left text-white" aria-hidden="true"></i>&nbsp;&nbsp;Back to Orders Page
         </a>
     </div>
-    {% if (salesmngr or admin) %}
+    {% if (user.is_salesmanager() or user.is_admin()) %}
         <div class="col">
             {% if not order.is_approved() %}
                 <a href="{{ orderdisplay.generate_releaseurl(order) }}" class="btn btn-warning float-right">
