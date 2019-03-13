@@ -12,5 +12,5 @@
 
 	$inputpost = $input->requestMethod('POST');
 
-	$page->body = $config->twig->render('program/program-add.twig', ['page' => $page, 'inputpost' => $inputpost, 'success' => $success, 'programcode' => $programcode, 'programtitle' => $programtitle]);
+	$page->body = $config->twig->render('programs/program-add.twig', ['page' => $page, 'inputpost' => $inputpost, 'success' => $success, 'programcode' => $programcode, 'programtitle' => $programtitle]);
 	include __DIR__ . "/basic-page.php";
