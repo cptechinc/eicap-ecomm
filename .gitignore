@@ -17,3 +17,6 @@ site/templates/test.php
 site/modules
 site/assets
 wire
+
+# Track Directories / files in Ignored Directories
+!site/modules/DplusUser
