@@ -44,7 +44,7 @@
 			</a>
 		</div>
 	</div>
-	{% if user.hasRole('admin') %}
+	{% if user.is_admin() %}
 		<div class="col-sm-3 my-3">
 			<div class="card bg-white">
 				<a href="{{ pages.get('template=build-items').url }}">

@@ -10,7 +10,7 @@
 
 	$dplusdatetime = new DplusDateTime();
 
-	if ($user->hasRole('slsmgr')) {
+	if ($user->is_salesmanger()) {
 		$filters = $salesordersdisplay->filters;
 		$filters['salesperson'] = find_salesrepidsbyprograms(get_programtypesforuser($user->loginid));
 		$salesordersdisplay->set('filters', $filters);
