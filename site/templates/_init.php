@@ -54,6 +54,12 @@ if ($user->loggedin) {
 	exit;
 }
 
+$loader = new Twig_Loader_Filesystem($config->paths->templates.'twig/');
+$config->twig = new Twig_Environment($loader, [
+    'cache' => $config->paths->templates.'twig/cache/',
+    'auto_reload' => true
+]);
+
 
 
 $page->stringerbell = new Dplus\Base\StringerBell();

@@ -1,0 +1,17 @@
+<h1 class="text-danger font-weight-bold border-bottom border-primary my-4">{{ page.title }}</h1>
+<form action="{{ customersearch }}" method="get" id="cust-index-search-form">
+    <div class="form-group">
+        {% if function %}
+            <input type="hidden" name="function" class="function" value="{{ function }}">
+        {% endif %}
+        <div class="input-group">
+            <input type="text" class="form-control cust-index-search" name="q" placeholder="Type customer phone, name, ID, contact">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default not-round"> <span class="fa fa-search" aria-hidden="true"></span> <span class="sr-only">Search</span> </button>
+            </span>
+        </div>
+    </div>
+    <div>
+        {% include 'customers/cart-list.twig' %}
+    </div>
+</form>

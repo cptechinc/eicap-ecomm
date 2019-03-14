@@ -1,0 +1,38 @@
+<h1 class="text-danger font-weight-bold border-bottom border-primary my-4">{{ page.title }}</h1>
+{% if user.is_admin() %}
+	<div class="mb-3">
+		<a href="{{ page.parent.url }}" class="btn btn-primary">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i> Back to App Settings
+		</a>
+	</div>
+	<div class="list-group">
+		{% for appuser in appusers %}
+			<div class="list-group-item list-group-item-action">
+				<h4>{{ appuser.name }}</h4>
+
+					{% set user = logmuser.load(appuser.name) %}
+					{% if user %}
+                        {% set dplusrole = config.user_roles[user.get_dplusorole()]['label'] %}
+                    {% else %}
+                        {% set dplusrole = 'Not Found' %}
+                    {% endif %}
+
+				<div class="row">
+					<div class="col-4">
+						<b>Role:</b> {{ dplusrole }}
+					</div>
+					<div class="col-4">
+						<b>Programs:</b> {% for program in programs %}{% if appuser.hasRole('program-'~program.name) %}{{ program.name }}&ensp;{% endif %}{% endfor %}
+					</div>
+					<div class="col-4">
+						<a href="{{ page.child('name=edit-user').url }}?user={{ appuser.name }}" class="btn btn-warning">
+							<i class="fa fa-pencil" aria-hidden="true"></i> Edit User
+						</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% else %}
+	<h3>You don't have permission to this function</h3>
+{% endif %}

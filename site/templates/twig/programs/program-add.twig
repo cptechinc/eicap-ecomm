@@ -1,0 +1,47 @@
+<h1 class="text-danger font-weight-bold border-bottom border-primary my-4">{{ page.title }}</h1>
+{% if user.is_admin() %}
+	<div class="mb-3">
+		<a href="{{ page.parent.url }}" class="btn btn-primary">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Programs
+		</a>
+	</div>
+	{% if inputpost %}
+		{% if success %}
+			<div class="alert alert-success" role="alert">
+				<h4 class="alert-heading">Success</h4>
+				<p>{{ programtitle }} ({{ programcode }}) was added</p>
+			</div>
+		{% else %}
+			<div class="alert alert-danger" role="alert">
+				<h4 class="alert-heading">Error!</h4>
+				<p>{{ programtitle }} ({{ programcode }}) was not added</p>
+			</div>
+		{% endif %}
+	{% endif %}
+	<form action="{{ page.fullURL.getUrl() }}" method="post">
+		<div class="row">
+			<div class="col-4">
+				<h5>Program Code</h5>
+				<div class="form-group">
+					<input type="text" class="form-control" name="program-code" value="">
+				</div>
+			</div>
+			<div class="col-4">
+				<h5>Program Title</h5>
+				<div class="form-group">
+					<input type="text" class="form-control" name="program-title" value="">
+				</div>
+			</div>
+			<div class="col-4">
+				<h5>&nbsp;</h5>
+				<button type="submit" class="btn btn-success float-right">
+					<i class="fa fa-floppy-o" aria-hidden="true"></i> Add
+				</button>
+			</div>
+		</div>
+	</form>
+{% else %}
+	{% set title = 'Error!' %}
+	{% set msg = 'You don\'t have permission to this function' %}
+	{% include 'common/error-page.twig' %}
+{% endif %}

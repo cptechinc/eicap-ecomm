@@ -1,0 +1,16 @@
+<form class="form-inline" action="{{ page.formaction }}" method="post">
+    <input type="hidden" name="action" value="{{ page.action }}">
+    <input type="hidden" name="itemID" value="{{ item.itemid }}">
+    <input type="hidden" name="page" value="{{ page.url }}">
+    {% if page.ordn %}
+        <input type="hidden" name="ordn" value="{{ page.ordn }}">
+    {% endif %}
+    <div class="row">
+        <div class="col">
+            <input class="form-control" type="text" name="qty" size="4" value="1">
+        </div>
+        <div class="col">
+            <button class="btn btn-success" type="submit">Add</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,53 @@
+<h1 class="text-danger font-weight-bold border-bottom border-primary my-4">{{ page.title }}</h1>
+{% if user.is_admin() %}
+	<div class="row">
+		<div class="col">
+			<div class="border-bottom border-primary mb-3">
+				<span class="h3 font-weight-bold ">Users</span>
+				<span class="float-right"><a href="{{ page.child('name=users-admin').url }}">View Menu</a></span>
+			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>User</th> <th>Program</th> <th>Role</th>
+					</tr>
+				</thead>
+				{% for appuser in appusers %}
+                    {% set user = logmuser.load(appuser.name) %}
+                    {% if user %}
+                        {% set dplusrole = config.user_roles[user.get_dplusorole()]['label'] %}
+                    {% else %}
+                        {% set dplusrole = 'Unknown Logm User' %}
+                    {% endif %}
+
+                    {% if not user %}
+                        {% set rowclass = 'bg-warning' %}
+                    {% else %}
+                        {% set rowclass = '' %}
+                    {% endif %}
+
+					<tr  class="{{ rowclass }}">
+						<td>{{ user.name }}</td>
+						<td> {% for program in programs %}{% if appuser.hasRole('program-'~program.name) %}{{ program.name }}&ensp;{% endif %}{% endfor %}</td>
+						<td>{{ dplusrole }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+		<div class="col">
+			<div class="border-bottom border-primary mb-3">
+				<span class="h3 font-weight-bold">Programs</span>
+				<span class="float-right"><a href="{{ page.child('name=programs').url }}">View Menu</a></span>
+			</div>
+			<div class="list-group">
+				{% for program in programs %}
+					<div class="list-group-item list-group-item-action">
+						{{ program.title }}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% else %}
+	<h3>You don't have permission to this function</h3>
+{% endif %}

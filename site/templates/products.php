@@ -1,22 +1,9 @@
-<?php include('./_head.php'); ?>
-	<div class='container top-margin'>
-		<div class="form-group">
-			<h1 class="text-danger font-weight-bold border-bottom border-primary"><?= ucwords(strtolower($page->get('headline|title'))); ?></h1>
-		</div>
-	</div>
-	<div class='container page top-margin'>
-		
-		<div class="form-group">
-		    <?php include "{$config->paths->content}products/product-search-form.php"; ?>
-		</div>
-		<ul class="product-list">
-			<?php foreach ($page->children('template!=products-search') as $child) : ?>
-				<a href="<?= $child->url; ?>">
-					<li><?= $child->title; ?></li>
-				</a>
-			<?php endforeach; ?>
-		</ul>
-	</div>
-	<!-- end content -->
+<?php
+	$item_categories = $page->children("template!=products-search");
 
-<?php include('./_foot.php'); ?>
+	$search = $pages->get('template=products-search');
+
+	$page->ordn = ($input->get->ordn) ? $input->get->text('ordn') : false;
+
+	$page->body = $config->twig->render('products/item-categories.twig', ['page' => $page, 'pages' => $pages, 'item_categories' => $item_categories, 'search' => $search, 'ordn' => $ordn]);
+	include __DIR__ . "/basic-page.php";

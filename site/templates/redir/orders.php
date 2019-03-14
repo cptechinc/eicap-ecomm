@@ -35,23 +35,23 @@
 		case 'get-order-details':
 			$ordn = $input->$requestmethod->text('ordn');
 			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn");
-			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
+			$session->loc = $pages->get('template=order')->url."?ordn=$ordn";
 			break;
 		case 'load-orders':
-			$session->loc = $pages->get('/user/orders/')->url;
+			$session->loc = $pages->get('template=orders')->url;
 			break;
 		case 'edit-new-order':
 			$ordn = get_createdordn(session_id());
 			$custID = SalesOrder::find_custid($ordn);
 			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn", "CUSTID=$custID", "LOCK");
 			$session->createdorder = $ordn;
-			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
+			$session->loc = $pages->get('template=edit-order')->url."?ordn=$ordn";
 			break;
 		case 'get-order-edit':
 			$ordn = $input->get->text('ordn');
 			$custID = SalesOrderHistory::is_saleshistory($ordn) ? SalesOrderHistory::find_custid($ordn) : SalesOrder::find_custid($ordn);
 			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn", "CUSTID=$custID", "LOCK");
-			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
+			$session->loc = $pages->get('template=edit-order')->url."?ordn=$ordn";
 			break;
 		case 'quick-update-line':
 			$ordn = $input->post->text('ordn');
@@ -62,7 +62,7 @@
 			$orderdetail->set('qty', $qty);
 			$session->sql = $orderdetail->update();
 			$data = array("DBNAME=$config->dplusdbname", "SALEDET", "ORDERNO=$ordn", "LINENO=$linenbr", "CUSTID=$custID");
-			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
+			$session->loc = $pages->get('template=edit-order')->url."?ordn=$ordn";
 			break;
 		case 'add-to-order':
 			$sessionID = session_id();
@@ -73,7 +73,7 @@
 			if (SalesOrder::does_exist($ordn)) {
 				$custID = SalesOrder::find_custid($ordn);
 				$data = array("DBNAME=$config->dplusdbname", "SALEDET", "ORDERNO=$ordn", "ITEMID=$itemID", "QTY=$qty", "CUSTID=$custID");
-				$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
+				$session->loc = $pages->get('template=edit-order')->url."?ordn=$ordn";
 			} else {
 				$session->loc = $input->$requestmethod->text('page');
 			}
@@ -93,7 +93,7 @@
 					$data[] = "ITEMID={$itemID}QTY=$qty";
 				}
 			}
-			$session->loc = "{$config->pages->orders}edit-order/?ordn=$ordn";
+			$session->loc = $pages->get('template=edit-order')->url."?ordn=$ordn";
 			break;
 		case 'remove-line-get':
 			$ordn = $input->get->text('ordn');
@@ -103,18 +103,17 @@
 			$session->sql = $orderdetail->update();
 			$custID = SalesOrder::find_custid($ordn);
 			$data = array("DBNAME=$config->dplusdbname", "SALEDET", "ORDERNO=$ordn", "LINENO=$linenbr", "QTY=0", "CUSTID=$custID");
-			$session->loc = $config->pages->orders.'edit-order/?ordn=' . $ordn;
-			$session->editdetail = true;
+			$session->loc = $pages->get('template=edit-order')->url."?ordn=$ordn";
 			break;
 		case 'unlock-order':
 			$ordn = $input->get->text('ordn');
 			$data = array("DBNAME=$config->dplusdbname", 'UNLOCK', "ORDERNO=$ordn");
-			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
+			$session->loc = $pages->get('template=order')->url."?ordn=$ordn";
 			break;
 		case 'release-order':
 			$ordn = $input->get->text('ordn');
 			$data = array("DBNAME=$config->dplusdbname", 'RELEASEORDER', "ORDERNO=$ordn");
-			$session->loc = $pages->get('/user/orders/order/')->url."?ordn=$ordn";
+			$session->loc = $pages->get('template=order')->url."?ordn=$ordn";
 			break;
 	}
 
