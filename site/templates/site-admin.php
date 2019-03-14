@@ -4,5 +4,9 @@
 
 	$programs = $pages->get('/config/programs/')->children();
 
-	$page->body = $config->twig->render('site-admin.twig', ['page' => $page, 'user' => $user, 'appusers' => $appusers, 'logmuser' => $logmuser, 'config' => $config, 'programs' => $programs]);
+	if ($user->is_admin()) {
+		$page->body = $config->twig->render('site-admin.twig', ['page' => $page, 'appusers' => $appusers, 'logmuser' => $logmuser, 'config' => $config, 'programs' => $programs]);
+	} else {
+		$page->body = $config->twig->render('common/error-page.twig', ['title' => 'Error!', 'msg' => "You don't have permission to this function"]);
+	}
 	include __DIR__ . "/basic-page.php";

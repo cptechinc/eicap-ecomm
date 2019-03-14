@@ -12,5 +12,10 @@
 
 	$inputpost = $input->requestMethod('POST');
 
-	$page->body = $config->twig->render('programs/program-add.twig', ['page' => $page, 'inputpost' => $inputpost, 'success' => $success, 'programcode' => $programcode, 'programtitle' => $programtitle]);
+
+	if ($user->is_admin()) {
+		$page->body = $config->twig->render('programs/program-add.twig', ['page' => $page, 'inputpost' => $inputpost, 'success' => $success, 'programcode' => $programcode, 'programtitle' => $programtitle]);
+	} else {
+		$page->body = $config->twig->render('common/error-page.twig', ['title' => 'Error!', 'msg' => "You don't have permission to this function"]);
+	}
 	include __DIR__ . "/basic-page.php";

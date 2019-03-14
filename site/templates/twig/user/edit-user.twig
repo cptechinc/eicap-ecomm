@@ -1,43 +1,39 @@
 <h1 class="text-danger font-weight-bold border-bottom border-primary my-4">{{ page.title }}</h1>
-{% if edituser.is_admin() %}
-	<form action="{{ page.fullURL.getUrl() }}" method="post">
-		<div class="row">
-			<div class="col-4">
-				<h5>User</h5>
-				<div class="form-group mb-2">
-					<input type="text" readonly class="form-control-plaintext" name="user" value="{{ edituser.name }}">
+<form action="{{ page.fullURL.getUrl() }}" method="post">
+	<div class="row">
+		<div class="col-4">
+			<h5>User</h5>
+			<div class="form-group mb-2">
+				<input type="text" readonly class="form-control-plaintext" name="user" value="{{ edituser.name }}">
+			</div>
+		</div>
+		<div class="col-4">
+			<h5>Role</h5>
+			{{ dplusrole }}
+		</div>
+		<div class="col-4">
+			<h5>Programs</h5>
+			{% for program in programs %}
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" name="program-{{ program.name }}" value="Y" {% if edituser.hasRole('program-'~program.name) %}checked{% else %} {% endif %} >
+					<label class="form-check-label">
+						{{ program.title }}
+					</label>
 				</div>
-			</div>
-			<div class="col-4">
-				<h5>Role</h5>
-				{{ dplusrole }}
-			</div>
-			<div class="col-4">
-				<h5>Programs</h5>
-				{% for program in programs %}
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" name="program-{{ program.name }}" value="Y" {% if edituser.hasRole('program-'~program.name) %}checked{% else %} {% endif %} >
-						<label class="form-check-label">
-							{{ program.title }}
-						</label>
-					</div>
-				{% endfor %}
-			</div>
+			{% endfor %}
 		</div>
-		<hr>
-		<div class="row">
-			<div class="col">
-				<a href="{{ page.parent.url }}" class="btn btn-primary">
-					<i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Users
-				</a>
-			</div>
-			<div class="col">
-				<button type="submit" class="btn btn-success float-right">
-					<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
-				</button>
-			</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col">
+			<a href="{{ page.parent.url }}" class="btn btn-primary">
+				<i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Users
+			</a>
 		</div>
-	</form>
-{% else %}
-	<h3>You don't have permission to this function</h3>
-{% endif %}
+		<div class="col">
+			<button type="submit" class="btn btn-success float-right">
+				<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+			</button>
+		</div>
+	</div>
+</form>

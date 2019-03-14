@@ -25,5 +25,9 @@
 	$page->title = "Editing User $edituser->name";
 	$dplusrole = $logmuser ? $config->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
 
-	$page->body = $config->twig->render('user/edit-user.twig', ['page' => $page, 'edituser' => $edituser, 'programs' => $programs, 'dplusrole' => $dplusrole]);
+	if ($user->is_admin()) {
+		$page->body = $config->twig->render('user/edit-user.twig', ['page' => $page, 'edituser' => $edituser, 'programs' => $programs, 'dplusrole' => $dplusrole]);
+	} else {
+		$page->body = $config->twig->render('common/error-page.twig', ['title' => 'Error!', 'msg' => "You don't have permission to this function"]);
+	}
 	include __DIR__ . "/basic-page.php";
