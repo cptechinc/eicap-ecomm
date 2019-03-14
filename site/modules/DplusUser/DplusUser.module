@@ -1,0 +1,28 @@
+<?php
+	class DplusUser extends WireData implements Module {
+		public static function getModuleInfo() {
+			return array(
+				'title' => 'Dplus User Extension',
+				'version' => 101,
+				'summary' => 'Extends $user object with dplus methods',
+				'singular' => true,
+				'autoload' => true,
+			);
+		}
+
+		public function init() {
+			$this->addHook('User::is_admin', $this, 'is_admin');
+			$this->addHook('User::is_salesmanager', $this, 'is_salesmanager');
+		}
+
+		public function is_admin($event) {
+			$user = $event->data['object'];
+			$event->return = $user->hasRole($this->wire('config')->user_roles['admin']['dplus-code']);
+		}
+
+		public function is_salesmanager($event) {
+			$user = $event->data['object'];
+			$event->return = $user->hasRole($this->wire('config')->user_roles['sales-manager']['dplus-code']);
+		}
+	}
+?>

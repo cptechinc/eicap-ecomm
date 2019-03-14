@@ -19,4 +19,4 @@ site/assets
 wire
 
 # Track Directories / files in Ignored Directories
-!site/modules/DplusUser
+!site/modules/DplusUser/DplusUser.module
