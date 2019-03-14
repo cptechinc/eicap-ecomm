@@ -1,0 +1,30 @@
+<?php
+	class EicapPrograms extends WireData implements Module {
+		/**
+		 * Prefix to find Program Role
+		 * @var string
+		 */
+		protected $roleprefix = "program-";
+		
+		public static function getModuleInfo() {
+			return array(
+				'title' => 'Eicap Program Roles Extension',
+				'version' => 101,
+				'summary' => 'Extends Roles for Programs with extra properties',
+				'singular' => true,
+				'autoload' => true,
+			);
+		}
+
+		public function init() {
+			$this->add_hooks();
+		}
+
+		protected function add_hooks() {
+			$this->addHookProperty('Role(name*=program-)::program', function($event) {
+				$role = $event->object;
+				$event->return = str_replace($this->roleprefix , '', $role->name);
+			});
+		}
+	}
+?>
