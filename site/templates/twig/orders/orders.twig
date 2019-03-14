@@ -112,7 +112,7 @@
 				</div>
 				<div class="col text-right">
 					<a href="{{ salesordersdisplay.generate_sortbyURL('total_order') }}" class="text-white" {{ salesordersdisplay.ajaxdata }}>
-						Order Totals {{ salesordersdisplay.tablesorter.generate_sortsymbol('total_order') }}
+						Order Totals {{ salesordersdisplay.tablesorter.generate_sortsymbol('total_order')|raw }}
 					</a>
 				</div>
 				<div class="col text-right">
