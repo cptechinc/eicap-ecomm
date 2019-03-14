@@ -31,7 +31,7 @@
     	$resultscount = $custindex->count_searchcustindex($q);
     	$paginator = new PaginatorBootstrap4($custindex->pagenbr, $resultscount, $custindex->pageurl, 'customers', $custindex->ajaxdata);
 
-		$page->body = $config->twig->render('customer/search-form.twig', ['page' => $page, 'customersearch' => $customersearch, 'resultscount' => $resultscount, 'custindex' => $custindex, 'input' => $q, 'function' => $input->get->function, 'paginator' => $paginator]);
+		$page->body = $config->twig->render('customers/search-form.twig', ['page' => $page, 'customersearch' => $customersearch, 'resultscount' => $resultscount, 'custindex' => $custindex, 'input' => $q, 'function' => $input->get->function, 'paginator' => $paginator]);
         include __DIR__ . "/basic-page.php";
 	}
 ?>
