@@ -1,5 +1,6 @@
 <?php
-	$programs = $roles->find('name*=program-');
+	// $programs = $roles->find('name*=program-');
+	$programs = $pages->get('/config/programs/')->children();
 
 	if ($user->is_admin()) {
 		$page->body = $config->twig->render('programs/programs-admin.twig', ['page' => $page, 'pages' => $pages, 'programs' => $programs]);
