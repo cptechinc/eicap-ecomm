@@ -5,7 +5,7 @@
 		 * @var string
 		 */
 		protected $roleprefix = "program-";
-		
+
 		public static function getModuleInfo() {
 			return array(
 				'title' => 'Eicap Program Roles Extension',
@@ -24,6 +24,11 @@
 			$this->addHookProperty('Role(name*=program-)::program', function($event) {
 				$role = $event->object;
 				$event->return = str_replace($this->roleprefix , '', $role->name);
+			});
+			$this->addHook('User::in_program', function($event) {
+				$user = $event->object;
+				$programname = $event->arguments(0);
+				$event->return = $user->hasRole($this->roleprefix . $programname);
 			});
 		}
 	}

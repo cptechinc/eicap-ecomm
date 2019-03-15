@@ -21,7 +21,12 @@
 					<b>Role:</b> {{ dplusrole }}
 				</div>
 				<div class="col-4">
-					<b>Programs:</b> {% for program in programs %}{% if appuser.hasRole('program-'~program.name) %}{{ program.name }}&ensp;{% endif %}{% endfor %}
+					<b>Programs:</b>
+					{% for program in programs %}
+						{% if appuser.in_program(program.name) %}
+							{{ program.name }},&nbsp;
+						{% endif %}
+					{% endfor %}
 				</div>
 				<div class="col-4">
 					<a href="{{ page.child('name=edit-user').url }}?user={{ appuser.name }}" class="btn btn-warning">
