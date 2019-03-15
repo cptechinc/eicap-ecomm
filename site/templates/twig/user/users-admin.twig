@@ -24,7 +24,7 @@
 					<b>Programs:</b>
 					{% for program in programs %}
 						{% if appuser.in_program(program.name) %}
-							{{ program.name }},&nbsp;
+							{{ program.name }},
 						{% endif %}
 					{% endfor %}
 				</div>
