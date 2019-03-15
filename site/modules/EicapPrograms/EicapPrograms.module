@@ -1,4 +1,6 @@
 <?php
+	use Dplus\ProcessWire\DplusWire;
+
 	class EicapPrograms extends WireData implements Module {
 		/**
 		 * Prefix to find Program Role
@@ -30,6 +32,30 @@
 				$programname = $event->arguments(0);
 				$event->return = $user->hasRole($this->roleprefix . $programname);
 			});
+		}
+
+		/**
+		 * Creates a new Program
+		 * @param string $code  Program Code e.g. hdst
+		 * @param string $title Program Description or Title
+		 */
+		public function add_program($code, $title) {
+			$p = new Page(); // create new page object
+			$p->template = 'program'; // set template
+			$p->parent = DplusWire::wire('pages')->get('/config/programs/'); // set the parent
+			$p->name = strtolower($code); // give it a name used in the url for the page
+			$p->title = $title;
+			return $p->save();
+		}
+
+		/**
+		 * Returns if Program Exists already
+		 * @param  string $code Program Code e.g. hdst
+		 * @return bool         Does Program Exist?
+		 */
+		public function does_programexist($code) {
+			$p = DplusWire::wire('pages')->get('/config/programs/')->child("name=$code");
+			return (get_class($p) == 'ProcessWire\Page') ? true : false;
 		}
 	}
 ?>
