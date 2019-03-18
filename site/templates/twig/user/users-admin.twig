@@ -23,8 +23,8 @@
 				<div class="col-4">
 					<b>Programs:</b>
 					{% for program in programs %}
-						{% if appuser.in_program(program.name) %}
-							{{ program.name }},
+						{% if appuser.in_program(program.program) %}
+							{{ program.program }},
 						{% endif %}
 					{% endfor %}
 				</div>

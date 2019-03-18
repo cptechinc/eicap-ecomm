@@ -1,32 +1,30 @@
 <?php
-	$userID = $input->get->text('user');
-	$edituser = $users->get("name=$userID");
-	$edituser->of(false);
-	$logmuser = LogmUser::load($userID);
-	$programs = $pages->get('/config/programs/')->children();
+	if ($user->is_admin()) {
+		$userID = $input->get->text('user');
+		$edituser = $users->get("name=$userID");
+		$programs = $modules->get('EicapPrograms')->get_programs();
+		$page->title = "Editing User $edituser->name";
 
-	if ($input->requestMethod('POST')) {
-		foreach ($programs as $program) {
-			$programcode = get_processwireprogramcode($program->name);
+		if ($input->requestMethod('POST')) {
+			$edituser->of(false);
 
-			if (strtoupper($input->post->text($programcode)) == "Y") {
-				if (!$edituser->hasRole($programcode)) {
-					$edituser->addRole($programcode);
-				}
-			} else {
-				if ($edituser->hasRole($programcode)) {
-					$edituser->removeRole($programcode);
+			foreach ($programs as $program) {
+
+				if (strtoupper($input->post->text($program->program)) == "Y") {
+					if (!$edituser->in_program($program->program)) {
+						$edituser->add_program($program->program);
+					}
+				} else {
+					if ($edituser->in_program($program->program)) {
+						$edituser->remove_program($programcode);
+					}
 				}
 			}
+			$edituser->save();
+			$edituser->of(true);
 		}
-		$edituser->save();
-		$edituser->of(true);
-	}
-	$page->title = "Editing User $edituser->name";
-	$dplusrole = $logmuser ? $config->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
 
-	if ($user->is_admin()) {
-		$page->body = $config->twig->render('user/edit-user.twig', ['page' => $page, 'edituser' => $edituser, 'programs' => $programs, 'dplusrole' => $dplusrole]);
+		$page->body = $config->twig->render('user/edit-user.twig', ['page' => $page, 'edituser' => $edituser, 'programs' => $programs]);
 	} else {
 		$page->body = $config->twig->render('common/error-page.twig', ['title' => 'Error!', 'msg' => "You don't have permission to this function"]);
 	}

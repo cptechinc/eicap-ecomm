@@ -1,9 +1,11 @@
 <?php
+	use LogmUser;
+
 	class DplusUser extends WireData implements Module {
 		public static function getModuleInfo() {
 			return array(
 				'title' => 'Dplus User Extension',
-				'version' => 101,
+				'version' => 102,
 				'summary' => 'Extends $user object with dplus methods',
 				'singular' => true,
 				'autoload' => true,
@@ -13,6 +15,11 @@
 		public function init() {
 			$this->addHook('User::is_admin', $this, 'is_admin');
 			$this->addHook('User::is_salesmanager', $this, 'is_salesmanager');
+			$this->addHookProperty('User::dpluso_role', function($event) {
+				$user = $event->object;
+				$logmuser = LogmUser::load($user->name);
+				$event->return = $logmuser ? wire('config')->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
+			});
 		}
 
 		public function is_admin($event) {

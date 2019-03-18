@@ -1,7 +1,5 @@
 <?php
-	use Dplus\Processwire\DplusWire;
-
-	$programs = DplusWire::wire('modules')->get('EicapPrograms');
+	$programs = $modules->get('EicapPrograms');
 
 	if ($input->requestMethod('POST')) {
 		$programcode = $input->post->text('program-code');

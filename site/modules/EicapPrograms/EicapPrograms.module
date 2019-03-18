@@ -27,10 +27,26 @@
 				$role = $event->object;
 				$event->return = str_replace($this->roleprefix , '', $role->name);
 			});
+
 			$this->addHook('User::in_program', function($event) {
 				$user = $event->object;
 				$programname = $event->arguments(0);
 				$event->return = $user->hasRole($this->roleprefix . $programname);
+			});
+
+			// Add method hook to add program role to user
+			$this->addHook('User::add_program', function($event) {
+				$user = $event->object;
+				$programname = $event->arguments(0);
+				$programcode = (strpos($code, $this->roleprefix) !== false) ? $programname : $this->roleprefix . $programname;
+				$event->return = $user->addRole($programcode);
+			});
+
+			$this->addHook('User::remove_program', function($event) {
+				$user = $event->object;
+				$programname = $event->arguments(0);
+				$programcode = (strpos($code, $this->roleprefix) !== false) ? $programname : $this->roleprefix . $programname;
+				$event->return = $user->removeRole($programcode);
 			});
 		}
 
@@ -40,10 +56,9 @@
 		 * @param string $title Program Description or Title
 		 */
 		public function add_program($code, $title) {
-			$p = new Page(); // create new page object
-			$p->template = 'program'; // set template
-			$p->parent = DplusWire::wire('pages')->get('/config/programs/'); // set the parent
-			$p->name = strtolower($code); // give it a name used in the url for the page
+			$programcode = (strpos($code, $this->roleprefix) !== false) ? $code : $this->roleprefix . $code;
+			$p = new Role(); // create new page object
+			$p->name = strtolower($programcode); // give it a name used in the url for the page
 			$p->title = $title;
 			return $p->save();
 		}
@@ -56,6 +71,10 @@
 		public function does_programexist($code) {
 			$p = DplusWire::wire('pages')->get('/config/programs/')->child("name=$code");
 			return (get_class($p) == 'ProcessWire\Page') ? true : false;
+		}
+
+		public function get_programs() {
+			return wire('roles')->find("name*=program-");
 		}
 	}
 ?>

@@ -4,7 +4,7 @@
 	$appusers = $users->find('template=user, name!=guest|apache');
 	$logmuser = new LogmUser();
 
-	$programs = $pages->get('/config/programs/')->children();
+	$programs = $modules->get('EicapPrograms')->get_programs();
 
 	if ($user->is_admin()) {
 		$page->body = $config->twig->render('user/users-admin.twig', ['page' => $page, 'appusers' => $appusers, 'logmuser' => $logmuser, 'config' => $config, 'programs' => $programs]);
