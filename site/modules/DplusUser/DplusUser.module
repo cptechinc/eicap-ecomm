@@ -12,6 +12,12 @@
 			);
 		}
 
+		public static $roles = array(
+			'admin'         => 'admin',
+			'sales-manager' => 'slsmgr',
+			'sales-rep'     => 'slsrep'
+ 		);
+
 		public function init() {
 			$this->addHook('User::is_admin', $this, 'is_admin');
 			$this->addHook('User::is_salesmanager', $this, 'is_salesmanager');
