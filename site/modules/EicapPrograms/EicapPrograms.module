@@ -28,6 +28,11 @@
 				$event->return = str_replace($this->roleprefix , '', $role->name);
 			});
 
+			$this->addHookProperty('User::programs', function($event) {
+				$user = $event->object;
+				$event->return = $user->roles->filter("name*=$this->roleprefix");
+			});
+
 			$this->addHook('User::in_program', function($event) {
 				$user = $event->object;
 				$programname = $event->arguments(0);
@@ -47,6 +52,26 @@
 				$programname = $event->arguments(0);
 				$programcode = (strpos($code, $this->roleprefix) !== false) ? $programname : $this->roleprefix . $programname;
 				$event->return = $user->removeRole($programcode);
+			});
+
+			$this->addHook('User::get_programs', function($event) {
+				$user = $event->object;
+				$allprograms = $this->get_programs();
+				$event->return = $user->roles->filter("name*=$this->roleprefix");
+			});
+
+			$this->add_adminhooks();
+		}
+
+		public function add_adminhooks() {
+			$roles = $this->wire('modules')->get('DplusUser')::$roles;
+			$admin = $roles['admin'];
+			$slsmgr = $roles['sales-manager'];
+			
+			$this->addHook("User(roles=$admin|$slsmgr)::get_programs_reps", function($event) {
+				$user = $event->object;
+				$programnames = $user->roles->filter("name*=$this->roleprefix")->explode('name');
+				$event->return = wire('users')->find("roles=$programnames")->explode('name');
 			});
 		}
 
@@ -73,8 +98,12 @@
 			return (get_class($p) == 'ProcessWire\Page') ? true : false;
 		}
 
+		/**
+		 * Returns an array of Programs
+		 * @return array Roles (Programs)
+		 */
 		public function get_programs() {
-			return wire('roles')->find("name*=program-");
+			return wire('roles')->find("name*=$this->roleprefix");
 		}
 	}
 ?>
