@@ -11,19 +11,20 @@
 				$edituser->of(false);
 
 				foreach ($programs as $program) {
-					if (strtoupper($input->post->text($program->program)) == "Y") {
+					if (strtoupper($input->post->text($program->name)) == "Y") {
 						if (!$edituser->in_program($program->program)) {
 							$edituser->add_program($program->program);
 						}
 					} else {
 						if ($edituser->in_program($program->program)) {
-							$edituser->remove_program($programcode);
+							$edituser->remove_program($program->program);
 						}
 					}
 				}
 				$edituser->save();
 				$edituser->of(true);
 			}
+
 			$page->body = $config->twig->render('user/edit-user.twig', ['page' => $page, 'edituser' => $edituser, 'programs' => $programs]);
 		} else {
 			$page->body = $config->twig->render('common/error-page.twig', ['title' => 'Error!', 'msg' => "User ID $userID not found"]);
