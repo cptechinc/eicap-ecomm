@@ -67,7 +67,7 @@
 			$roles = $this->wire('modules')->get('DplusUser')::$roles;
 			$admin = $roles['admin'];
 			$slsmgr = $roles['sales-manager'];
-			
+
 			$this->addHook("User(roles=$admin|$slsmgr)::get_programs_reps", function($event) {
 				$user = $event->object;
 				$programnames = $user->roles->filter("name*=$this->roleprefix")->explode('name');
@@ -94,8 +94,7 @@
 		 * @return bool         Does Program Exist?
 		 */
 		public function does_programexist($code) {
-			$p = DplusWire::wire('pages')->get('/config/programs/')->child("name=$code");
-			return (get_class($p) == 'ProcessWire\Page') ? true : false;
+			return boolval(wire('roles')->find("name={$this->roleprefix}$code")->count);
 		}
 
 		/**
