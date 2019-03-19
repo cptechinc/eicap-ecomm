@@ -1,0 +1,24 @@
+{% for order in orders %}
+    <a href="{{ salesordershistorydisplay.generate_loaddetailsURL(order) }}" class="list-group-item list-group-item-action {{ class }}">
+        <div class="row">
+            <div class="col">{{ order.ordernumber }}</br></div>
+            <div class="col">{{ order.custid }}</div>
+            <div class="col">
+                {% set address = order.shipto_address1 ~ '<br>' %}
+                {% if order.shipto_address2 is not empty %}
+                    {% set shipto_address2 = order.shipto_address2 %}
+                {% else %}
+                    {% set shipto_address2 = '' %}
+                {% endif %}
+                {% set address = address ~ shipto_address2 %}
+                {% set address = address ~ "<br>" %}
+                {% set address = address ~ order.shipto_city ~ ", " ~ order.shipto_state ~ ' ' ~ order.shipto_zip %}
+                {% if order.shiptoid is not empty %}
+                    <button type="button" class="btn btn-default btn-block" data-toggle="tooltip" data-placement="top" data-html="true" title="{{ address }}">{{ order.shiptoid }}</button>
+                {% endif %}
+            </div>
+            <div class="col text-right">$ {{ order.total_order }}</div>
+            <div class="col text-right">{{ dplusdatetime.format_date(order.order_date) }}</div>
+        </div>
+    </a>
+{% endfor %}
