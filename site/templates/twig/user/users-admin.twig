@@ -9,22 +9,16 @@
 		<div class="list-group-item list-group-item-action">
 			<h4>{{ appuser.name }}</h4>
 
-				{% set user = logmuser.load(appuser.name) %}
-				{% if user %}
-                    {% set dplusrole = config.user_roles[user.get_dplusorole()]['label'] %}
-                {% else %}
-                    {% set dplusrole = 'Not Found' %}
-                {% endif %}
-
 			<div class="row">
 				<div class="col-4">
-					<b>Role:</b> {{ dplusrole }}
+					<b>Role:</b> {{ appuser.dpluso_role }}
 				</div>
 				<div class="col-4">
 					<b>Programs:</b>
-					{% for program in programs %}
-						{% if appuser.in_program(program.name) %}
-							{{ program.name }},&nbsp;
+
+					{% for program in appuser.get_programs() %}
+						{% if appuser.in_program(program.program) %}
+							{{ program.title ~ (program != appuser.get_programs().last ? ',' : '')}}
 						{% endif %}
 					{% endfor %}
 				</div>

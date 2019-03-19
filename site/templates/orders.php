@@ -12,7 +12,7 @@
 
 	if ($user->is_salesmanager()) {
 		$filters = $salesordersdisplay->filters;
-		$filters['salesperson'] = find_salesrepidsbyprograms(get_programtypesforuser($user->loginid));
+		$filters['salesperson'] = $user->get_programs_reps();
 		$salesordersdisplay->set('filters', $filters);
 	}
 

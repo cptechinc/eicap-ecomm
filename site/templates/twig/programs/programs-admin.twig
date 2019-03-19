@@ -14,7 +14,7 @@
 <div class="list-group">
     {% for program in programs %}
 		<div class="list-group-item list-group-item-action">
-			<h4>{{ pages.get('/config/programs/').child('name=' ~ program.program).title }} ({{ programID }})</h4>
+			<h4>{{ program.title }} ({{ program.name }})</h4>
 			<h5>{{ program.name }}</h5>
 		</div>
 	{% endfor %}

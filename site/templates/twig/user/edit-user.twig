@@ -9,13 +9,13 @@
 		</div>
 		<div class="col-4">
 			<h5>Role</h5>
-			{{ dplusrole }}
+			{{ edituser.dpluso_role }}
 		</div>
 		<div class="col-4">
 			<h5>Programs</h5>
 			{% for program in programs %}
 				<div class="form-check">
-					<input class="form-check-input" type="checkbox" name="program-{{ program.name }}" value="Y" {{ (edituser.in_program(program.name)) ? 'checked' : '' }}>
+					<input class="form-check-input" type="checkbox" name="program-{{ program.program }}" value="Y" {{ (edituser.in_program(program.program)) ? 'checked' : '' }}>
 					<label class="form-check-label">
 						{{ program.title }}
 					</label>

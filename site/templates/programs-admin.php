@@ -1,5 +1,5 @@
 <?php
-	$programs = $roles->find('name*=program-');
+	$programs = $modules->get('EicapPrograms')->get_programs();
 
 	if ($user->is_admin()) {
 		$page->body = $config->twig->render('programs/programs-admin.twig', ['page' => $page, 'pages' => $pages, 'programs' => $programs]);
