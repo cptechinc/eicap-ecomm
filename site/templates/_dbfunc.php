@@ -232,7 +232,7 @@
 			return $sql->fetch();
 		}
 	}
-	
+
 	function get_items($debug = false) {
 		$q = (new QueryBuilder())->table('itemmaster');
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
@@ -273,7 +273,7 @@
 	function count_salesorders($filter = false, $filtertypes = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('COUNT(*)'));
-		
+
 		if (isset($filter['salesperson'])) {
 			$salespeople = $filter['salesperson'];
 			$ordersquery = (new QueryBuilder())->table('oe_head');
@@ -287,15 +287,15 @@
 					->where('salesperson_3', $salespeople)
 				);
 			}
-			
+
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
-		
+
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
 
 		if ($debug) {
@@ -305,7 +305,7 @@
 			return $sql->fetchColumn();
 		}
 	}
-	
+
 	/**
 	 * Returns an array of SalesOrder that match the filter criteria
 	 * @param  int    $limit       Number of Records to Return
@@ -319,7 +319,7 @@
 	 */
 	function get_salesorders($limit = 10, $page = 1, $sortrule, $filter = false, $filtertypes = false, $useclass = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
-		
+
 		if (isset($filter['salesperson'])) {
 			$salespeople = $filter['salesperson'];
 			$ordersquery = (new QueryBuilder())->table('oe_head');
@@ -336,7 +336,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
@@ -370,12 +370,12 @@
 	 */
 	function get_salesorders_orderby($limit = 10, $page = 1, $sortrule, $orderby, $filter = false, $filtertypes = false, $useclass = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
-		
+
 		if (isset($filter['salesperson'])) {
 			$salespeople = $filter['salesperson'];
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
-			
+
 			if (!empty($salespeople)) {
 				$ordersquery->where(
 					$ordersquery
@@ -388,7 +388,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($filter)) {
 			$q->generate_filters($filter, $filtertypes);
 		}
@@ -483,7 +483,7 @@
 		$q->where('sessionid', $sessionID);
 		$q->where('orderno', $ordn);
 		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
-		
+
 		if ($debug) {
 			return $q->generate_sqlquery($q->params);
 		} else {
@@ -529,7 +529,7 @@
 	function get_minsalesorderdate($field, $custID = false, $shipID = false, $filter, $filtertypes, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr("MIN($field)"));
-		
+
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
@@ -546,7 +546,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($custID)) {
 			$q->where('custid', $custID);
 
@@ -576,12 +576,12 @@
 	function get_maxsalesordertotal($custID = '', $shipID = '', $filter, $filtertypes, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('MAX(total_order)'));
-		
+
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
 			$salespeople = $filter['salesperson'];
-			
+
 			if (!empty($salespeople)) {
 				$ordersquery->where(
 					$ordersquery
@@ -594,7 +594,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($custID)) {
 			$q->where('custid', $custID);
 
@@ -611,7 +611,7 @@
 			return $sql->fetchColumn();
 		}
 	}
-	
+
 	/**
 	 * Returns the Min Order Total for Sales Orders that
 	 * @param  string $custID      Customer ID, if blank will not filter to one customer
@@ -624,12 +624,12 @@
 	function get_minsalesordertotal($custID = '', $shipID = '', $filter, $filtertypes, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->field($q->expr('MIN(total_order)'));
-		
+
 		if (isset($filter['salesperson'])) {
 			$ordersquery = (new QueryBuilder())->table('oe_head');
 			$ordersquery->field('ordernumber');
 			$salespeople = $filter['salesperson'];
-			
+
 			if (!empty($salespeople)) {
 				$ordersquery->where(
 					$ordersquery
@@ -642,7 +642,7 @@
 			$q->where('ordernumber', $ordersquery);
 			unset($filter['salesperson']);
 		}
-		
+
 		if (!empty($custID)) {
 			$q->where('custid', $custID);
 
@@ -663,9 +663,6 @@
 	/* =============================================================
 		EDIT ORDER FUNCTIONS
 	============================================================ */
-
-
-
 	function get_orderhead($sessionID, $ordn, $useclass = false, $debug = false) {
 		$q = (new QueryBuilder())->table('oe_head');
 		$q->where('sessionid', $sessionID);
@@ -722,6 +719,221 @@
 				$sql->execute($q->params);
 			}
 			return $q->generate_sqlquery($q->params);
+		}
+	}
+
+	/* =============================================================
+		SALES ORDER  HISTORY FUNCTIONS
+	============================================================ */
+	/**
+	 * Returns the number of Orders in Sales History that meets
+	 * the filtered criteria for the User provided
+	 * @param  array   $filter      Array that contains the column and the values to filter for
+	 * ex. array(
+	 * 	'ordertotal' => array (123.64, 465.78)
+	 * )
+	 * @param  array   $filterable  Array that contains the filterable columns as keys, and the rules needed
+	 * ex. array(
+	 * 	'ordertotal' => array(
+	 * 		'querytype' => 'between',
+	 * 		'datatype' => 'numeric',
+	 * 		'label' => 'Order Total'
+	 * 	),
+	 * 	'orderdate' => array(
+	 * 		'querytype' => 'between',
+	 * 		'datatype' => 'date',
+	 * 		'date-format' => 'Ymd',
+	 * 		'label' => 'order-date'
+	 * 	)
+	 * )
+	 * @param  bool    $debug       Run in debug? If so, return SQL Query
+	 * @return int                  Number of Orders that meet filter requirements
+	 */
+	function count_saleshistory($filter = false, $filterable = false, $debug = false) {
+		$q = (new QueryBuilder())->table('saleshist');
+		$q->field($q->expr('COUNT(*)'));
+
+		if (isset($filter['salesperson'])) {
+			$salespeople = $filter['salesperson'];
+			$ordersquery = (new QueryBuilder())->table('saleshist');
+			$ordersquery->field('ordernumber');
+			if (!empty($salespeople)) {
+				$ordersquery->where(
+					$ordersquery
+					->orExpr()
+					->where('salesperson_1', $salespeople)
+					->where('salesperson_2', $salespeople)
+					->where('salesperson_3', $salespeople)
+				);
+			}
+
+			$q->where('ordernumber', $ordersquery);
+			unset($filter['salesperson']);
+		}
+
+		if (!empty($filter)) {
+			$q->generate_filters($filter, $filtertypes);
+		}
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
+		}
+	}
+
+	/**
+	 * Returns an array of Sales History Records (sorted) that meet the filter criteria
+	 * for the User
+	 * @param  int    $limit       Number of Records to return
+	 * @param  int    $page        Page Number to start from
+	 * @param  string $sortrule    Sort Rule ASC | DESC
+	 * @param  string $orderby     Column to sort on
+	 * @param  array  $filter      Array that contains the column and the values to filter for
+	 * ex. array(
+	 * 	'ordertotal' => array (123.64, 465.78)
+	 * )
+	 * @param  array   $filterable  Array that contains the filterable columns as keys, and the rules needed
+	 * ex. array(
+	 * 	'ordertotal' => array(
+	 * 		'querytype' => 'between',
+	 * 		'datatype' => 'numeric',
+	 * 		'label' => 'Order Total'
+	 * 	),
+	 * 	'orderdate' => array(
+	 * 		'querytype' => 'between',
+	 * 		'datatype' => 'date',
+	 * 		'date-format' => 'Ymd',
+	 * 		'label' => 'order-date'
+	 * 	)
+	 * )
+	 * @param  bool   $useclass      Return records as a SalesOrderHistory object? (or array)
+	 * @param  bool   $debug         Run in debug? If so return SQL Query
+	 * @return array                 array of SalesOrderHistory objects | array of sales history orders as arrays
+	 */
+	function get_saleshistory_orderby($limit = 10, $page = 1, $sortrule = 'ASC', $orderby, $filter = false, $filterable = false, $useclass = true, $debug = false) {
+		$q = (new QueryBuilder())->table('saleshist');
+
+		if (isset($filter['salesperson'])) {
+			$salespeople = $filter['salesperson'];
+			$ordersquery = (new QueryBuilder())->table('saleshist');
+			$ordersquery->field('ordernumber');
+			if (!empty($salespeople)) {
+				$ordersquery->where(
+					$ordersquery
+					->orExpr()
+					->where('salesperson_1', $salespeople)
+					->where('salesperson_2', $salespeople)
+					->where('salesperson_3', $salespeople)
+				);
+			}
+			$q->where('ordernumber', $ordersquery);
+			unset($filter['salesperson']);
+		}
+
+		if (!empty($filter)) {
+			$q->generate_filters($filter, $filtertypes);
+		}
+		$q->order($orderby .' '. $sortrule);
+		$q->limit($limit, $q->generate_offset($page, $limit));
+
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			if ($useclass) {
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrderHistory');
+				return $sql->fetchAll();
+			}
+			return $sql->fetchAll(PDO::FETCH_ASSOC);
+		}
+	}
+
+	/**
+	 * Returns the Min Date $field from the Sales History Table
+	 * @param  string $field        Order Date Column
+	 * @param  string $custID       Customer ID
+	 * @param  string $shipID       Customer Shipto ID
+	 * @param  array  $filter       Array that contains the column and the values to filter for
+	 * @param  array  $filtertypes  Array that contains the filterable columns as keys, and the rules needed
+	 * @param  bool   $debug        Run in debug? If so, return SQL Query
+	 * @return float                Min Sales Order Date
+	 */
+	function get_minsaleshistoryorderdate($field, $custID = '', $shipID = '', $filter = array(), $filtertypes = array(), $debug = false) {
+		$q = (new QueryBuilder())->table('saleshist');
+		$q->field($q->expr("MIN(STR_TO_DATE(CAST($field as CHAR(12)), '%Y%m%d'))"));
+		if ($custID) {
+			$q->where('custid', $custID);
+		}
+		if ($shipID) {
+			$q->where('shiptoid', $shipID);
+		}
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
+		}
+	}
+
+	/**
+	 * Returns the Min Sales Order Total from the Sales History Table
+	 * @param  string $custID       Customer ID
+	 * @param  string $shipID       Customer Shipto ID
+	 * @param  array  $filter       Array that contains the column and the values to filter for
+	 * @param  array  $filtertypes  Array that contains the filterable columns as keys, and the rules needed
+	 * @param  bool   $debug        Run in debug? If so, return SQL Query
+	 * @return float                Min Sales Order Total
+	 */
+	function get_minsaleshistoryordertotal($custID = '', $shipID = '', $filter = array(), $filtertypes = array(), $debug = false) {
+		$q = (new QueryBuilder())->table('saleshist');
+		$q->field($q->expr("MIN(total_order)"));
+		if (!empty($custID)) {
+			$q->where('custid', $custID);
+			if (!empty($shipID)) {
+				$q->where('shiptoid', $shipID);
+			}
+		}
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
+		}
+	}
+
+	/**
+	 * Returns the Max Sales Order Total from the Sales History Table
+	 * @param  string $custID       Customer ID
+	 * @param  string $shipID       Customer Shipto ID
+	 * @param  array  $filter       Array that contains the column and the values to filter for
+	 * @param  array  $filtertypes  Array that contains the filterable columns as keys, and the rules needed
+	 * @param  bool   $debug        Run in debug? If so, return SQL Query
+	 * @return float                Max Sales Order Total
+	 */
+	function get_maxsaleshistoryordertotal($custID = '', $shipID = '', $filter = array(), $filtertypes = array(), $debug = false) {
+		$q = (new QueryBuilder())->table('saleshist');
+		$q->field($q->expr("MAX(total_order)"));
+
+		if (!empty($custID)) {
+			$q->where('custid', $custID);
+			if (!empty($shipID)) {
+				$q->where('shiptoid', $shipID);
+			}
+		}
+		$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+		if ($debug) {
+			return $q->generate_sqlquery($q->params);
+		} else {
+			$sql->execute($q->params);
+			return $sql->fetchColumn();
 		}
 	}
 
@@ -926,7 +1138,7 @@
 /* =============================================================
 	CUSTOMER INDEX FUNCTIONS
 ============================================================ */
-	
+
 	/**
 	 * Returns the Number of custindex records that match the search
 	 * and filters it by user permissions
@@ -947,7 +1159,7 @@
 		if ($user->is_salesrep() || $user->is_salesmanager()) {
 			$customertypes = get_customertypesforuser($loginID);
 			$customertypes = array_map('strtoupper', $customertypes);
-			
+
 			if (!empty($customertypes)) {
 				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
 				$q->where('(custid, shiptoid)','in', $custpermquery);
@@ -988,13 +1200,13 @@
 		if ($user->is_salesrep() || $user->is_salesmanager()) {
 			$customertypes = get_customertypesforuser($loginID);
 			$customertypes = array_map('strtoupper', $customertypes);
-			
+
 			if (!empty($customertypes)) {
 				$custpermquery = (new QueryBuilder())->table('custindex')->field('custid, shiptoid')->where('typecode', $customertypes);
 				$q->where('(custid, shiptoid)','in', $custpermquery);
 			}
 		}
-		
+
 		$fieldstring = implode(", ' ', ", array_keys(Contact::generate_classarray()));
 
 		$q->where($q->expr("UCASE(REPLACE(CONCAT($fieldstring), '-', '')) LIKE UCASE([])", [$search]));
