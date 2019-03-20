@@ -1274,6 +1274,27 @@
 		}
 
 		/**
+		 * Returns Sales History Record
+		 * @param  int    $ordn          Order Number
+		 * @param  bool   $debug         Run in debug? If so return SQL Query
+		 * @return array                 array of SalesOrderHistory record
+		 */
+		function get_saleshistoryorder($ordn, $debug = false) {
+			$q = (new QueryBuilder())->table('saleshist');
+			$q->where('ordernumber', $ordn);
+
+			$sql = DplusWire::wire('dplusdatabase')->prepare($q->render());
+
+			if ($debug) {
+				return $q->generate_sqlquery($q->params);
+			} else {
+				$sql->execute($q->params);
+				$sql->setFetchMode(PDO::FETCH_CLASS, 'SalesOrderHistory');
+				return $sql->fetch();
+			}
+		}
+
+		/**
 		 * Returns the Customer ID from a Sales History Order
 		 * @param  string $ordn  Sales Order Number
 		 * @param  bool   $debug Run in debug? IF so, return SQL query
