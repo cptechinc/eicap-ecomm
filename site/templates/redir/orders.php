@@ -35,7 +35,11 @@
 		case 'get-order-details':
 			$ordn = $input->$requestmethod->text('ordn');
 			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn");
-			$session->loc = $pages->get('template=order')->url."?ordn=$ordn";
+			if (is_ordersaleshistory($ordn)) {
+				$session->loc = $pages->get('template=order-history')->url."?ordn=$ordn";
+			} else {
+				$session->loc = $pages->get('template=order')->url."?ordn=$ordn";
+			}
 			break;
 		case 'load-orders':
 			$session->loc = $pages->get('template=orders')->url;
