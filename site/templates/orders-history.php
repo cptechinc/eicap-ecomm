@@ -1,10 +1,10 @@
 <?php
 	use Dplus\Base\DplusDateTime;
-	use Dplus\Dpluso\OrderDisplays\SalesOrderHistoryPanel;
+	use Dplus\Ecomm\SalesOrderHistoryDisplay;
 	use Dplus\Content\PaginatorBootstrap4;
 
 	$page->title = "Sales Orders History";
-	$salesordershistorydisplay = new SalesOrderHistoryPanel(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
+	$salesordershistorydisplay = new SalesOrderHistoryDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordershistorydisplay->set('pagenbr', $input->pageNum);
 	$salesordershistorydisplay->generate_filter($input);
 
@@ -21,7 +21,7 @@
 
 	$salesordershistorydisplay->get_ordercount();
 	$salesordershistorydisplay->set('paginationinsertafter', $page->name);
-	$paginator = new PaginatorBootstrap4($salesordershistorydisplay->pagenbr, $salesordershistorydisplay->count, $page->fullURL, $salesordershistorydisplay->paginationinsertafter, !empty($salesordershistorydisplay->ajaxdata) ? $salesordershistorydisplay->ajaxdata : '');
+	$paginator = new PaginatorBootstrap4($salesordershistorydisplay->pagenbr, $salesordershistorydisplay->count, $salesordershistorydisplay->pageurl->getUrl(), $salesordershistorydisplay->paginationinsertafter, !empty($salesordershistorydisplay->ajaxdata) ? $salesordershistorydisplay->ajaxdata : '');
 
 	$orders = $salesordershistorydisplay->get_orders();
 
