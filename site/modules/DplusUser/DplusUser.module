@@ -21,11 +21,7 @@
 		public function init() {
 			$this->addHook('User::is_admin', $this, 'is_admin');
 			$this->addHook('User::is_salesmanager', $this, 'is_salesmanager');
-			$this->addHookProperty('User::dpluso_role', function($event) {
-				$user = $event->object;
-				$logmuser = LogmUser::load($user->name);
-				$event->return = $logmuser ? wire('config')->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
-			});
+			$this->addHook('User::dpluso_role', $this, 'dpluso_role');
 		}
 
 		public function is_admin($event) {
@@ -36,6 +32,12 @@
 		public function is_salesmanager($event) {
 			$user = $event->data['object'];
 			$event->return = $user->hasRole($this->wire('config')->user_roles['sales-manager']['dplus-code']);
+		}
+
+		public function dpluso_role($event) {
+			$user = $event->object;
+			$logmuser = LogmUser::load($user->name);
+			$event->return = $logmuser ? wire('config')->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
 		}
 	}
 ?>
