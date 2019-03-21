@@ -3,9 +3,9 @@
 
     if ($input->get->ordn) {
         $ordn = $input->get->text('ordn');
-        $orderhistorydisplay = new Dplus\Dpluso\OrderDisplays\SalesOrderHistoryPanel(session_id(), $page->fullURL, '', $ordn);
+        $orderhistorydisplay = new Dplus\Ecomm\SalesOrderHistoryDisplay(session_id(), $page->fullURL, '', $ordn);
 
-        if (SalesOrder::exists($ordn)) {
+        if (is_ordersaleshistory($ordn)) {
             $order = $orderhistorydisplay->get_order();
             $customer = Customer::load($order->custid, $order->shiptoid);
             $page->title = "Order #$ordn for $customer->name";
