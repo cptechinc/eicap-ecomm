@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "content-hash": "fa058cb9813b06e47011fcc9cb9fa1e9",
@@ -164,12 +164,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-content.git",
-                "reference": "82749f5e3c2b188dbf1111e3e88993cb64724027"
+                "reference": "274b9d70f115a4119b11dfa2b9db335b6e0410ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-content/zipball/82749f5e3c2b188dbf1111e3e88993cb64724027",
-                "reference": "82749f5e3c2b188dbf1111e3e88993cb64724027",
+                "url": "https://api.github.com/repos/cptechinc/dplus-content/zipball/274b9d70f115a4119b11dfa2b9db335b6e0410ba",
+                "reference": "274b9d70f115a4119b11dfa2b9db335b6e0410ba",
                 "shasum": ""
             },
             "type": "library",
@@ -188,7 +188,7 @@
                 "paginator",
                 "table"
             ],
-            "time": "2018-12-13T16:01:58+00:00"
+            "time": "2019-03-11T15:02:55+00:00"
         },
         {
             "name": "cptechinc/dplus-dpluso",
@@ -241,12 +241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-ecomm.git",
-                "reference": "96bb1f87a453ab4de909b0b2dd19087da14e2f22"
+                "reference": "840477b532aee3009cc27da707db96f73e6fca05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-ecomm/zipball/96bb1f87a453ab4de909b0b2dd19087da14e2f22",
-                "reference": "96bb1f87a453ab4de909b0b2dd19087da14e2f22",
+                "url": "https://api.github.com/repos/cptechinc/dplus-ecomm/zipball/840477b532aee3009cc27da707db96f73e6fca05",
+                "reference": "840477b532aee3009cc27da707db96f73e6fca05",
                 "shasum": ""
             },
             "type": "library",
@@ -279,7 +279,7 @@
             "keywords": [
                 "dplus-ecomm"
             ],
-            "time": "2018-12-19T15:29:27+00:00"
+            "time": "2019-02-15T16:51:54+00:00"
         },
         {
             "name": "cptechinc/dplus-items",
@@ -287,12 +287,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-items.git",
-                "reference": "fe98a4172af9efa29e66f0dd84c05f7830de194e"
+                "reference": "2d40de46f4087cf7a6dce803720aadb12e40eda4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-items/zipball/fe98a4172af9efa29e66f0dd84c05f7830de194e",
-                "reference": "fe98a4172af9efa29e66f0dd84c05f7830de194e",
+                "url": "https://api.github.com/repos/cptechinc/dplus-items/zipball/2d40de46f4087cf7a6dce803720aadb12e40eda4",
+                "reference": "2d40de46f4087cf7a6dce803720aadb12e40eda4",
                 "shasum": ""
             },
             "type": "library",
@@ -307,7 +307,7 @@
             "keywords": [
                 "items"
             ],
-            "time": "2019-02-12T16:29:47+00:00"
+            "time": "2019-03-07T17:19:42+00:00"
         },
         {
             "name": "cptechinc/dplus-order",
@@ -315,12 +315,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cptechinc/dplus-order.git",
-                "reference": "36835a4842e10aae5a033acd2f75fd415b15c35e"
+                "reference": "ea0d392973c10d80ab9c65d2ee6f05f434e9858a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cptechinc/dplus-order/zipball/36835a4842e10aae5a033acd2f75fd415b15c35e",
-                "reference": "36835a4842e10aae5a033acd2f75fd415b15c35e",
+                "url": "https://api.github.com/repos/cptechinc/dplus-order/zipball/ea0d392973c10d80ab9c65d2ee6f05f434e9858a",
+                "reference": "ea0d392973c10d80ab9c65d2ee6f05f434e9858a",
                 "shasum": ""
             },
             "type": "library",
@@ -340,7 +340,7 @@
                 "quote",
                 "sales-order"
             ],
-            "time": "2019-02-05T15:02:17+00:00"
+            "time": "2019-03-01T19:55:33+00:00"
         },
         {
             "name": "cptechinc/dplus-processwire",
@@ -580,16 +580,16 @@
         },
         {
             "name": "mikehaertl/phpwkhtmltopdf",
-            "version": "2.3.1",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikehaertl/phpwkhtmltopdf.git",
-                "reference": "45974cc1f0b99a8200aeedac6b692934a8a592cd"
+                "reference": "dcd1236026e8bec9e429308e867c26cd1f941e0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikehaertl/phpwkhtmltopdf/zipball/45974cc1f0b99a8200aeedac6b692934a8a592cd",
-                "reference": "45974cc1f0b99a8200aeedac6b692934a8a592cd",
+                "url": "https://api.github.com/repos/mikehaertl/phpwkhtmltopdf/zipball/dcd1236026e8bec9e429308e867c26cd1f941e0a",
+                "reference": "dcd1236026e8bec9e429308e867c26cd1f941e0a",
                 "shasum": ""
             },
             "require": {
@@ -625,7 +625,7 @@
                 "wkhtmltoimage",
                 "wkhtmltopdf"
             ],
-            "time": "2018-02-18T10:54:00+00:00"
+            "time": "2019-03-12T07:03:42+00:00"
         },
         {
             "name": "picqer/php-barcode-generator",
@@ -741,7 +741,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -819,12 +819,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "d1596b6ccf609fb83a5804d3280c2f4335f08b9a"
+                "reference": "bafd5d26f2e8807bcfe1ef8d9249bc13522ae5ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d1596b6ccf609fb83a5804d3280c2f4335f08b9a",
-                "reference": "d1596b6ccf609fb83a5804d3280c2f4335f08b9a",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/bafd5d26f2e8807bcfe1ef8d9249bc13522ae5ae",
+                "reference": "bafd5d26f2e8807bcfe1ef8d9249bc13522ae5ae",
                 "shasum": ""
             },
             "require": {
@@ -878,7 +878,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-02-15T07:44:47+00:00"
+            "time": "2019-03-20T06:24:27+00:00"
         }
     ],
     "packages-dev": [],
