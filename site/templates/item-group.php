@@ -17,5 +17,5 @@
 
 	$paginator = new PaginatorBootstrap4($input->pageNum, $resultcount, $page->fullURL, $page->name);
 
-	$page->body = $config->twig->render('products/item-list.twig', ['items' => $items, 'page' => $page, 'search' => $search, 'paginator' => $paginator]);
+	$page->body = $config->twig->render('products/item-list.twig', ['items' => $items, 'page' => $page, 'pages' => $pages, 'search' => $search, 'paginator' => $paginator]);
 	include __DIR__ . "/basic-page.php";
