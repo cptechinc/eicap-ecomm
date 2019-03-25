@@ -28,12 +28,12 @@
 					<input type="checkbox" name="holdstatus[]" value="R" {{ salesordersdisplay.has_filtervalue('holdstatus', 'R') ? 'checked' : '' }} >
 					<label>&emsp;On Review</label>
 				</div>
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					<h4>Order #</h4>
 					<input class="form-control form-group inline input-sm" type="text" name="ordernumber[]" value="{{ salesordersdisplay.get_filtervalue('ordernumber') }}" placeholder="From Order #">
 					<input class="form-control form-group inline input-sm" type="text" name="ordernumber[]" value="{{ salesordersdisplay.get_filtervalue('ordernumber', 1) }}" placeholder="Through Order #">
 				</div>
-				<div class="col-sm-3">
+				<div class="col-sm-2">
 					<h4>Cust ID</h4>
 					<div class="input-group form-group">
 						<input class="form-control form-group inline input-sm" type="text" name="custid[]" id="sales-order-cust-from" value="{{ salesordersdisplay.get_filtervalue('custid') }}" placeholder="From CustID">

@@ -21,7 +21,7 @@
 			<input type="hidden" name="filter" value="filter">
 
 			<div class="row">
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					<h4>Order #</h4>
 					<input class="form-control form-group inline input-sm" type="text" name="ordernumber[]" value="{{ salesordershistorydisplay.get_filtervalue('ordernumber') }}" placeholder="From Order #">
 					<input class="form-control form-group inline input-sm" type="text" name="ordernumber[]" value="{{ salesordershistorydisplay.get_filtervalue('ordernumber', 1) }}" placeholder="Through Order #">
@@ -50,7 +50,7 @@
 						</span>
 					</div>
 				</div>
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					<h4>Order Date</h4>
 					{% set name = 'order_date[]' %}
                     {% set value = salesordershistorydisplay.get_filtervalue('order_date') %}

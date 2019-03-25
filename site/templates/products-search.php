@@ -6,7 +6,7 @@
 
 	// Processwire Selectors
 	// https://processwire.com/api/selectors/
-	$selector = "template=product|imitem, title|body|itemid|name1|name2%=$q";
+	$selector = "template=imitem, title|body|itemid|name1|name2%=$q";
 	$limit = 10;
 	$start = $input->pageNum > 1 ? $input->pageNum * $limit : 0;
 	$selector .= ", limit=$limit, start=$start";
