@@ -1,0 +1,37 @@
+<form action="{{ ordersredir }}" method="post" class="">
+    <input type="hidden" name="action" value="quick-update-line">
+    <input type="hidden" name="ordn" value="{{ ordn }}">
+    <input type="hidden" name="linenbr" value="{{ detail.linenbr }}">
+    <div class="list-group-item list-group-item-action">
+        <div class="row">
+            <div class="col-12 col-sm">
+                {{ detail.itemid }}<br>
+                <small>{{ detail.desc1 }}</small>
+            </div>
+            <div class="col-6 col-sm text-right">
+                <div class="d-sm-none"><b>Price</b></div>
+                <br>
+                $ {{ detail.price|number_format(2, '.', ',') }}
+            </div>
+            <div class="col-6 col-sm text-right">
+                <div class="d-sm-none"><b>Qty</b></div>
+                <br>
+                <input class="form-control pull-right text-right qty" type="text" name="qty" size="4" value="{{ detail.qty|number_format }}">
+            </div>
+            <div class="col-6 col-sm text-right">
+                <div class="d-sm-none"><b>Item Total</b></div>
+                <br>
+                $ {{ (detail.totalprice)|number_format(2, '.', ',') }}
+            </div>
+            <div class="col-12 col-sm text-right">
+                <br>
+                <button type="submit" class="btn btn-success save-button" title="Save Changes">
+                    <span class="fa fa-floppy-o"></span> <span class="sr-only">Save Line</span>
+                </button>
+                <a href="{{ editorderdisplay.generate_removedetailURL(order, detail) }}" class='btn btn-danger'>
+                    <i class="fa fa-trash"></i> <span class="sr-only">Delete Line</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
