@@ -27,7 +27,7 @@
                 <button type="submit" class="btn btn-success save-button" title="Save Changes">
                     <span class="fa fa-floppy-o"></span> <span class="sr-only">Save Line</span>
                 </button>
-                <a href="{{ cartdisplay.generate_detaildeleteurl(cartdisplay.cart, detail) }}" class="btn btn-danger detail-line-icon" title="Delete Item">
+                <a href="{{ cartdisplay.generate_removedetailURL(cartdisplay.cart, detail) }}" class="btn btn-danger detail-line-icon" title="Delete Item">
                     <i class="fa fa-trash text-white" aria-hidden="true"></i><span class="sr-only">Delete Line</span>
                 </a>
             </div>
