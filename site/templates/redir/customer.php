@@ -35,9 +35,12 @@
 
     switch ($action) {
         case 'shop-as-customer':
-		    $data = array();
-            $cart = new CartQuote();
-            $cart->set('sessionid', session_id());
+            $data = array();
+            $cart = CartQuote::load(session_id());
+            if (empty($cart)) {
+                $cart = new CartQuote();
+                $cart->set('sessionid', session_id());
+            }
             $cart->set('custid', $custID);
             $cart->set('shiptoid', $shipID);
             $session->sql = $cart->save(true);
