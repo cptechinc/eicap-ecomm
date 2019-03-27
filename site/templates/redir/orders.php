@@ -34,7 +34,8 @@
 	switch ($action) {
 		case 'get-order-details':
 			$ordn = $input->$requestmethod->text('ordn');
-			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn");
+			$custID = SalesOrderHistory::is_saleshistory($ordn) ? SalesOrderHistory::find_custid($ordn) : SalesOrder::find_custid($ordn);
+			$data = array("DBNAME=$config->dplusdbname", "ORDRDET=$ordn", "CUSTID=$custID");
 			if (is_ordersaleshistory($ordn)) {
 				$session->loc = $pages->get('template=order-history')->url."?ordn=$ordn";
 			} else {
