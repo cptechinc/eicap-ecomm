@@ -8,7 +8,7 @@
 	// https://processwire.com/api/selectors/
 	$selector = "template=imitem, title|body|itemid|name1|name2%=$q";
 	$limit = 10;
-	$start = $input->pageNum > 1 ? $input->pageNum * $limit : 0;
+	$start = $input->pageNum > 1 ? ($input->pageNum - 1) * $limit : 0;
 	$selector .= ", limit=$limit, start=$start";
 	$resultcount = $pages->count($selector);
 
@@ -35,10 +35,8 @@
 		$paginator = new PaginatorBootstrap4($input->pageNum, $resultcount, $page->fullURL, $page->name, $ajax);
 
 		$modal_id = 'item-search';
-		// $page->body = $config->paths->content."products/search/results-ajax.php";
 		$page->body = $config->twig->render('products/item-ajax.twig', ['page' => $page, 'pages' => $pages, 'items' => $items, 'modal_id' => $modal_id, 'returnurl' => $returnurl, 'paginator' => $paginator]);
 		if ($config->modal) {
-			// include('./_include-ajax-modal.php');
 			include __DIR__ . "/_include-ajax-modal.php";
 		}
 	} else {
