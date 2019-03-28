@@ -3,7 +3,7 @@
 	use Dplus\Ecomm\SalesOrderHistoryDisplay;
 	use Dplus\Content\PaginatorBootstrap4;
 
-	$page->title = "Sales Orders History";
+	$page->title = "Sales History";
 	$salesordershistorydisplay = new SalesOrderHistoryDisplay(session_id(), $page->fullURL, $modal = '', $loadint = '', $ajax = false);
 	$salesordershistorydisplay->set('pagenbr', $input->pageNum);
 	$salesordershistorydisplay->generate_filter($input);
