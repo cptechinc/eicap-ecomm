@@ -17,7 +17,6 @@
 	}
 
 	$filters = $salesordersdisplay->filters;
-	$input = $input->get->filter;
 
 	$salesordersdisplay->get_ordercount();
 	$salesordersdisplay->set('paginationinsertafter', $page->name);
