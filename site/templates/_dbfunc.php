@@ -834,7 +834,7 @@
 		}
 
 		if (!empty($filter)) {
-			$q->generate_filters($filter, $filtertypes);
+			$q->generate_filters($filter, $filterable);
 		}
 		$q->order($orderby .' '. $sortrule);
 		$q->limit($limit, $q->generate_offset($page, $limit));
