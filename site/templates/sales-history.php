@@ -22,6 +22,6 @@
 	$paginator = new PaginatorBootstrap4($salesordershistorydisplay->pagenbr, $salesordershistorydisplay->count, $salesordershistorydisplay->pageurl->getUrl(), $salesordershistorydisplay->paginationinsertafter, !empty($salesordershistorydisplay->ajaxdata) ? $salesordershistorydisplay->ajaxdata : '');
 
 	$orders = $salesordershistorydisplay->get_orders();
-	$page->body = $config->twig->render('sales-history/sales-history.twig', ['page' => $page, 'pages' => $pages, 'salesordershistorydisplay' => $salesordershistorydisplay, 'dplusdatetime' => $dplusdatetime, 'filters' => $filters, 'input' => $input, 'orders' => $orders, 'paginator' => $paginator]);
+	$page->body = $config->twig->render('sales-history/sales-history.twig', ['page' => $page, 'salesordershistorydisplay' => $salesordershistorydisplay, 'dplusdatetime' => $dplusdatetime, 'filters' => $filters, 'input' => $input, 'orders' => $orders, 'paginator' => $paginator]);
 	include __DIR__ . "/basic-page.php";
 ?>
