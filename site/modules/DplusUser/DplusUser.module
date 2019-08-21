@@ -26,6 +26,7 @@
 				$logmuser = LogmUser::load($user->name);
 				$event->return = $logmuser ? wire('config')->user_roles[$logmuser->get_dplusorole()]['label'] : 'Not Found';
 			});
+			$this->addHookProperty("User::warehouse", $this, "dpluso_warehouse");
 		}
 
 		public function is_admin($event) {
@@ -36,6 +37,12 @@
 		public function is_salesmanager($event) {
 			$user = $event->data['object'];
 			$event->return = $user->hasRole($this->wire('config')->user_roles['sales-manager']['dplus-code']);
+		}
+
+		public function dpluso_warehouse($event) {
+			$user = $event->object;
+			$logmuser = LogmUser::load($user->name);
+			$event->return = $logmuser->whseid;
 		}
 	}
 ?>
