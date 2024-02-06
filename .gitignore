@@ -21,3 +21,6 @@ wire
 # Track Directories / files in Ignored Directories
 !site/modules/DplusUser/DplusUser.module
 !site/modules/EicapPrograms/EicapPrograms.module
+
+# VS Code files
+.vscode
